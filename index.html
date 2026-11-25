@@ -890,7 +890,7 @@
           <h2 class="card-title" style="margin: 0;">📊 測驗成績與個人能力診斷報告</h2>
           <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
             <div class="student-pill" id="res-student-pill"></div>
-            <button type="button" class="btn btn-ghost no-print" id="open-gas-modal-btn" title="教師設定 Google Apps Script 寄信網址">⚙️ 寄信服務設定</button>
+            <button type="button" class="btn btn-ghost no-print hidden" id="open-gas-modal-btn" title="教師設定 Google Apps Script 寄信網址">⚙️ 寄信服務設定</button>
           </div>
         </div>
 
@@ -1031,7 +1031,7 @@
     // 0. 教師設定區：請將部署完成的 Google Apps Script Web App 網址貼入此處
     //    部署方式請見專案內 README.md 與 gas/Code.gs
     // =========================================================================
-    const GAS_WEB_APP_URL = "";
+    const GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzsGdq097kFXTYyStsLZkIajrJ6iVbP5fe1TjgZryW4pW99pLjysttwWsAnLahJhT9P/exec";
 
     // =========================================================================
     // 1. 6 大章節能力指標定義 (對應 115 學年度課本第2、3、6章)
@@ -2263,6 +2263,9 @@
     });
 
     // Boot
+    if (new URLSearchParams(location.search).get("setup") === "1") {
+      document.getElementById("open-gas-modal-btn").classList.remove("hidden");
+    }
     renderExam();
     updateProgress();
   </script>
