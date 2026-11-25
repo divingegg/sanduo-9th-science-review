@@ -195,6 +195,23 @@
       box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.16);
     }
 
+    .mode-card.boss-card {
+      grid-column: 1 / -1;
+      border-color: #fca5a5;
+      background: linear-gradient(135deg, #fff5f5 0%, #ffffff 100%);
+    }
+
+    .mode-card.boss-card:hover {
+      border-color: #ef4444;
+      background: #fef2f2;
+    }
+
+    .mode-card.boss-card.selected {
+      border-color: #dc2626;
+      background: linear-gradient(135deg, #fef2f2 0%, #fff1f2 100%);
+      box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.2);
+    }
+
     .mode-badge {
       display: inline-block;
       font-size: 0.75rem;
@@ -209,6 +226,23 @@
     .mode-card.remix-card .mode-badge {
       background: #ccfbf1;
       color: #0f766e;
+    }
+
+    .mode-card.boss-card .mode-badge {
+      background: #fee2e2;
+      color: #b91c1c;
+    }
+
+    .q-boss-badge {
+      display: inline-block;
+      font-size: 0.76rem;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 6px;
+      background: #fef2f2;
+      color: #b91c1c;
+      border: 1px solid #fecaca;
+      margin-left: 4px;
     }
 
     .mode-card h4 {
@@ -925,6 +959,11 @@
             <h4>📄 112 學年度第二次段考</h4>
             <p>選擇與素養 26 題（78 分）＋ 簡答 4 大題（22 分），滿分 100 分。</p>
           </button>
+          <button type="button" class="mode-card boss-card" data-mode="boss">
+            <span class="mode-badge">🔥 魔王難度｜名校挑戰</span>
+            <h4>👑 魔王難度（114 學年度福和國中第二次段考）</h4>
+            <p>收錄新北市立福和國中 114 上二次段考原卷（單選 40 題 × 2.5 分 ＝ 100 分，含卡文迪許扭秤素養題與物理計算挑戰題）</p>
+          </button>
         </div>
 
         <div class="overview-grid">
@@ -988,7 +1027,7 @@
       </div>
       <div id="mc-container"></div>
 
-      <div class="section-banner">
+      <div class="section-banner" id="hw-section-banner">
         <span id="hw-section-title">二、手寫與簡答填充題</span>
         <span class="sub" id="hw-section-sub"></span>
       </div>
@@ -1213,7 +1252,8 @@
       remix: "開始進入【重組段考】隨機作答 →",
       "114": "開始進入 114 學年度段考作答 →",
       "113": "開始進入 113 學年度段考作答 →",
-      "112": "開始進入 112 學年度段考作答 →"
+      "112": "開始進入 112 學年度段考作答 →",
+      boss: "開始挑戰【魔王難度】試卷 →"
     };
 
     document.getElementById("mode-grid").addEventListener("click", (e) => {
@@ -1301,8 +1341,16 @@
       document.getElementById("mc-section-title").textContent = `一、單一選擇題（共 ${exam.mc.length} 題）`;
       document.getElementById("mc-section-sub").textContent = `每題 ${exam.mcPts} 分，共 ${exam.mcMax} 分`;
       const hwTotalBlanks = exam.hw.reduce((s, q) => s + q.blanks.length, 0);
-      document.getElementById("hw-section-title").textContent = `二、手寫與簡答填充題（共 ${exam.hw.length} 大題，${hwTotalBlanks} 格）`;
-      document.getElementById("hw-section-sub").textContent = `共 ${exam.hwMax} 分（請依提示填入數值或選擇答案）`;
+      const hwBanner = document.getElementById("hw-section-banner");
+      if (exam.hw.length === 0) {
+        hwBanner.classList.add("hidden");
+        hwHost.classList.add("hidden");
+      } else {
+        hwBanner.classList.remove("hidden");
+        hwHost.classList.remove("hidden");
+        document.getElementById("hw-section-title").textContent = `二、手寫與簡答填充題（共 ${exam.hw.length} 大題，${hwTotalBlanks} 格）`;
+        document.getElementById("hw-section-sub").textContent = `共 ${exam.hwMax} 分（請依提示填入數值或選擇答案）`;
+      }
 
       const renderedGroups = new Set();
 
@@ -1346,12 +1394,15 @@
         const srcTag = exam.mode === "remix"
           ? `<span class="q-src-tag">出自 ${q.sourceYear} 學年度</span>`
           : "";
+        const bossTag = q.badge
+          ? `<span class="q-boss-badge">${escapeHtml(q.badge)}</span>`
+          : "";
 
         card.innerHTML = `
           <div class="q-header">
             <div>
               <span class="q-num">第 ${q.num} 題</span>
-              ${srcTag}
+              ${srcTag}${bossTag}
             </div>
             <span class="q-unit-tag">${unit.section}</span>
           </div>
@@ -1598,7 +1649,9 @@
       document.getElementById("res-student-pill").textContent = `${cls} ${seat}號 ${name}`;
       document.getElementById("res-email-line").textContent = `學生信箱：${email}`;
       document.getElementById("stat-mc").textContent = `${formatPts(mcScore)} / ${exam.mcMax} 分（對 ${mcCorrect}/${exam.mc.length} 題）`;
-      document.getElementById("stat-hw").textContent = `${formatPts(hwScore)} / ${exam.hwMax} 分（對 ${hwCorrectBlanks}/${hwTotalBlanks} 格）`;
+      document.getElementById("stat-hw").textContent = exam.hwMax === 0
+        ? "本卷無手寫題（全單選 40 題）"
+        : `${formatPts(hwScore)} / ${exam.hwMax} 分（對 ${hwCorrectBlanks}/${hwTotalBlanks} 格）`;
       document.getElementById("stat-time").textContent = `${formatTime(state.elapsedSeconds)} / ${totalScore} 分`;
 
       const sendBtn = document.getElementById("send-email-btn");
@@ -1823,13 +1876,16 @@
         const srcBadge = exam.mode === "remix"
           ? `<span class="q-src-tag" style="margin-left:6px;">出自 ${r.q.sourceYear} 學年度</span>`
           : "";
+        const qBadge = r.q.badge
+          ? `<span class="q-boss-badge">${escapeHtml(r.q.badge)}</span>`
+          : "";
         items.push(`
           <div class="review-item ${r.isCorrect ? "correct" : "wrong"}">
             <div style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px; margin-bottom:8px;">
               <div>
                 <span class="badge ${r.isCorrect ? "badge-great" : "badge-danger"}">${r.isCorrect ? `✓ 答對 (+${exam.mcPts})` : "✗ 答錯 (0)"}</span>
                 <strong style="margin-left:6px;">單一選擇第 ${r.q.num} 題</strong>
-                ${srcBadge}
+                ${srcBadge}${qBadge}
               </div>
               <span class="q-unit-tag">${unit.section}（${unit.pages}）</span>
             </div>
