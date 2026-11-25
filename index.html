@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>三多國中九年級自然｜第二次段考複習與能力診斷系統</title>
+  <title>三多國中九年級自然｜第二次段考複習與重組段考系統</title>
   <style>
     :root {
       --primary: #1e40af;
@@ -95,7 +95,7 @@
 
     .hidden { display: none !important; }
 
-    /* Step 1: Form */
+    /* Step 1: Form & Exam Mode Picker */
     .form-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -122,7 +122,7 @@
     .req { color: var(--danger); margin-left: 3px; }
 
     .form-group input,
-    .form-group select {
+    .hw-blank-item select {
       padding: 11px 14px;
       border-radius: 10px;
       border: 1.5px solid var(--border);
@@ -133,7 +133,7 @@
     }
 
     .form-group input:focus,
-    .form-group select:focus {
+    .hw-blank-item select:focus {
       outline: none;
       border-color: var(--primary-light);
       box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
@@ -146,11 +146,88 @@
       min-height: 1.1em;
     }
 
+    .mode-picker-title {
+      margin: 22px 0 10px;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #1e293b;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .mode-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    @media (max-width: 680px) {
+      .mode-grid { grid-template-columns: 1fr; }
+    }
+
+    .mode-card {
+      border: 2px solid #cbd5e1;
+      border-radius: 12px;
+      padding: 14px 16px;
+      background: #fff;
+      cursor: pointer;
+      text-align: left;
+      font-family: inherit;
+      transition: all 0.15s;
+      position: relative;
+    }
+
+    .mode-card:hover {
+      border-color: var(--primary-light);
+      background: #f8fafc;
+    }
+
+    .mode-card.selected {
+      border-color: var(--primary);
+      background: var(--primary-bg);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.16);
+    }
+
+    .mode-card.remix-card.selected {
+      border-color: #0f766e;
+      background: #f0fdfa;
+      box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.16);
+    }
+
+    .mode-badge {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 2px 9px;
+      border-radius: 999px;
+      background: #e2e8f0;
+      color: #334155;
+      margin-bottom: 6px;
+    }
+
+    .mode-card.remix-card .mode-badge {
+      background: #ccfbf1;
+      color: #0f766e;
+    }
+
+    .mode-card h4 {
+      margin: 0 0 4px;
+      font-size: 1.05rem;
+      color: #0f172a;
+    }
+
+    .mode-card p {
+      margin: 0;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
     .overview-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 12px;
-      margin-top: 14px;
+      margin-top: 16px;
     }
 
     @media (max-width: 720px) {
@@ -192,11 +269,7 @@
       transition: transform 0.12s, background-color 0.2s, box-shadow 0.2s, opacity 0.2s;
     }
 
-    .btn:disabled {
-      opacity: 0.65;
-      cursor: not-allowed;
-    }
-
+    .btn:disabled { opacity: 0.65; cursor: not-allowed; }
     .btn:active:not(:disabled) { transform: scale(0.98); }
 
     .btn-primary {
@@ -215,12 +288,6 @@
     }
 
     .btn-secondary:hover:not(:disabled) { background: #cbd5e1; }
-
-    .btn-success {
-      background: linear-gradient(135deg, #0f766e, #0d9488);
-      color: #fff;
-      box-shadow: 0 6px 16px rgba(13, 148, 136, 0.25);
-    }
 
     .btn-ghost {
       background: transparent;
@@ -320,7 +387,19 @@
       color: #1e40af;
     }
 
-    /* Section divider */
+    .exam-mode-banner {
+      background: #fff;
+      border: 1.5px solid #93c5fd;
+      border-radius: 12px;
+      padding: 12px 18px;
+      margin-bottom: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
     .section-banner {
       background: #1e293b;
       color: #fff;
@@ -367,6 +446,7 @@
       align-items: flex-start;
       gap: 10px;
       margin-bottom: 10px;
+      flex-wrap: wrap;
     }
 
     .q-num {
@@ -377,7 +457,17 @@
       font-size: 0.85rem;
       padding: 2px 10px;
       border-radius: 999px;
-      margin-right: 8px;
+      margin-right: 6px;
+    }
+
+    .q-src-tag {
+      font-size: 0.76rem;
+      color: #0f766e;
+      background: #f0fdfa;
+      border: 1px solid #99f6e4;
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-weight: 600;
     }
 
     .q-unit-tag {
@@ -510,23 +600,25 @@
       border: 1px solid #cbd5e1;
       border-radius: 10px;
       padding: 8px 12px;
-      flex: 1 1 240px;
+      flex: 1 1 260px;
     }
 
     .hw-blank-item label {
       font-weight: 600;
-      font-size: 0.92rem;
+      font-size: 0.9rem;
       white-space: nowrap;
     }
 
-    .hw-blank-item input {
+    .hw-blank-item input,
+    .hw-blank-item select {
       flex: 1;
-      min-width: 90px;
+      min-width: 100px;
       padding: 7px 10px;
       border: 1.5px solid #94a3b8;
       border-radius: 8px;
-      font-size: 1rem;
+      font-size: 0.96rem;
       font-family: inherit;
+      background: #fff;
     }
 
     .hw-blank-item input:focus {
@@ -573,7 +665,7 @@
     }
 
     .meta-stat .lbl { font-size: 0.82rem; color: var(--muted); }
-    .meta-stat .val { font-size: 1.25rem; font-weight: 800; color: var(--primary); }
+    .meta-stat .val { font-size: 1.15rem; font-weight: 800; color: var(--primary); }
 
     .radar-layout {
       display: grid;
@@ -717,7 +809,6 @@
       margin-bottom: 12px;
     }
 
-    /* Modal for GAS URL setup */
     .modal-backdrop {
       position: fixed;
       inset: 0;
@@ -738,11 +829,7 @@
       box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
     }
 
-    .modal-card h3 {
-      margin: 0 0 8px;
-      color: var(--primary);
-    }
-
+    .modal-card h3 { margin: 0 0 8px; color: var(--primary); }
     .modal-card input {
       width: 100%;
       padding: 10px 12px;
@@ -781,15 +868,15 @@
   <div class="container">
     <div class="header-banner">
       <div class="header-badge">新北市立三多國民中學｜九年級自然科複習系統</div>
-      <h1>114學年度第一學期第二次段考考古題 × 115課本能力診斷</h1>
+      <h1>112～114學年度第二次段考考古題 × 115課本能力診斷</h1>
       <p>範圍：115課本 第2章 力與運動、第3章 功與能、第6章 板塊運動與地球歷史（滿分 100 分）</p>
     </div>
 
-    <!-- ==================== PAGE 1: STUDENT INFO ==================== -->
+    <!-- ==================== PAGE 1: STUDENT INFO & MODE SELECT ==================== -->
     <section id="page-info" class="card">
-      <h2 class="card-title">📝 第一步：填寫學生基本資料</h2>
+      <h2 class="card-title">📝 第一步：填寫學生資料與選擇試卷模式</h2>
       <p style="color: var(--muted); margin-top: 0;">
-        請先完整填寫你的班級、座號、姓名與電子信箱。完成作答送出後，系統將自動依官方解答批改分數，產出<strong>「個人能力值六角圖」</strong>與<strong>「115課本章節複習建議」</strong>，並可一鍵將結果寄送到你的信箱保存。
+        請先填寫你的班級、座號、姓名與電子信箱，並選擇要練習的段考年度或「重組段考」。交卷後將自動產生<strong>「個人能力值六角圖」</strong>與<strong>「115課本頁碼複習建議」</strong>，並可寄送至你的信箱保存。
       </p>
 
       <form id="student-form" novalidate>
@@ -814,6 +901,30 @@
             <input id="stu-email" type="email" placeholder="例如：s12345@apps.ntpc.edu.tw" required />
             <div class="form-error" id="err-email"></div>
           </div>
+        </div>
+
+        <div class="mode-picker-title">📚 選擇練習試卷（點擊卡片切換）：</div>
+        <div class="mode-grid" id="mode-grid">
+          <button type="button" class="mode-card remix-card selected" data-mode="remix">
+            <span class="mode-badge">🔥 推薦刷題｜防背答案</span>
+            <h4>🎲 【重組段考】智慧隨機組卷</h4>
+            <p>依 112～114 三年章節比例均衡抽題（單選 32 題＋手寫 4 題共 10 格），每次重抽題目與選項順序全打亂！</p>
+          </button>
+          <button type="button" class="mode-card" data-mode="114">
+            <span class="mode-badge">考古題原卷</span>
+            <h4>📄 114 學年度第二次段考</h4>
+            <p>單一選擇 32 題（80 分）＋ 手寫填充 6 題共 10 格（20 分），滿分 100 分。</p>
+          </button>
+          <button type="button" class="mode-card" data-mode="113">
+            <span class="mode-badge">考古題原卷</span>
+            <h4>📄 113 學年度第二次段考</h4>
+            <p>選擇、題組與地科 24 題（72 分）＋ 手寫 4 大題（28 分），滿分 100 分。</p>
+          </button>
+          <button type="button" class="mode-card" data-mode="112">
+            <span class="mode-badge">考古題原卷</span>
+            <h4>📄 112 學年度第二次段考</h4>
+            <p>選擇與素養 26 題（78 分）＋ 簡答 4 大題（22 分），滿分 100 分。</p>
+          </button>
         </div>
 
         <div class="overview-grid">
@@ -841,7 +952,7 @@
         </div>
 
         <div style="margin-top: 22px; display: flex; justify-content: flex-end; gap: 12px; flex-wrap: wrap;">
-          <button type="submit" class="btn btn-primary">開始進入段考模擬作答 →</button>
+          <button type="submit" class="btn btn-primary" id="start-btn">開始進入【重組段考】作答 →</button>
         </div>
       </form>
     </section>
@@ -863,20 +974,28 @@
         <div id="nav-grid" class="nav-grid hidden"></div>
       </div>
 
+      <div class="exam-mode-banner">
+        <div>
+          <strong id="active-exam-title" style="color: var(--primary); font-size: 1.05rem;"></strong>
+          <div id="active-exam-subtitle" style="font-size: 0.86rem; color: var(--muted);"></div>
+        </div>
+        <button type="button" class="btn btn-ghost no-print" id="switch-mode-top-btn">切換試卷年度</button>
+      </div>
+
       <div class="section-banner">
-        <span>一、單一選擇題（共 32 題）</span>
-        <span class="sub">每題 2.5 分，共 80 分</span>
+        <span id="mc-section-title">一、單一選擇題</span>
+        <span class="sub" id="mc-section-sub"></span>
       </div>
       <div id="mc-container"></div>
 
       <div class="section-banner">
-        <span>二、手寫填充題（共 6 題，10 格）</span>
-        <span class="sub">每格 2 分，共 20 分（請依提示填入正確數值或代號）</span>
+        <span id="hw-section-title">二、手寫與簡答填充題</span>
+        <span class="sub" id="hw-section-sub"></span>
       </div>
       <div id="hw-container"></div>
 
       <div class="card" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
-        <button type="button" class="btn btn-secondary" id="back-to-info-btn">← 修改基本資料</button>
+        <button type="button" class="btn btn-secondary" id="back-to-info-btn">← 返回修改資料 / 切換年度</button>
         <div style="display: flex; gap: 10px; flex-wrap: wrap;">
           <button type="button" class="btn btn-primary" id="submit-exam-btn">完成作答並查看成績與六角圖 ✓</button>
         </div>
@@ -887,7 +1006,10 @@
     <section id="page-result" class="hidden">
       <div class="card">
         <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 16px;">
-          <h2 class="card-title" style="margin: 0;">📊 測驗成績與個人能力診斷報告</h2>
+          <div>
+            <h2 class="card-title" style="margin: 0;">📊 測驗成績與個人能力診斷報告</h2>
+            <div id="res-exam-label" style="font-size: 0.88rem; color: var(--muted); margin-top: 2px;"></div>
+          </div>
           <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
             <div class="student-pill" id="res-student-pill"></div>
             <button type="button" class="btn btn-ghost no-print hidden" id="open-gas-modal-btn" title="教師設定 Google Apps Script 寄信網址">⚙️ 寄信服務設定</button>
@@ -905,11 +1027,11 @@
                 <div class="val" id="stat-mc">0 / 80</div>
               </div>
               <div class="meta-stat">
-                <div class="lbl">手寫填充題得分</div>
+                <div class="lbl">手寫與簡答得分</div>
                 <div class="val" id="stat-hw">0 / 20</div>
               </div>
               <div class="meta-stat">
-                <div class="lbl">作答時間 / 總答對率</div>
+                <div class="lbl">作答時間 / 總分</div>
                 <div class="val" id="stat-time">00:00</div>
               </div>
             </div>
@@ -919,7 +1041,8 @@
         <div class="no-print" style="display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-top: 18px; padding-top: 16px; border-top: 1px solid #e2e8f0;">
           <button type="button" class="btn btn-primary" id="send-email-btn">📧 將結果寄送至信箱</button>
           <button type="button" class="btn btn-secondary" id="retry-btn">🔄 重新挑戰一次</button>
-          <span id="email-status-note" style="font-size: 0.86rem; color: var(--muted);"></span>
+          <button type="button" class="btn btn-ghost" id="switch-exam-btn">📚 切換其他年度試卷</button>
+          <span id="email-status-note" style="font-size: 0.86rem; color: var(--muted); width: 100%;"></span>
         </div>
       </div>
 
@@ -967,7 +1090,7 @@
               <li><strong>牛頓第一運動定律（P.36~37）</strong>：合力為零時，靜者恆靜，動者恆沿一直線作等速度運動（慣性定律）。</li>
               <li><strong>牛頓第二運動定律（P.39~40）</strong>：<code>F = m × a</code>（單位：1 N = 1 kg·m/s²；重力 <code>W = m × g</code>，地球 <code>g ≈ 9.8 m/s²</code>）。</li>
               <li><strong>牛頓第三運動定律（P.44）</strong>：作用力與反作用力大小相等、方向相反、同時發生與消失、作用在<strong>不同物體</strong>上，不可抵消。</li>
-              <li><strong>圓周運動（P.46~48）</strong>：向心力永遠指向圓心；速度方向為圓的<strong>切線方向</strong>。</li>
+              <li><strong>圓周運動（P.46~48）</strong>：向心力永遠指向圓心；速度方向為圓的<strong>切線方向</strong>（向心力消失時沿切線飛出）。</li>
               <li><strong>萬有引力定律（P.49~50）</strong>：兩物體間萬有引力互為作用力與反作用力（大小必相等），大小與質量乘積成正比、與<strong>距離平方成反比</strong>。</li>
             </ul>
           </div>
@@ -988,9 +1111,9 @@
           <div class="notes-content">
             <ul>
               <li><strong>地球內部構造與岩石圈（P.172~173）</strong>：地殼（大陸約 40 km、海洋約 7 km）→ 地函（含軟流圈）→ 地核（主要為<strong>鐵、鎳金屬</strong>）。岩石圈包含地殼與一部分地函，浮在軟流圈上。</li>
-              <li><strong>板塊運動與臺灣（P.174~178, 186）</strong>：分離邊界形成<strong>中洋脊</strong>（產生新海洋地殼）；聚合邊界形成海溝與高聳山脈（歐亞板塊與菲律賓海板塊推擠形成臺灣島，<strong>花東縱谷</strong>即板塊交界處）。</li>
-              <li><strong>斷層與地震（P.180~181, 187~188）</strong>：受擠壓力時上盤相對下盤向上移動為<strong>逆斷層</strong>（如喜馬拉雅山脈）；地震震源在斷層面上，震央位於震源正上方地表。</li>
-              <li><strong>地質事件先後與化石（P.182, 184）</strong>：未倒轉岩層越下方越古老；古生代代表化石為<strong>三葉蟲</strong>、中生代為<strong>恐龍與菊石</strong>、新生代為<strong>鳥類與哺乳類</strong>。</li>
+              <li><strong>板塊運動與臺灣（P.174~178, 186）</strong>：分離邊界形成<strong>中洋脊</strong>（產生新海洋地殼）；聚合邊界形成海溝與高聳山脈（歐亞板塊與菲律賓海板塊推擠形成臺灣島，<strong>花東縱谷</strong>即板塊交界處，綠島／海岸山脈屬菲律賓海板塊）。</li>
+              <li><strong>斷層與地震（P.180~181, 187~188）</strong>：受擠壓力時上盤相對下盤向上移動為<strong>逆斷層</strong>；同一地震規模各地相同，離震央越近震度通常越大且越早測得地震波。</li>
+              <li><strong>地質事件先後與化石（P.182, 184）</strong>：未倒轉岩層越下方越古老，先發生事件常被後發生者切穿；古生代代表化石為<strong>三葉蟲</strong>、中生代為<strong>恐龍與菊石</strong>、新生代為<strong>鳥類與哺乳類</strong>。</li>
             </ul>
           </div>
         </details>
@@ -1014,7 +1137,7 @@
     <div class="modal-card">
       <h3>⚙️ 設定 Google Apps Script 自動寄信網址</h3>
       <p style="font-size:0.9rem; color:#475569; margin:0;">
-        請貼上部署 <code>gas/Code.gs</code> 後取得的網頁應用程式網址（以 <code>https://script.google.com/macros/s/.../exec</code> 結尾）。若老師想讓所有學生免設定即可寄信，請將網址寫入 <code>index.html</code> 頂端的 <code>GAS_WEB_APP_URL</code> 常數。
+        請貼上部署 <code>gas/Code.gs</code> 後取得的網頁應用程式網址（以 <code>https://script.google.com/macros/s/.../exec</code> 結尾）。
       </p>
       <input id="gas-url-input" type="url" placeholder="https://script.google.com/macros/s/...../exec" />
       <div style="display:flex; justify-content:flex-end; gap:8px; margin-top:8px;">
@@ -1026,500 +1149,19 @@
 
   <div class="toast" id="toast"></div>
 
+  <script src="questions.js"></script>
   <script>
     // =========================================================================
-    // 0. 教師設定區：請將部署完成的 Google Apps Script Web App 網址貼入此處
-    //    部署方式請見專案內 README.md 與 gas/Code.gs
+    // 0. 教師設定區：已綁定您部署完成的 Google Apps Script Web App 網址
     // =========================================================================
     const GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzsGdq097kFXTYyStsLZkIajrJ6iVbP5fe1TjgZryW4pW99pLjysttwWsAnLahJhT9P/exec";
 
     // =========================================================================
-    // 1. 6 大章節能力指標定義 (對應 115 學年度課本第2、3、6章)
-    // =========================================================================
-    const UNITS = [
-      {
-        id: "u1",
-        shortLabel: "2-1~2-3\n牛頓定律",
-        chapter: "第2章 力與運動",
-        section: "2-1～2-3 牛頓三大運動定律",
-        pages: "115課本 P.36～44",
-        tips: "重點複習：慣性定律、牛頓第二運動定律 F=ma（注意質量需換算成 kg，g=9.8 m/s²）、v-t 圖斜率求加速度，以及作用力與反作用力（大小相等、方向相反、作用在不同物體上）。"
-      },
-      {
-        id: "u2",
-        shortLabel: "2-4 圓周與\n萬有引力",
-        chapter: "第2章 力與運動",
-        section: "2-4 圓周運動與萬有引力",
-        pages: "115課本 P.46～50",
-        tips: "重點複習：等速率圓周運動的向心力恆指向圓心、速度方向恆為切線方向；兩物體間萬有引力互為作用力與反作用力（1:1），且大小與距離平方成反比。"
-      },
-      {
-        id: "u3",
-        shortLabel: "3-1~3-2 功\n與力學能",
-        chapter: "第3章 功與能",
-        section: "3-1～3-2 功、功率與力學能守恆",
-        pages: "115課本 P.62～71",
-        tips: "重點複習：作功 W=F∥×S（力與位移垂直時作功為 0）、功率 P=W/t（時間越短功率越大）、無摩擦與阻力時「動能＋重力位能」力學能總和守恆。"
-      },
-      {
-        id: "u4",
-        shortLabel: "3-3~3-4\n力矩與槓桿",
-        chapter: "第3章 功與能",
-        section: "3-3～3-4 力矩與槓桿原理",
-        pages: "115課本 P.74～81",
-        tips: "重點複習：力臂是支點到施力作用線的「垂直距離」（施力線通過支點則力矩為 0）；槓桿平衡須同時滿足合力矩為零（順時鐘力矩＝逆時鐘力矩）與合力為零；水中物體須扣掉浮力（B＝V排×D液）。"
-      },
-      {
-        id: "u5",
-        shortLabel: "6-1~6-2\n板塊與斷層",
-        chapter: "第6章 板塊運動與地球歷史",
-        section: "6-1～6-2 地球構造、板塊與斷層",
-        pages: "115課本 P.172～181, 186～188",
-        tips: "重點複習：地核主要由鐵、鎳組成；海洋地殼（約7 km）比大陸地殼（約40 km）薄；中洋脊產生新海洋地殼；花東縱谷為歐亞板塊與菲律賓海板塊交界；受擠壓產生逆斷層，震央位於震源正上方（上盤側）。"
-      },
-      {
-        id: "u6",
-        shortLabel: "6-3 地球歷史\n與化石演化",
-        chapter: "第6章 板塊運動與地球歷史",
-        section: "6-3 地球歷史與代表性化石",
-        pages: "115課本 P.182, 184",
-        tips: "重點複習：古生代代表化石為三葉蟲、中生代為恐龍與菊石、新生代為鳥類與哺乳類；未倒轉沉積岩層「先沉積在下、後沉積在上」；依生物生存時間範圍（Ma）判斷能否共存與演化支序。"
-      }
-    ];
-
-    // =========================================================================
-    // 2. 114 學年度段考試題資料（全面採用試卷 PDF 原始圖片）與官方解答
-    // =========================================================================
-    const MC_QUESTIONS = [
-      {
-        num: 1, unit: "u6",
-        text: "岩層中若有下列哪一種化石，則代表此岩層是在古生代形成的？",
-        options: { A: "鳥類", B: "菊石", C: "恐龍", D: "三葉蟲" },
-        ans: "D",
-        explain: "古生代的代表性標準化石是三葉蟲；恐龍與菊石為中生代代表化石；鳥類與哺乳類多屬於新生代。"
-      },
-      {
-        num: 2, unit: "u5",
-        text: "關於板塊運動時所形成的地形與地質活動，下列何者敘述正確？",
-        options: {
-          A: "互相分離的板塊交界在陸地上較常見",
-          B: "海溝是大陸地殼隱沒的地方",
-          C: "中洋脊和安地斯山脈的成因相同",
-          D: "中洋脊是形成新海洋地殼的地方"
-        },
-        ans: "D",
-        explain: "(A) 張裂性板塊交界多位於海底中洋脊；(B) 密度較大的海洋地殼會隱沒到大陸地殼下方形成海溝；(C) 中洋脊為板塊分離、安地斯山脈為板塊推擠聚合；(D) 正確。"
-      },
-      {
-        num: 3, unit: "u5",
-        text: "請問地核主要是由下列何種物質組成？",
-        options: { A: "密度較大的岩石", B: "鐵、鎳金屬", C: "熔融的岩漿", D: "黃金、白銀" },
-        ans: "B",
-        explain: "地球內部構造由外而內為地殼（岩石）、地函（岩石）、地核（主要為鐵、鎳等高密度金屬）。"
-      },
-      {
-        num: 4, unit: "u5",
-        text: "花東縱谷在地質構造上有什麼特別的意義？",
-        options: { A: "臺灣唯一冰川侵蝕成的山谷", B: "兩個板塊的交界處", C: "臺灣最大的V形谷", D: "岩漿湧出的裂隙" },
-        ans: "B",
-        explain: "臺灣島是由歐亞板塊與菲律賓海板塊互相擠壓抬升形成，花東縱谷正是這兩個板塊的交界縫合帶。"
-      },
-      {
-        num: 5, unit: "u5",
-        text: "喜馬拉雅山脈的岩層中有許多斷層，根據山脈的形成過程，推測理論上哪一種斷層的數量應該最多？",
-        options: { A: "正斷層", B: "平移斷層", C: "逆斷層", D: "三種斷層各占三分之一" },
-        ans: "C",
-        explain: "喜馬拉雅山脈是兩大陸板塊互相推擠碰撞形成的高聳山脈，岩層受到強大水平擠壓力，故以「逆斷層」最多。"
-      },
-      {
-        num: 6, unit: "u5",
-        text: "附圖是某地的地質剖面示意圖，該地有一斷層經過，依據此斷層在地表的破裂位置，將其劃分為甲、乙二區。若斷層再次活動而產生地震，斷層兩側岩層移動方向如圖中箭號所示，則下列有關此斷層的類型及地震的震央位置之敘述，何者最合理？",
-        img: "images/q6.png",
-        options: {
-          A: "正斷層，震央可能位於甲區",
-          B: "逆斷層，震央可能位於甲區",
-          C: "正斷層，震央可能位於乙區",
-          D: "逆斷層，震央可能位於乙區"
-        },
-        ans: "B",
-        explain: "斷層面向右下方傾斜，故右側的甲區在斷層面上方（上盤），箭號顯示上盤相對下盤向上移動，屬於「逆斷層」；地下斷層面位於甲區下方，故震源在甲區正下方附近，震央可能位於甲區。"
-      },
-      {
-        num: 7, unit: "u5",
-        passage: "已知地球半徑約為 6370 公里，欲探索地球內部的構造最直接的方法是鑿井下挖，目前地球上最深的井位於北極圈內的科拉半島上，約 12 公里深，井內的壓力與溫度隨著深度越來越高，探勘過程也會越來越困難。因此地球科學家為了一窺地球內部，利用地震波的波速變化來探究。附圖為全球地殼等厚度圖，線上的數字表示對應下方的地殼厚度，相隔的等厚線之間差異為 10 公里。請根據下圖回答第 7 題：",
-        text: "若欲直接鑽探鑿井探索地函，在圖中選取的四個地點（以 ★ 表示）進行鑽探，哪一地點可能位於海洋地殼，所鑽的井深最淺，即可抵達地函？",
-        img: "images/q7.png",
-        options: { A: "海洋地殼，丁", B: "大陸地殼，丙", C: "乙，海洋地殼", D: "大陸地殼，甲" },
-        ans: "A",
-        explain: "甲、乙、丙皆位於大陸地塊上（厚度約 30～50 km），丁位於東太平洋海洋盆地（海洋地殼厚度僅約 7 km，小於 10 km 等厚線），故在丁處鑽探井深最淺即可抵達地函。"
-      },
-      {
-        num: 8, unit: "u6",
-        passage: "附圖為恐龍相關的演化過程示意圖，圖中線段上的 ○ 代表生物出現的時間、● 代表生物滅絕的時間。其中甲類生物被認為是演化成現存鳥類的生物，附表則為相對應生物生存的時間範圍。請根據下圖回答第 8～10 題：",
-        passageHtml: `<div class="orig-q8-wrap">
-          <img src="images/q8_tree.png" alt="恐龍演化過程示意圖" class="orig-fig" style="max-height:220px;">
-          <img src="images/q8_table.png" alt="生物生存的時間範圍" class="orig-fig" style="max-height:190px;">
-          <img src="images/q8_note.png" alt="Ma為百萬年前" class="orig-fig" style="max-height:64px;">
-        </div>`,
-        text: "根據本文，下列有關甲類生物的推論，何者最合理？",
-        options: {
-          A: "與三角龍同時期滅亡",
-          B: "由始祖鳥直接演化而來",
-          C: "與劍龍有共同的祖先",
-          D: "與暴龍在白堊紀有共同祖先"
-        },
-        ans: "C",
-        explain: "(A) 甲類生物並未滅絕，而是演化成現存鳥類；(B) 始祖鳥為旁支並已滅絕（●），並非甲類生物的直系祖先；(C) 演化樹顯示所有類群皆源於共同祖先，正確；(D) 甲與暴龍的分歧點在三疊紀，非白堊紀。"
-      },
-      {
-        num: 9, unit: "u6",
-        text: "根據上述資料，若在某地最上方的岩層中可找到甲類生物化石，且此地岩層未曾倒轉，下列何者最可能是屬於此地的岩層剖面？",
-        optionImgs: {
-          A: "images/q9_A.png",
-          B: "images/q9_B.png",
-          C: "images/q9_C.png",
-          D: "images/q9_D.png"
-        },
-        options: { A: "選項 (A) 剖面", B: "選項 (B) 剖面", C: "選項 (C) 剖面", D: "選項 (D) 剖面" },
-        ans: "A",
-        explain: "岩層未倒轉時「越早形成的化石在越下方」。年代由老到新：劍龍（155~150 Ma）→ 暴龍（68~66 Ma）→ 甲類生物（延續至新生代），故由下而上為 劍龍 → 暴龍 → 甲類生物，選 (A)。"
-      },
-      {
-        num: 10, unit: "u6",
-        text: "根據附表，下列敘述中，何者是有可能發生的？",
-        options: {
-          A: "分析暴龍的進食殘骸，發現暴龍也會吃始祖鳥",
-          B: "發現暴龍追捕劍龍時，兩者遺留下的足跡化石",
-          C: "從三角龍的骨骼化石，分析出被暴龍咬的咬痕",
-          D: "於同一層火山灰岩層中發現劍龍與三角龍的化石"
-        },
-        ans: "C",
-        explain: "三角龍（68～65 Ma）與暴龍（68～66 Ma）的生存時間有重疊（68～66 Ma），故可能同時出現並留下咬痕；劍龍（155～150 Ma）與始祖鳥（151～149 Ma）均早於暴龍與三角龍約 8 千萬年，不可能共存。"
-      },
-      {
-        num: 11, unit: "u1",
-        text: "某物體的質量為 2 公斤，若重力加速度為 9.8 公尺/秒²，則其重量為多少牛頓？",
-        options: { A: "2", B: "4.9", C: "9.8", D: "19.6" },
-        ans: "D",
-        explain: "由牛頓第二運動定律：重量 W = m × g = 2 kg × 9.8 m/s² = 19.6 牛頓。"
-      },
-      {
-        num: 12, unit: "u1",
-        text: "太空船內有一個質量為 50 公克的物體，如果太空人用 10 牛頓的力量推它，則此物體所獲得的加速度為多少公尺/秒²？",
-        options: { A: "0.2", B: "5", C: "50", D: "200" },
-        ans: "D",
-        explain: "質量須換算為公斤：m = 50 g = 0.05 kg。代入 F = m × a → 10 = 0.05 × a → a = 10 / 0.05 = 200 m/s²。"
-      },
-      {
-        num: 13, unit: "u1",
-        text: "甲、乙、丙三物體做直線運動，其速度與時間的關係如下圖所示。假設三物體的受力方向與其運動方向都在同一直線上，且質量分別為 3 公斤、4 公斤、10 公斤，若三物體所受合力大小分別為 F甲、F乙、F丙，則其關係為何？",
-        img: "images/q13.png",
-        options: { A: "F乙＞F甲＞F丙", B: "F甲＞F丙＞F乙", C: "F丙＞F乙＞F甲", D: "F甲＞F乙＞F丙" },
-        ans: "B",
-        explain: "由 v-t 圖求加速度：a甲 = 12/3 = 4 m/s²、a乙 = 12/6 = 2 m/s²、a丙 = 12/12 = 1 m/s²。各合力：F甲 = 3×4 = 12 N、F乙 = 4×2 = 8 N、F丙 = 10×1 = 10 N。故 F甲 ＞ F丙 ＞ F乙。"
-      },
-      {
-        num: 14, unit: "u1",
-        text: "道路上常可以看見環保局出動灑水車清洗路面、降低揚塵。以下是阿康和小軒的對話，請判斷兩人的解釋是否合理？\n阿康：灑水過程中，灑水車的總質量 m 逐漸減少，若灑水車的驅動力 F 保持不變，則灑水車的加速度 a 會逐漸減少。\n小軒：灑水過程中，灑水車的總質量 m 逐漸減少，若灑水車要保持加速度 a 不變，則灑水車的驅動力 F 須逐漸增加。",
-        options: { A: "兩人均不合理", B: "只有小軒合理", C: "兩人均合理", D: "只有阿康合理" },
-        ans: "A",
-        explain: "依 F = m × a：當 m 減少且 F 不變時，加速度 a 應「逐漸增加」（阿康錯）；若 m 減少且欲保持 a 不變，驅動力 F 應「逐漸減少」（小軒錯）。故兩人均不合理。"
-      },
-      {
-        num: 15, unit: "u1",
-        text: "一塊大石頭重 30 公斤重，如果阿康用 10 公斤重的力往上抬，石頭仍然不動，則下列敘述何者正確？",
-        options: {
-          A: "石頭給阿康的反作用力為 30 公斤重",
-          B: "石頭所受的合力不為零",
-          C: "石頭給地面的作用力為 30 公斤重",
-          D: "地面給石頭的反作用力為 20 公斤重"
-        },
-        ans: "D",
-        explain: "石頭靜止不動故合力為 0（B錯）。阿康施力 10 kgw 向上，故石頭給阿康的反作用力為 10 kgw（A錯）；石頭向下壓地面的力為 30 − 10 = 20 kgw（C錯），地面支撐石頭的力亦為 20 kgw（D正確）。"
-      },
-      {
-        num: 16, unit: "u4",
-        text: "如附圖所示，將扳手卡住一螺絲，然後分別沿 a、b、c 三個不同方向，施以相同大小的力，則請問沿哪一方向施力所產生的力矩最大？",
-        img: "images/q16.png",
-        options: { A: "a", B: "b", C: "c", D: "一樣大" },
-        ans: "B",
-        explain: "力矩 = 施力 × 力臂。三力大小相同時，b 方向垂直於扳手握柄，獲得最大的垂直力臂；c 方向作用線通過支點（螺絲中心），力臂為 0。"
-      },
-      {
-        num: 17, unit: "u4",
-        passage: "◎如附圖所示，將一槓桿（桿重不計）掛在一個彈簧秤下方，左右兩邊分別掛上甲、乙兩個物體，請回答下列問題（17～20）：",
-        img: "images/q17.png",
-        text: "若圖中的槓桿達平衡狀態，則甲物體離彈簧秤的距離 L 為多少公分？",
-        options: { A: "2", B: "4", C: "5", D: "6" },
-        ans: "C",
-        explain: "甲質量 = D甲×V甲 = 3×100 = 300 g（重 300 gw）；乙質量 = D乙×V乙 = 5×30 = 150 g（重 150 gw）。槓桿平衡：300 × L = 150 × 10 → L = 5 cm。"
-      },
-      {
-        num: 18, unit: "u4",
-        text: "承上題，請問此時彈簧秤的讀數為多少公克重？",
-        options: { A: "0", B: "150", C: "300", D: "450" },
-        ans: "D",
-        explain: "槓桿靜止平衡且桿重不計，彈簧秤須承擔左右兩物體的總重量：300 + 150 = 450 gw。"
-      },
-      {
-        num: 19, unit: "u4",
-        text: "若將甲、乙兩物體分別浸入裝水的容器中，如附圖所示，請問此時槓桿所受的各方向的力矩大小，下列敘述何者正確？",
-        img: "images/q19.png",
-        options: {
-          A: "逆時鐘力矩 1000 gw·cm",
-          B: "順時鐘力矩 600 gw·cm",
-          C: "逆時鐘力矩 600 gw·cm",
-          D: "順時鐘力矩 800 gw·cm"
-        },
-        ans: "A",
-        explain: "浸入水中受浮力（水密度 1 g/cm³）：甲視重 = 300 − 100×1 = 200 gw，逆時鐘力矩 = 200 × 5 = 1000 gw·cm；乙視重 = 150 − 30×1 = 120 gw，順時鐘力矩 = 120 × 10 = 1200 gw·cm。故選 (A)。"
-      },
-      {
-        num: 20, unit: "u4",
-        text: "承上題，若要加一個重量為 50 公克重的丙物體，使槓桿再達水平平衡，請問丙物體應置於下列何處？（丙物體未浸入水中）",
-        options: {
-          A: "左邊距彈簧秤 4 cm 處",
-          B: "右邊距彈簧秤 6 cm 處",
-          C: "右邊距彈簧秤 4 cm 處",
-          D: "槓桿不會轉動，不必掛丙物體"
-        },
-        ans: "A",
-        explain: "目前順時鐘力矩（1200）大於逆時鐘力矩（1000）相差 200 gw·cm，故須在左側增加逆時鐘力矩 200 gw·cm：50 × d = 200 → d = 4 cm，即左邊距彈簧秤 4 cm 處。"
-      },
-      {
-        num: 21, unit: "u3",
-        text: "甲、乙、丙三人，分別將同重量的物體扛到三樓，甲耗時 70 秒，乙耗時 80 秒，丙耗時 60 秒，則三人何者對此物體作功的功率最大？",
-        options: { A: "甲", B: "乙", C: "丙", D: "一樣大" },
-        ans: "C",
-        explain: "同重量物體提升相同高度，三人所作的功 W 相同；功率 P = W / t，耗時最短者功率最大，丙耗時 60 秒最短，功率最大。"
-      },
-      {
-        num: 22, unit: "u4",
-        text: "下列各圖中的木尺可繞 O 點轉，木尺重量不計，則何者受力後不轉動？",
-        optionImgs: {
-          A: "images/q22_A.png",
-          B: "images/q22_B.png",
-          C: "images/q22_C.png",
-          D: "images/q22_D.png"
-        },
-        options: { A: "選項 (A)", B: "選項 (B)", C: "選項 (C)", D: "選項 (D)" },
-        ans: "B",
-        explain: "(B) 左側逆時鐘力矩 = 20×3 = 60，右側順時鐘力矩 = 30×2 = 60，合力矩為零故不轉動。(A) 60≠40；(C) 兩力皆造成逆時鐘力矩；(D) 30≠20。"
-      },
-      {
-        num: 23, unit: "u3",
-        text: "小明施力 F 牛頓拉動行李使之等速度移動 S 公尺，若 F、S 方向不平行，如圖所示，下列敘述何者正確？",
-        img: "images/q23.png",
-        options: {
-          A: "小明並未對行李作功",
-          B: "小明雖然作功，但作功的大小並不等於 FS",
-          C: "無論施力 F 和移動距離 S 的方向是否平行，小明所作的功都是 FS",
-          D: "在無摩擦力的狀況下，雖然小明施力 F，行李移動距離 S，但小明仍未對行李作功"
-        },
-        ans: "B",
-        explain: "作功 W = 沿位移方向的水平分力 × S，因 F 與 S 不平行（非垂直也非同向），小明對行李有作正功，但大小會小於 F × S。"
-      },
-      {
-        num: 24, unit: "u1",
-        text: "旅美投手陳偉殷，面對洋基隊強打 A-Rod，投出時速 144 公里（40 m／s）的快速球，A-Rod 發揮強打威力，將球以 20 m／s 的速度反向擊出，若球與球棒的接觸時間為 0.5 秒，則棒球在這段時間內的平均受力大小為多少 N？（已知棒球質量為 0.5 kg）",
-        options: { A: "20", B: "30", C: "50", D: "60" },
-        ans: "D",
-        explain: "注意方向相反：設原方向為正 (+40 m/s)，反向擊出為 −20 m/s，速度變化量 Δv = −20 − 40 = −60 m/s（大小為 60 m/s）。平均加速度大小 a = 60 / 0.5 = 120 m/s²，平均受力 F = m × a = 0.5 × 120 = 60 N。"
-      },
-      {
-        num: 25, unit: "u1",
-        text: "甲、乙兩人同時互推，其推力甲為 5 kgw，乙為 4 kgw，則兩人所受之力各為何？",
-        options: {
-          A: "甲、乙均為 1 kgw",
-          B: "甲、乙均為 9 kgw",
-          C: "甲為 5 kgw、乙為 4 kgw",
-          D: "甲為 4 kgw、乙為 5 kgw"
-        },
-        ans: "B",
-        explain: "甲推乙 5 kgw（同時受反作用力 5 kgw），乙推甲 4 kgw（同時受反作用力 4 kgw），兩組作用力疊加後，甲與乙各自受力均為 5 + 4 = 9 kgw。"
-      },
-      {
-        num: 26, unit: "u4",
-        text: "如圖所示，F₁ 和 F₂ 大小相等，同時作用於木棒上的同一點，下列敘述何者錯誤？",
-        img: "images/q26.png",
-        options: {
-          A: "F₁ 產生的力矩大於 F₂ 產生的力矩",
-          B: "F₂ 產生的力矩等於 F₂ × d₁",
-          C: "F₁ 和 F₂ 產生的力矩方向相同",
-          D: "F₁ 產生的力矩等於 F₁ × d₃"
-        },
-        ans: "A",
-        explain: "F₂ 垂直於木棒，其力臂為 d₁（直角三角形的斜邊，最大）；F₁ 斜向施力，力臂為直角股長 d₃，因 d₃ ＜ d₁ 且 F₁ = F₂，故 F₁ 產生的力矩應「小於」F₂ 產生的力矩，(A) 錯誤。"
-      },
-      {
-        num: 27, unit: "u3",
-        text: "某人在盪鞦韆的過程中，不同位置的離地高度如圖所示，O 為最低點。假設擺盪過程無摩擦力和空氣阻力，下列敘述何者正確？",
-        img: "images/q27.png",
-        options: {
-          A: "B 的動能為零",
-          B: "力學能的大小：A＞B＞O",
-          C: "重力位能的大小：A＝B",
-          D: "O 到 B 減少的動能＜A 到 O 減少的重力位能"
-        },
-        ans: "D",
-        explain: "無阻力時力學能守恆（A = O = B，B錯）。因高度 A(120)＞B(100)＞O(80)，重力位能 A＞B＞O（C錯），且 B 點高度低於最高點 A，仍有動能（A錯）。O 到 B 減少的動能 = 增加的位能(高度差 20 cm)，小於 A 到 O 減少的位能(高度差 40 cm)，故 (D) 正確。"
-      },
-      {
-        num: 28, unit: "u2",
-        text: "地球與火星的質量比約為 10：1，若兩者間距離為 R 時，地球作用於火星的萬有引力大小為 F₁，火星作用於地球的萬有引力大小為 F₂，則 F₁：F₂ 為下列何者？",
-        options: { A: "1：1", B: "10：1", C: "1：100", D: "100：1" },
-        ans: "A",
-        explain: "地球吸引火星的力與火星吸引地球的力互為「作用力與反作用力」，大小永遠相等，故 F₁：F₂ = 1：1。"
-      },
-      {
-        num: 29, unit: "u2",
-        text: "將小球固定在細繩的一端，阿峰手持細繩的另一端，施力使小球在水平面上作等速率圓周運動，手的位置保持不動。已知小球每秒旋轉 1.5 圈，且當時間 t＝0 s 時小球位於手的正東方，其俯視圖如附圖所示，在時間 t＝5 s 時，小球的速度方向為下列何者？",
-        img: "images/q29.png",
-        options: { A: "正東方", B: "正西方", C: "正南方", D: "正北方" },
-        ans: "C",
-        explain: "t = 5 s 時共轉了 1.5 × 5 = 7.5 圈，故小球位於起始點（正東方）的對面「正西方」。由俯視圖轉動方向為逆時針，在正西方時的切線速度方向指向「正南方」。"
-      },
-      {
-        num: 30, unit: "u4",
-        text: "如附圖所示，一槓桿保持水平，支點在左端，全長為 L。在槓桿右端施予鉛直向上 3 N 及水平向左 4 N 的力，此兩力對槓桿產生逆時針 360 N·cm 的力矩，若槓桿的質量與粗細忽略不計，則 L 應為多少？",
-        img: "images/q30.png",
-        options: { A: "120 cm", B: "168 cm", C: "210 cm", D: "280 cm" },
-        ans: "A",
-        explain: "水平向左 4 N 的作用線直接通過左端支點，力臂為 0，不產生力矩。故僅 3 N 產生逆時針力矩：3 N × L = 360 N·cm → L = 120 cm。"
-      },
-      {
-        num: 31, unit: "u4",
-        text: "如附圖所示，甲、乙、丙、丁四個天平，其上各自擺放不同的重物，重物擺放前後天平皆保持水平平衡。若不改變四個天平的秤盤吊掛位置，僅將天平上的重物各自左右互換，則互換後哪一個天平會向左端傾斜？",
-        img: "images/q31.png",
-        options: { A: "甲", B: "乙", C: "丙", D: "丁" },
-        ans: "C",
-        explain: "甲、乙左右臂均為 10 cm，互換後仍平衡。丙原本左臂 10 cm、右臂 5 cm 平衡，代表右側重物（★）重量為左側的 2 倍；左右互換後，較重的★放到左邊較長的 10 cm 臂，左側力矩大增，故天平向左端傾斜！"
-      },
-      {
-        num: 32, unit: "u1",
-        text: "如附圖所示，將五個完全相同的木塊以細線連接，再以固定的水平力 F 拉動木塊，使五個木塊以相同速度在無摩擦力的水平桌面上作直線運動。剛開始五個木塊的加速度大小同為 2 m/s²，一段時間後，將某一位置的細線剪斷，已知剪斷後仍被相同的水平力 F 拉動的木塊其加速度變為 5 m/s²，若忽略細線質量，則剪斷細線的位置，應是圖上 P、Q、R、S 哪一個位置？",
-        img: "images/q32.png",
-        options: { A: "P", B: "Q", C: "R", D: "S" },
-        ans: "C",
-        explain: "設每塊木塊質量為 m。原本總質量 5m，拉力 F = 5m × 2 = 10m。剪斷後加速度變為 5 m/s²，代表仍受 F 拉動的總質量 M = F / 5 = 10m / 5 = 2m（即只剩下最右側 2 個木塊），故應剪斷第 3 與第 4 個木塊之間的細線 R。"
-      }
-    ];
-
-    const HW_QUESTIONS = [
-      {
-        num: 1, unit: "u2",
-        text: "沛沛在遊樂場中搭乘旋轉鞦韆，鞦韆繞著 O 點做平行地面的等速率圓周運動，如附圖所示。請問當鞦韆在 M 處時，其所受到的向心力方向應為何？速度方向為何？（請用甲、乙、丙、丁回答）",
-        img: "images/hw1.png",
-        blanks: [
-          { id: "hw1_1", label: "向心力方向：", placeholder: "請填甲/乙/丙/丁", ansDisplay: "丁", check: (v) => normBasic(v) === "丁" },
-          { id: "hw1_2", label: "速度方向：", placeholder: "請填甲/乙/丙/丁", ansDisplay: "丙", check: (v) => normBasic(v) === "丙" }
-        ],
-        explain: "等速率圓周運動的向心力永遠指向圓心 O（即方向「丁」）；由圖示旋轉方向（順時針）可知，M 處切線速度方向為「丙」。"
-      },
-      {
-        num: 2, unit: "u2",
-        text: "附圖為一顆行星以橢圓形軌道繞著太陽運行，當行星在甲、乙、丙三個位置時，與太陽的距離分別為 R甲、R乙、R丙，此時兩者之間的萬有引力大小分別為 F甲、F乙、F丙。若運行的過程中，太陽與行星的質量變化忽略不計，且 R甲＞R乙＞R丙，則 F甲、F乙、F丙 的大小關係為何？",
-        img: "images/hw2.png",
-        blanks: [
-          {
-            id: "hw2_1",
-            label: "大小關係（請寫甲、乙、丙與 >）：",
-            placeholder: "例如：丙>乙>甲",
-            ansDisplay: "丙>乙>甲",
-            check: (v) => {
-              const s = normBasic(v).replace(/f/g, "");
-              return s === "丙>乙>甲" || s === "甲<乙<丙";
-            }
-          }
-        ],
-        explain: "萬有引力與兩者距離平方成反比（距離越近，引力越大）。因距離 R丙 ＜ R乙 ＜ R甲，故萬有引力大小為 F丙 ＞ F乙 ＞ F甲（丙>乙>甲）。"
-      },
-      {
-        num: 3, unit: "u1",
-        text: "如附圖所示，用 5 牛頓向右的水平拉力作用於 2 公斤的靜止物體上，15 秒後該物體的速度為 15 公尺/秒，(1) 該期間的加速度是多少？(2) 該物體所受的摩擦力為多少牛頓，向何方？",
-        img: "images/hw3.png",
-        blanks: [
-          {
-            id: "hw3_1",
-            label: "(1) 加速度（m/s²）：",
-            placeholder: "請填數字",
-            ansDisplay: "1",
-            check: (v) => normNum(v, ["m/s2", "m/s^2", "m/s²", "公尺/秒2", "公尺/秒²"]) === "1"
-          },
-          {
-            id: "hw3_2",
-            label: "(2) 摩擦力大小（牛頓）：",
-            placeholder: "請填數字",
-            ansDisplay: "3",
-            check: (v) => normNum(v, ["n", "牛頓"]) === "3"
-          },
-          {
-            id: "hw3_3",
-            label: "摩擦力方向：",
-            placeholder: "左 或 右",
-            ansDisplay: "左",
-            check: (v) => ["左", "向左", "左方", "水平向左"].includes(normBasic(v))
-          }
-        ],
-        explain: "(1) 加速度 a = Δv / Δt = (15 − 0) / 15 = 1 m/s²。(2) 合力 F合 = m × a = 2 × 1 = 2 N（向右）；已知向右拉力為 5 N，故必有 5 − 2 = 3 N 的摩擦力向「左」。"
-      },
-      {
-        num: 4, unit: "u3",
-        text: "阿康背著重量為 20 牛頓的書包進學校，以固定的速度從校門口水平走了 40 公尺後，再走樓梯上五樓（一層樓高 3 公尺）抵達教室門口。過程中，阿康對書包作功多少焦耳？",
-        blanks: [
-          {
-            id: "hw4_1",
-            label: "作功（焦耳）：",
-            placeholder: "請填數字",
-            ansDisplay: "240",
-            check: (v) => normNum(v, ["j", "焦耳"]) === "240"
-          }
-        ],
-        explain: "水平走 40 公尺時，支撐書包的力鉛直向上，與水平位移垂直，作功為 0。從 1 樓走到 5 樓共上升 4 層樓，高度 h = 4 × 3 = 12 公尺。對書包作功 W = 20 N × 12 m = 240 焦耳。"
-      },
-      {
-        num: 5, unit: "u4",
-        text: "安全逃生門（防火門）上方都有設置一個自動反彈關閉裝置，小軒想打開安全門，垂直施力 F 在距離門軸 60 公分的 A 點，如附圖所示。假設此時反彈的力量 F₀ 是 6 公斤重，垂直作用在距離門軸 20 公分的 B 點，則打開門的施力 F 大約多少公斤重？",
-        img: "images/hw5.png",
-        blanks: [
-          {
-            id: "hw5_1",
-            label: "施力 F（公斤重）：",
-            placeholder: "請填數字",
-            ansDisplay: "2",
-            check: (v) => normNum(v, ["kgw", "公斤重"]) === "2"
-          }
-        ],
-        explain: "門軸為支點，欲推開門至少須克服反彈力矩：F × 60 cm = 6 kgw × 20 cm → F = 120 / 60 = 2 公斤重。"
-      },
-      {
-        num: 6, unit: "u3",
-        text: "一個質量為 10 kg 的木塊置於水平桌面，木塊同時受到 F₁、F₂ 兩個大小固定的外力，F₁ 的大小為 20 N，方向水平向右；F₂ 的大小為 10 N，方向鉛直向上。若施力過程中，木塊僅水平向右移動 1 m，如附圖所示，則此過程 F₁ 及 F₂ 對木塊作功應為多少？",
-        img: "images/hw6.png",
-        blanks: [
-          {
-            id: "hw6_1",
-            label: "F₁ 作功（焦耳）：",
-            placeholder: "請填數字",
-            ansDisplay: "20",
-            check: (v) => normNum(v, ["j", "焦耳"]) === "20"
-          },
-          {
-            id: "hw6_2",
-            label: "F₂ 作功（焦耳）：",
-            placeholder: "請填數字",
-            ansDisplay: "0",
-            check: (v) => normNum(v, ["j", "焦耳"]) === "0"
-          }
-        ],
-        explain: "F₁ 方向與位移（向右 1 m）相同：W₁ = 20 N × 1 m = 20 焦耳。F₂ 鉛直向上，與水平位移方向垂直（且木塊鉛直方向位移為 0）：W₂ = 0 焦耳。"
-      }
-    ];
-
-    // =========================================================================
-    // 3. 狀態管理與輸入正規化工具
+    // 1. 狀態管理與輔助函式
     // =========================================================================
     const state = {
+      selectedMode: "remix",
+      activeExam: null,
       student: { cls: "", seat: "", name: "", email: "" },
       mcAnswers: {},
       hwAnswers: {},
@@ -1528,29 +1170,6 @@
       timerId: null,
       lastPayload: null
     };
-
-    function toHalfWidth(str) {
-      return String(str || "").replace(/[\uFF01-\uFF5E]/g, ch =>
-        String.fromCharCode(ch.charCodeAt(0) - 0xFEE0)
-      );
-    }
-
-    function normBasic(str) {
-      return toHalfWidth(str).trim().replace(/\s+/g, "").toLowerCase();
-    }
-
-    function normNum(str, unitSuffixes = []) {
-      let s = normBasic(str);
-      for (const u of unitSuffixes) {
-        if (s.endsWith(u.toLowerCase())) {
-          s = s.slice(0, -u.length);
-        }
-      }
-      if (s !== "" && !isNaN(Number(s))) {
-        return String(Number(s));
-      }
-      return s;
-    }
 
     function escapeHtml(str) {
       return String(str || "")
@@ -1573,6 +1192,10 @@
       return `${m}:${s}`;
     }
 
+    function formatPts(n) {
+      return Number.isInteger(n) ? String(n) : Number(n.toFixed(2)).toString();
+    }
+
     function getGasUrl() {
       const configured = (GAS_WEB_APP_URL || "").trim();
       if (configured) return configured;
@@ -1584,8 +1207,24 @@
     }
 
     // =========================================================================
-    // 4. 頁面初始化：表單驗證 & 試題渲染
+    // 2. 第一頁：模式選擇卡片 & 表單驗證
     // =========================================================================
+    const MODE_BUTTON_LABELS = {
+      remix: "開始進入【重組段考】隨機作答 →",
+      "114": "開始進入 114 學年度段考作答 →",
+      "113": "開始進入 113 學年度段考作答 →",
+      "112": "開始進入 112 學年度段考作答 →"
+    };
+
+    document.getElementById("mode-grid").addEventListener("click", (e) => {
+      const card = e.target.closest(".mode-card");
+      if (!card) return;
+      state.selectedMode = card.dataset.mode;
+      document.querySelectorAll(".mode-card").forEach(c => c.classList.remove("selected"));
+      card.classList.add("selected");
+      document.getElementById("start-btn").textContent = MODE_BUTTON_LABELS[state.selectedMode] || "開始作答 →";
+    });
+
     document.getElementById("student-form").addEventListener("submit", (e) => {
       e.preventDefault();
       const cls = document.getElementById("stu-class").value.trim();
@@ -1607,12 +1246,26 @@
       if (!valid) return;
 
       state.student = { cls, seat, name, email };
-      document.getElementById("exam-student-pill").textContent = `${cls} ${seat}號 ${name}`;
+      startExamSession(state.selectedMode);
+    });
+
+    function startExamSession(mode) {
+      state.mcAnswers = {};
+      state.hwAnswers = {};
+      state.activeExam = generateActiveExam(mode);
+      state.startTime = Date.now();
+      state.elapsedSeconds = 0;
+
+      document.getElementById("exam-student-pill").textContent = `${state.student.cls} ${state.student.seat}號 ${state.student.name}`;
+      renderExam();
+      updateProgress();
+
       document.getElementById("page-info").classList.add("hidden");
+      document.getElementById("page-result").classList.add("hidden");
       document.getElementById("page-exam").classList.remove("hidden");
       window.scrollTo({ top: 0, behavior: "smooth" });
       startTimer();
-    });
+    }
 
     function startTimer() {
       if (state.timerId) clearInterval(state.timerId);
@@ -1623,7 +1276,18 @@
       }, 1000);
     }
 
+    // =========================================================================
+    // 3. 試題渲染與作答進度追蹤
+    // =========================================================================
+    function getTotalInputTargets() {
+      if (!state.activeExam) return 0;
+      const mcLen = state.activeExam.mc.length;
+      const hwBlanks = state.activeExam.hw.reduce((s, q) => s + q.blanks.length, 0);
+      return mcLen + hwBlanks;
+    }
+
     function renderExam() {
+      const exam = state.activeExam;
       const mcHost = document.getElementById("mc-container");
       const hwHost = document.getElementById("hw-container");
       const navHost = document.getElementById("nav-grid");
@@ -1632,12 +1296,30 @@
       hwHost.innerHTML = "";
       navHost.innerHTML = "";
 
-      MC_QUESTIONS.forEach(q => {
+      document.getElementById("active-exam-title").textContent = exam.title;
+      document.getElementById("active-exam-subtitle").textContent = exam.subtitle;
+      document.getElementById("mc-section-title").textContent = `一、單一選擇題（共 ${exam.mc.length} 題）`;
+      document.getElementById("mc-section-sub").textContent = `每題 ${exam.mcPts} 分，共 ${exam.mcMax} 分`;
+      const hwTotalBlanks = exam.hw.reduce((s, q) => s + q.blanks.length, 0);
+      document.getElementById("hw-section-title").textContent = `二、手寫與簡答填充題（共 ${exam.hw.length} 大題，${hwTotalBlanks} 格）`;
+      document.getElementById("hw-section-sub").textContent = `共 ${exam.hwMax} 分（請依提示填入數值或選擇答案）`;
+
+      const renderedGroups = new Set();
+
+      exam.mc.forEach(q => {
         const unit = UNITS.find(u => u.id === q.unit);
-        if (q.passage || q.passageHtml) {
+        const shouldRenderPassage = (q.passage || q.passageHtml || q.passageImg) &&
+          (!q.groupId || !renderedGroups.has(q.groupId));
+
+        if (shouldRenderPassage) {
+          if (q.groupId) renderedGroups.add(q.groupId);
           const p = document.createElement("div");
           p.className = "passage-box";
-          p.innerHTML = `${q.passage ? `<div>${escapeHtml(q.passage)}</div>` : ""}${q.passageHtml ? `<div style="margin-top:10px;">${q.passageHtml}</div>` : ""}${q.img && q.num === 17 ? `<div class="q-figure"><img src="${q.img}" alt="第${q.num}題附圖" class="orig-fig" loading="lazy"></div>` : ""}`;
+          p.innerHTML = `
+            ${q.passage ? `<div>${escapeHtml(q.passage).replace(/\n/g, "<br>")}</div>` : ""}
+            ${q.passageHtml ? `<div style="margin-top:10px;">${q.passageHtml}</div>` : ""}
+            ${q.passageImg ? `<div class="q-figure"><img src="${q.passageImg}" alt="題組附圖" class="orig-fig" loading="lazy"></div>` : ""}
+          `;
           mcHost.appendChild(p);
         }
 
@@ -1645,7 +1327,7 @@
         card.className = "question-card";
         card.id = `q-mc-${q.num}`;
 
-        const showInlineImg = q.img && q.num !== 17;
+        const showInlineImg = q.img && !q.hideInlineImgInExam;
         const singleCol = !q.optionImgs && Object.values(q.options).some(v => v.length > 18);
 
         let optsHtml = "";
@@ -1661,9 +1343,16 @@
           `;
         });
 
+        const srcTag = exam.mode === "remix"
+          ? `<span class="q-src-tag">出自 ${q.sourceYear} 學年度</span>`
+          : "";
+
         card.innerHTML = `
           <div class="q-header">
-            <div><span class="q-num">第 ${q.num} 題</span></div>
+            <div>
+              <span class="q-num">第 ${q.num} 題</span>
+              ${srcTag}
+            </div>
             <span class="q-unit-tag">${unit.section}</span>
           </div>
           <div class="q-text">${escapeHtml(q.text).replace(/\n/g, "<br>")}</div>
@@ -1683,7 +1372,7 @@
         navHost.appendChild(dot);
       });
 
-      mcHost.addEventListener("click", (e) => {
+      mcHost.onclick = (e) => {
         const btn = e.target.closest(".option-btn");
         if (!btn) return;
         const qNum = Number(btn.dataset.q);
@@ -1694,27 +1383,46 @@
         btn.classList.add("selected");
         document.getElementById(`nav-mc-${qNum}`).classList.add("done");
         updateProgress();
-      });
+      };
 
-      HW_QUESTIONS.forEach(q => {
+      exam.hw.forEach(q => {
         const unit = UNITS.find(u => u.id === q.unit);
         const card = document.createElement("div");
         card.className = "question-card";
         card.id = `q-hw-${q.num}`;
 
-        const blanksHtml = q.blanks.map(b => `
-          <div class="hw-blank-item">
-            <label for="inp-${b.id}">${escapeHtml(b.label)}</label>
-            <input id="inp-${b.id}" data-hw-id="${b.id}" type="text" placeholder="${escapeHtml(b.placeholder)}" />
-          </div>
-        `).join("");
+        const blanksHtml = q.blanks.map(b => {
+          if (b.selectOptions) {
+            const opts = `<option value="">-- 請選擇答案 --</option>` +
+              b.selectOptions.map(o => `<option value="${escapeHtml(o)}">${escapeHtml(o)}</option>`).join("");
+            return `
+              <div class="hw-blank-item">
+                <label for="inp-${b.id}">${escapeHtml(b.label)}</label>
+                <select id="inp-${b.id}" data-hw-id="${b.id}">${opts}</select>
+              </div>
+            `;
+          }
+          return `
+            <div class="hw-blank-item">
+              <label for="inp-${b.id}">${escapeHtml(b.label)}</label>
+              <input id="inp-${b.id}" data-hw-id="${b.id}" type="text" placeholder="${escapeHtml(b.placeholder || "")}" />
+            </div>
+          `;
+        }).join("");
+
+        const srcTag = exam.mode === "remix"
+          ? `<span class="q-src-tag">出自 ${q.sourceYear} 學年度</span>`
+          : "";
 
         card.innerHTML = `
           <div class="q-header">
-            <div><span class="q-num" style="background: var(--accent);">手寫第 ${q.num} 題</span></div>
+            <div>
+              <span class="q-num" style="background: var(--accent);">手寫第 ${q.num} 題</span>
+              ${srcTag}
+            </div>
             <span class="q-unit-tag">${unit.section}</span>
           </div>
-          <div class="q-text">${escapeHtml(q.text)}</div>
+          <div class="q-text">${escapeHtml(q.text).replace(/\n/g, "<br>")}</div>
           ${q.img ? `<div class="q-figure"><img src="${q.img}" alt="手寫第${q.num}題附圖" class="orig-fig" loading="lazy"></div>` : ""}
           <div class="hw-blanks">${blanksHtml}</div>
         `;
@@ -1731,45 +1439,62 @@
         navHost.appendChild(dot);
       });
 
-      hwHost.addEventListener("input", (e) => {
-        const inp = e.target.closest("input[data-hw-id]");
-        if (!inp) return;
-        state.hwAnswers[inp.dataset.hwId] = inp.value;
-        HW_QUESTIONS.forEach(q => {
+      const handleHwChange = (e) => {
+        const ctrl = e.target.closest("[data-hw-id]");
+        if (!ctrl) return;
+        state.hwAnswers[ctrl.dataset.hwId] = ctrl.value;
+        exam.hw.forEach(q => {
           const allFilled = q.blanks.every(b => (state.hwAnswers[b.id] || "").trim() !== "");
           document.getElementById(`nav-hw-${q.num}`).classList.toggle("done", allFilled);
         });
         updateProgress();
-      });
+      };
+      hwHost.oninput = handleHwChange;
+      hwHost.onchange = handleHwChange;
     }
 
     function updateProgress() {
+      const totalTargets = getTotalInputTargets();
+      if (!totalTargets) return;
       const mcCount = Object.keys(state.mcAnswers).length;
       let hwCount = 0;
-      HW_QUESTIONS.forEach(q => q.blanks.forEach(b => {
+      state.activeExam.hw.forEach(q => q.blanks.forEach(b => {
         if ((state.hwAnswers[b.id] || "").trim() !== "") hwCount++;
       }));
       const totalDone = mcCount + hwCount;
-      document.getElementById("progress-text").textContent = `已作答 ${totalDone} / 42 格`;
-      document.getElementById("progress-fill").style.width = `${(totalDone / 42) * 100}%`;
+      document.getElementById("progress-text").textContent = `已作答 ${totalDone} / ${totalTargets} 格`;
+      document.getElementById("progress-fill").style.width = `${(totalDone / totalTargets) * 100}%`;
     }
 
     document.getElementById("toggle-nav-btn").addEventListener("click", () => {
       document.getElementById("nav-grid").classList.toggle("hidden");
     });
 
-    document.getElementById("back-to-info-btn").addEventListener("click", () => {
+    function returnToModePicker() {
+      if (state.timerId) clearInterval(state.timerId);
       document.getElementById("page-exam").classList.add("hidden");
+      document.getElementById("page-result").classList.add("hidden");
       document.getElementById("page-info").classList.remove("hidden");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    document.getElementById("back-to-info-btn").addEventListener("click", returnToModePicker);
+    document.getElementById("switch-mode-top-btn").addEventListener("click", () => {
+      if (Object.keys(state.mcAnswers).length > 0 || Object.keys(state.hwAnswers).length > 0) {
+        if (!confirm("切換試卷年度會清除目前的作答進度，確定要返回嗎？")) return;
+      }
+      returnToModePicker();
     });
+    document.getElementById("switch-exam-btn").addEventListener("click", returnToModePicker);
 
     // =========================================================================
-    // 5. 批改計算、六角能力雷達圖 & 個人化建議
+    // 4. 批改計算、六角能力雷達圖 & 個人化建議
     // =========================================================================
     document.getElementById("submit-exam-btn").addEventListener("click", () => {
-      const missingMc = MC_QUESTIONS.filter(q => !state.mcAnswers[q.num]).map(q => `選擇第${q.num}題`);
+      const exam = state.activeExam;
+      const missingMc = exam.mc.filter(q => !state.mcAnswers[q.num]).map(q => `選擇第${q.num}題`);
       const missingHw = [];
-      HW_QUESTIONS.forEach(q => {
+      exam.hw.forEach(q => {
         if (q.blanks.some(b => (state.hwAnswers[b.id] || "").trim() === "")) {
           missingHw.push(`手寫第${q.num}題`);
         }
@@ -1786,6 +1511,7 @@
     });
 
     function gradeAndShowResult() {
+      const exam = state.activeExam;
       const unitStats = {};
       UNITS.forEach(u => {
         unitStats[u.id] = {
@@ -1800,16 +1526,16 @@
 
       let mcScore = 0;
       let mcCorrect = 0;
-      const mcResults = MC_QUESTIONS.map(q => {
+      const mcResults = exam.mc.map(q => {
         const stuAns = state.mcAnswers[q.num] || "";
-        const isCorrect = stuAns === q.ans;
+        const isCorrect = Array.isArray(q.ans) ? q.ans.includes(stuAns) : (stuAns === q.ans);
         const st = unitStats[q.unit];
-        st.total += 2.5;
+        st.total += exam.mcPts;
         st.qCount += 1;
         if (isCorrect) {
-          mcScore += 2.5;
+          mcScore += exam.mcPts;
           mcCorrect++;
-          st.earned += 2.5;
+          st.earned += exam.mcPts;
         } else {
           st.qWrongCount += 1;
           st.wrongItems.push(`選擇題第 ${q.num} 題`);
@@ -1819,57 +1545,68 @@
 
       let hwScore = 0;
       let hwCorrectBlanks = 0;
-      const hwResults = HW_QUESTIONS.map(q => {
+      let hwTotalBlanks = 0;
+      const hwResults = exam.hw.map(q => {
         const st = unitStats[q.unit];
-        let qAllCorrect = true;
+        const qVals = q.blanks.map(b => (state.hwAnswers[b.id] || "").trim());
         const blankResults = q.blanks.map((b, idx) => {
-          const stuVal = (state.hwAnswers[b.id] || "").trim();
-          const ok = stuVal !== "" && b.check(stuVal);
-          st.total += 2;
-          st.qCount += 1;
+          hwTotalBlanks++;
+          const stuVal = qVals[idx];
+          let ok = false;
+          if (stuVal !== "") {
+            ok = b.groupCheck ? b.groupCheck(stuVal, qVals) : b.check(stuVal);
+          }
           if (ok) {
-            hwScore += 2;
             hwCorrectBlanks++;
-            st.earned += 2;
           } else {
-            qAllCorrect = false;
-            st.qWrongCount += 1;
             const subTag = q.blanks.length > 1 ? `第${idx + 1}格` : "";
             st.wrongItems.push(`手寫題第 ${q.num} 題${subTag}`);
           }
           return { b, stuVal, ok };
         });
-        return { type: "hw", q, blankResults, isCorrect: qAllCorrect };
+
+        const qTotalPts = q.customScore
+          ? 14
+          : q.blanks.reduce((acc, b) => acc + b.pts, 0);
+        const qEarnedPts = q.customScore
+          ? q.customScore(blankResults)
+          : blankResults.reduce((acc, br) => acc + (br.ok ? br.b.pts : 0), 0);
+
+        hwScore += qEarnedPts;
+        st.total += qTotalPts;
+        st.earned += qEarnedPts;
+        const qAllCorrect = blankResults.every(br => br.ok);
+        return { type: "hw", q, blankResults, earnedPts: qEarnedPts, totalPts: qTotalPts, isCorrect: qAllCorrect };
       });
 
-      const totalScore = mcScore + hwScore;
+      const totalScore = Math.round((mcScore + hwScore) * 10) / 10;
       const statsArray = UNITS.map(u => {
         const s = unitStats[u.id];
-        const mastery = s.total > 0 ? Math.round((s.earned / s.total) * 100) : 100;
+        const earnedRound = Math.round(s.earned * 10) / 10;
+        const totalRound = Math.round(s.total * 10) / 10;
+        const mastery = totalRound > 0 ? Math.round((earnedRound / totalRound) * 100) : 100;
         const errorRate = 100 - mastery;
-        return { ...s, mastery, errorRate };
+        return { ...s, earned: earnedRound, total: totalRound, mastery, errorRate };
       });
 
-      // Switch page
       document.getElementById("page-exam").classList.add("hidden");
       document.getElementById("page-result").classList.remove("hidden");
       window.scrollTo({ top: 0, behavior: "smooth" });
 
-      // Populate Header & Score Ring
       const { cls, seat, name, email } = state.student;
+      document.getElementById("res-exam-label").textContent = `本次測驗卷別：${exam.title}`;
       document.getElementById("res-student-pill").textContent = `${cls} ${seat}號 ${name}`;
       document.getElementById("res-email-line").textContent = `學生信箱：${email}`;
-      document.getElementById("stat-mc").textContent = `${mcScore} / 80 分（對 ${mcCorrect}/32 題）`;
-      document.getElementById("stat-hw").textContent = `${hwScore} / 20 分（對 ${hwCorrectBlanks}/10 格）`;
-      document.getElementById("stat-time").textContent = `${formatTime(state.elapsedSeconds)} / ${totalScore}%`;
+      document.getElementById("stat-mc").textContent = `${formatPts(mcScore)} / ${exam.mcMax} 分（對 ${mcCorrect}/${exam.mc.length} 題）`;
+      document.getElementById("stat-hw").textContent = `${formatPts(hwScore)} / ${exam.hwMax} 分（對 ${hwCorrectBlanks}/${hwTotalBlanks} 格）`;
+      document.getElementById("stat-time").textContent = `${formatTime(state.elapsedSeconds)} / ${totalScore} 分`;
 
-      // Reset email button state
       const sendBtn = document.getElementById("send-email-btn");
       sendBtn.disabled = false;
       sendBtn.textContent = `📧 將結果寄送至 ${email}`;
       document.getElementById("email-status-note").textContent = getGasUrl()
-        ? "已連接自動寄信服務，點擊即可寄出完整六角圖診斷信件"
-        : "（尚未設定 Google Apps Script 寄信網址，老師可點右上角「⚙️ 寄信服務設定」）";
+        ? "已連接學校 Google 郵件服務，點擊上方按鈕即可將成績單與個人能力值六角圖寄送到信箱！"
+        : "（尚未設定 Google Apps Script 寄信網址）";
 
       let comment = "";
       let ringColor = "#2563eb";
@@ -1883,7 +1620,7 @@
         comment = "💪 已經達標！再把公式應用與地科觀念釐清，成績還有很大的進步空間喔！";
         ringColor = "#d97706";
       } else {
-        comment = "📚 加油！別灰心，這份考古題幫你精準抓出了盲點，照著下方的課本頁碼逐一複習一定能進步！";
+        comment = "📚 加油！別灰心，這份診斷幫你精準抓出了盲點，照著下方的 115 課本頁碼逐一複習一定能進步！";
         ringColor = "#dc2626";
       }
       document.getElementById("score-comment").textContent = comment;
@@ -1902,10 +1639,8 @@
         </svg>
       `;
 
-      // Render Hexagon Radar Chart
       renderHexagonRadar(statsArray);
 
-      // Render Unit Table
       const tbody = document.querySelector("#unit-summary-table tbody");
       tbody.innerHTML = statsArray.map(s => {
         let badge = `<span class="badge badge-great">精熟</span>`;
@@ -1915,7 +1650,7 @@
         return `
           <tr>
             <td><strong>${s.unit.section}</strong><br><span style="font-size:0.78rem; color:#64748b;">${s.unit.pages}</span></td>
-            <td>${s.earned} / ${s.total}</td>
+            <td>${formatPts(s.earned)} / ${formatPts(s.total)}</td>
             <td style="color:${s.errorRate > 0 ? '#dc2626' : '#16a34a'}; font-weight:700;">${s.errorRate}%</td>
             <td><strong>${s.mastery}%</strong></td>
             <td>${badge}</td>
@@ -1923,7 +1658,6 @@
         `;
       }).join("");
 
-      // Render Recommendations sorted by errorRate descending
       const sorted = [...statsArray].sort((a, b) => b.errorRate - a.errorRate);
       const recHost = document.getElementById("recommendations-container");
       recHost.innerHTML = sorted.map((s, idx) => {
@@ -1953,7 +1687,6 @@
         `;
       }).join("");
 
-      // Render Question-by-Question Review
       renderReviewList(mcResults, hwResults, "all");
       document.querySelectorAll(".filter-btn").forEach(btn => {
         btn.onclick = () => {
@@ -1963,22 +1696,26 @@
         };
       });
 
-      // Save payload for GAS Email
       state.lastPayload = {
+        examTitle: exam.title,
         student: { cls, seat, name, email },
         totalScore,
-        mcScore,
-        hwScore,
+        mcScore: formatPts(mcScore),
+        hwScore: formatPts(hwScore),
+        mcMax: exam.mcMax,
+        hwMax: exam.hwMax,
         mcCorrect,
+        mcTotalCount: exam.mc.length,
         hwCorrectBlanks,
+        hwTotalBlanks,
         elapsedTime: formatTime(state.elapsedSeconds),
         comment,
         units: sorted.map(s => ({
           chapter: s.unit.chapter,
           section: s.unit.section,
           pages: s.unit.pages,
-          earned: s.earned,
-          total: s.total,
+          earned: formatPts(s.earned),
+          total: formatPts(s.total),
           mastery: s.mastery,
           errorRate: s.errorRate,
           tips: s.unit.tips,
@@ -2046,7 +1783,7 @@
         dotsSvg += `
           <circle cx="${dx.toFixed(1)}" cy="${dy.toFixed(1)}" r="6" fill="#2563eb" stroke="#fff" stroke-width="2"
             style="cursor:pointer;"
-            data-tip="${escapeHtml(s.unit.section)}：熟悉度 ${s.mastery}%（得分 ${s.earned}/${s.total}，答錯率 ${s.errorRate}%）"/>
+            data-tip="${escapeHtml(s.unit.section)}：熟悉度 ${s.mastery}%（得分 ${formatPts(s.earned)}/${formatPts(s.total)}，答錯率 ${s.errorRate}%）"/>
         `;
       });
 
@@ -2072,6 +1809,7 @@
 
     function renderReviewList(mcResults, hwResults, filter) {
       const host = document.getElementById("review-container");
+      const exam = state.activeExam;
       const items = [];
 
       mcResults.forEach(r => {
@@ -2079,13 +1817,19 @@
         if (filter === "correct" && !r.isCorrect) return;
         const unit = UNITS.find(u => u.id === r.q.unit);
         const stuDisplay = r.stuAns ? `(${r.stuAns}) ${r.q.options[r.stuAns]}` : "未作答";
-        const ansDisplay = `(${r.q.ans}) ${r.q.options[r.q.ans]}`;
+        const ansDisplay = Array.isArray(r.q.ans)
+          ? r.q.ans.map(a => `(${a}) ${r.q.options[a]}`).join(" 或 ")
+          : `(${r.q.ans}) ${r.q.options[r.q.ans]}`;
+        const srcBadge = exam.mode === "remix"
+          ? `<span class="q-src-tag" style="margin-left:6px;">出自 ${r.q.sourceYear} 學年度</span>`
+          : "";
         items.push(`
           <div class="review-item ${r.isCorrect ? "correct" : "wrong"}">
             <div style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px; margin-bottom:8px;">
               <div>
-                <span class="badge ${r.isCorrect ? "badge-great" : "badge-danger"}">${r.isCorrect ? "✓ 答對 (+2.5)" : "✗ 答錯 (0)"}</span>
+                <span class="badge ${r.isCorrect ? "badge-great" : "badge-danger"}">${r.isCorrect ? `✓ 答對 (+${exam.mcPts})` : "✗ 答錯 (0)"}</span>
                 <strong style="margin-left:6px;">單一選擇第 ${r.q.num} 題</strong>
+                ${srcBadge}
               </div>
               <span class="q-unit-tag">${unit.section}（${unit.pages}）</span>
             </div>
@@ -2104,14 +1848,15 @@
         if (filter === "wrong" && r.isCorrect) return;
         if (filter === "correct" && !r.isCorrect) return;
         const unit = UNITS.find(u => u.id === r.q.unit);
-        const earnedPts = r.blankResults.filter(b => b.ok).length * 2;
-        const totalPts = r.blankResults.length * 2;
+        const srcBadge = exam.mode === "remix"
+          ? `<span class="q-src-tag" style="margin-left:6px;">出自 ${r.q.sourceYear} 學年度</span>`
+          : "";
         const blanksHtml = r.blankResults.map(br => `
           <div style="margin-top:4px; font-size:0.9rem;">
-            <span class="badge ${br.ok ? "badge-great" : "badge-danger"}">${br.ok ? "✓ +2" : "✗ 0"}</span>
+            <span class="badge ${br.ok ? "badge-great" : "badge-danger"}">${br.ok ? "✓ 正確" : "✗ 錯誤"}</span>
             <strong>${escapeHtml(br.b.label)}</strong>
             你的作答：<span style="color:${br.ok ? "#16a34a" : "#dc2626"}; font-weight:700;">${escapeHtml(br.stuVal || "未填寫")}</span>
-            ｜ 官方解答：<span style="color:#1e40af; font-weight:700;">${escapeHtml(br.b.ansDisplay)}</span>
+            ｜ 參考解答：<span style="color:#1e40af; font-weight:700;">${escapeHtml(br.b.ansDisplay)}</span>
           </div>
         `).join("");
 
@@ -2119,12 +1864,13 @@
           <div class="review-item ${r.isCorrect ? "correct" : "wrong"}">
             <div style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px; margin-bottom:8px;">
               <div>
-                <span class="badge ${r.isCorrect ? "badge-great" : "badge-danger"}">${r.isCorrect ? "✓ 全對" : "需訂正"} (${earnedPts}/${totalPts} 分)</span>
+                <span class="badge ${r.isCorrect ? "badge-great" : "badge-danger"}">${r.isCorrect ? "✓ 全對" : "需訂正"} (${formatPts(r.earnedPts)}/${formatPts(r.totalPts)} 分)</span>
                 <strong style="margin-left:6px;">手寫第 ${r.q.num} 題</strong>
+                ${srcBadge}
               </div>
               <span class="q-unit-tag">${unit.section}（${unit.pages}）</span>
             </div>
-            <div style="font-size:0.95rem; margin-bottom:8px;">${escapeHtml(r.q.text)}</div>
+            <div style="font-size:0.95rem; margin-bottom:8px;">${escapeHtml(r.q.text).replace(/\n/g, "<br>")}</div>
             ${r.q.img ? `<div class="q-figure"><img src="${r.q.img}" alt="手寫第${r.q.num}題附圖" class="orig-fig" loading="lazy"></div>` : ""}
             ${blanksHtml}
             <div class="explain-box"><strong>詳解：</strong>${escapeHtml(r.q.explain)}</div>
@@ -2138,7 +1884,7 @@
     }
 
     // =========================================================================
-    // 6. 六角圖 SVG 轉 PNG Base64 並透過 Google Apps Script 寄送至學生 Email
+    // 5. 六角圖 SVG 轉 PNG Base64 並透過 Google Apps Script 寄送至學生 Email
     // =========================================================================
     function svgToPngBase64(svgEl) {
       return new Promise((resolve) => {
@@ -2222,7 +1968,6 @@
       }
     });
 
-    // GAS Settings Modal handlers
     function openGasModal() {
       document.getElementById("gas-url-input").value = getGasUrl();
       document.getElementById("gas-modal").classList.remove("hidden");
@@ -2249,25 +1994,17 @@
     });
 
     document.getElementById("retry-btn").addEventListener("click", () => {
-      if (!confirm("確定要清除本次作答紀錄並重新作答嗎？")) return;
-      state.mcAnswers = {};
-      state.hwAnswers = {};
-      state.startTime = Date.now();
-      state.elapsedSeconds = 0;
-      renderExam();
-      updateProgress();
-      document.getElementById("page-result").classList.add("hidden");
-      document.getElementById("page-exam").classList.remove("hidden");
-      window.scrollTo({ top: 0, behavior: "smooth" });
-      startTimer();
+      const msg = state.selectedMode === "remix"
+        ? "確定要清除本次紀錄，並「重新隨機抽取一份全新的重組段考」挑戰嗎？"
+        : "確定要清除本次作答紀錄並重新作答嗎？";
+      if (!confirm(msg)) return;
+      startExamSession(state.selectedMode);
     });
 
     // Boot
     if (new URLSearchParams(location.search).get("setup") === "1") {
       document.getElementById("open-gas-modal-btn").classList.remove("hidden");
     }
-    renderExam();
-    updateProgress();
   </script>
 </body>
 </html>
