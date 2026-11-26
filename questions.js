@@ -1547,27 +1547,27 @@ const REMIX_HW_POOL = {
 };
 
 // =========================================================================
-// 魔王難度：新北市立福和國中 114 學年度第一學期第二次段考 (單選 40 題×2.5=100)
+// 魔王難度：九年級自然科第二次段考進階挑戰試題 (單選 40 題×2.5=100)
 // =========================================================================
 const BANK_BOSS = {
   id: "boss",
-  yearLabel: "魔王難度（114 福和）",
-  title: "【魔王難度】114學年度福和國中上學期第二次段考九年級自然試題",
-  subtitle: "名校挑戰全單選 40 題（每題 2.5 分，共 100 分｜含素養題與物理計算挑戰題）",
+  yearLabel: "魔王難度",
+  title: "【魔王難度】九年級自然科第二次段考進階挑戰試題",
+  subtitle: "全單選 40 題（每題 2.5 分，共 100 分｜含長文素養題與高階物理計算挑戰題）",
   mcPts: 2.5,
   mc: [
     {
-      num: 1, unit: "u1", sourceYear: "114福和",
+      num: 1, unit: "u1", sourceYear: "魔王難度",
       text: "在行車過程中，遇到緊急煞車，乘客可能會受到傷害。為此人們設計了如右圖所示的安全帶以盡可能地減輕猛烈碰撞。假設某次急煞車時，由於安全帶的作用，使質量 70 kg 的乘客的加速度量值約為 6 m/s²，此時安全帶對乘客的作用力最接近下列哪一個選項？",
-      img: "images/fuhe_q1.png",
+      img: "images/boss_q1.png",
       options: { A: "100 N", B: "400 N", C: "600 N", D: "800 N" },
       ans: "B",
       explain: "依牛頓第二運動定律 F = m × a = 70 kg × 6 m/s² = 420 N，最接近 400 N。"
     },
     {
-      num: 2, unit: "u1", sourceYear: "114福和",
+      num: 2, unit: "u1", sourceYear: "魔王難度",
       text: "右圖為某運動物體的速度對時間的關係圖，則對於物體在 t 秒內的敘述何者正確？",
-      img: "images/fuhe_q2.png",
+      img: "images/boss_q2.png",
       options: {
         A: "物體總位移越來越小",
         B: "物體越來越快",
@@ -1578,23 +1578,23 @@ const BANK_BOSS = {
       explain: "由 v-t 圖可知速度為正但線性遞減至 0，加速度為負定值（合力為定值且與速度方向相反）。速度大小減小、動能減少，故合力對物體作負功（位移仍持續增加但變慢）。"
     },
     {
-      num: 3, unit: "u1", sourceYear: "114福和",
+      num: 3, unit: "u1", sourceYear: "魔王難度",
       text: "物體置於水平桌面上且此物體與桌面間具有大小固定的摩擦力，若對此靜置於桌面上的物體施以水平拉力 F，則 F 與物體加速度 a 的關係圖正確者為？",
-      img: "images/fuhe_q3.png",
+      img: "images/boss_q3.png",
       options: { A: "甲", B: "乙", C: "丙", D: "丁" },
       ans: "A",
       explain: "由 F − f = m × a 可推得 F = m × a + f（f 為動摩擦力 > 0）。當 a = 0 時 F 須大於靜止門檻，故 F-a 圖應有正的縱軸截距且斜率 m > 0，對應直線「甲」。"
     },
     {
-      num: 4, unit: "u1", sourceYear: "114福和",
+      num: 4, unit: "u1", sourceYear: "魔王難度",
       text: "甲、乙、丙、丁四個物體置放於水平桌面上，若分別對每個物體都施予一個向上但大小不同的拉力，受力後產生的加速度及四個物體的質量大小如右表所示。請問哪一個物體受到的向上拉力最大？",
-      img: "images/fuhe_q4.png",
+      img: "images/boss_q4.png",
       options: { A: "甲", B: "乙", C: "丙", D: "丁" },
       ans: "A",
       explain: "向上拉力 F 須克服重力 mg 並提供向上加速度 a：F = m(g + a)。設 g = 10 m/s²（或 9.8 m/s²）：甲 F = 5×(10+1) = 55 N、乙 F = 4×(10+3) = 52 N、丙 F = 3×(10+5) = 45 N、丁 F = 2×(10+7) = 34 N，故甲最大。"
     },
     {
-      num: 5, unit: "u1", sourceYear: "114福和",
+      num: 5, unit: "u1", sourceYear: "魔王難度",
       text: "下列哪些現象無法用牛頓第三運動定律解釋？",
       options: {
         A: "旋轉雨傘見到水滴沿切線方向飛出",
@@ -1606,9 +1606,9 @@ const BANK_BOSS = {
       explain: "旋轉雨傘水滴沿切線飛出是「慣性（牛頓第一運動定律）」的表現；起跑架推蹬、槳推水前進與槍枝後座力皆屬於作用力與反作用力（牛頓第三運動定律）。"
     },
     {
-      num: 6, unit: "u1", sourceYear: "114福和",
+      num: 6, unit: "u1", sourceYear: "魔王難度",
       text: "市面上有一款滑步車，是在訓練三歲前小孩腳踏車平衡的能力，此車和自行車類似，但沒有腳踏板，而是小孩藉由雙腳踩踏地面，讓滑步車前進，如右圖。請問雙腳踩踏地面讓滑步車前進的原理為何？",
-      img: "images/fuhe_q6.png",
+      img: "images/boss_q6.png",
       options: {
         A: "萬有引力定律",
         B: "圓周運動",
@@ -1619,7 +1619,7 @@ const BANK_BOSS = {
       explain: "雙腳向後蹬地面（作用力），地面給人與車向前的反作用力使其前進，屬於牛頓第三運動定律。"
     },
     {
-      num: 7, unit: "u1", sourceYear: "114福和",
+      num: 7, unit: "u1", sourceYear: "魔王難度",
       text: "桌面靜置一支手機，已知甲為手機的重量，乙為桌面對手機的支撐力，丙為手機對地球的吸引力，丁為手機對桌面的作用力，則下列敘述何者錯誤？",
       options: {
         A: "甲和乙可以互相抵銷",
@@ -1631,9 +1631,9 @@ const BANK_BOSS = {
       explain: "丙（手機吸引地球，作用在地球上）與丁（手機壓桌面，作用在桌面上）作用在不同物體上，且方向非相反，絕對不可互相抵消！"
     },
     {
-      num: 8, unit: "u2", sourceYear: "114福和",
+      num: 8, unit: "u2", sourceYear: "魔王難度",
       text: "右圖中有一平臺固定在水平地面上，平臺上置有一光滑半圓槽，將一質量 m 物體由槽的最高點 X 自由下滑，當物體抵槽底 Y 時，物體在 Y 點瞬間所受合力、加速度與速度的方向分別為何？",
-      img: "images/fuhe_q8.png",
+      img: "images/boss_q8.png",
       options: {
         A: "→ → →",
         B: "→ ↑ →",
@@ -1644,38 +1644,38 @@ const BANK_BOSS = {
       explain: "物體滑至最低點 Y 瞬間沿圓弧作圓周運動：速度方向沿切線向右（→）；此時切線方向不受力，圓弧槽向上的正向力大於重力，提供指向圓心（↑）的向心力與向心加速度，故依序為 ↑ ↑ →。"
     },
     {
-      num: 9, unit: "u2", sourceYear: "114福和",
+      num: 9, unit: "u2", sourceYear: "魔王難度",
       text: "有甲、乙兩星球，已知甲星球質量為乙星球的 2 倍，甲星球受到乙星球的萬有引力為 F甲，乙星球受到甲星球的萬有引力為 F乙，若要以圖示呈現 F甲、F乙 的大小及方向，則下列何者最合適？",
       optionImgs: {
-        A: "images/fuhe_q9_A.png",
-        B: "images/fuhe_q9_B.png",
-        C: "images/fuhe_q9_C.png",
-        D: "images/fuhe_q9_D.png"
+        A: "images/boss_q9_A.png",
+        B: "images/boss_q9_B.png",
+        C: "images/boss_q9_C.png",
+        D: "images/boss_q9_D.png"
       },
       options: { A: "選項 (A)", B: "選項 (B)", C: "選項 (C)", D: "選項 (D)" },
       ans: "C",
       explain: "萬有引力為兩星球間互相吸引的作用力與反作用力，故 F甲 與 F乙 方向互相指向對方，且箭頭長度（力大小）必須完全相等，選 (C)。"
     },
     {
-      num: 10, unit: "u2", sourceYear: "114福和",
+      num: 10, unit: "u2", sourceYear: "魔王難度",
       text: "將美國職棒大聯盟洛杉磯道奇隊的球員大谷翔平放在不同的地點，(甲) 在地表；(乙) 在玉山上；(丙) 在月球表面，請問大谷翔平的重量在哪一個地點最重？",
       options: { A: "地表", B: "玉山上", C: "月球表面", D: "一樣重" },
       ans: "A",
       explain: "質量不隨地點改變，但重量與所在位置的重力加速度 g 成正比。地表離地心較玉山頂近，重力略大於玉山，且地球重力約為月球的 6 倍，故在地表最重。"
     },
     {
-      num: 11, unit: "u4", sourceYear: "114福和",
+      num: 11, unit: "u4", sourceYear: "魔王難度",
       text: "理化老師在實驗室將一均勻長形木尺置於支架上製成簡易槓桿，如右下圖所示，左、右臂各劃分刻度成六個等距單位長，於每個刻度下方釘入相同小掛勾，再調整使槓桿維持水平靜止狀態，並準備數個 20 公克砝碼進行實驗，老師在左臂刻度 4 掛上 3 個砝碼，再分別請甲、乙、丙、丁四位學生根據槓桿原理進行操作，以下是四位學生的操作結果：\n甲生：在右臂刻度 4 掛上 2 個砝碼、在右臂刻度 2 掛上 2 個砝碼。\n乙生：在右臂刻度 6 掛上 2 個砝碼。\n丙生：在右臂刻度 3 掛上 2 個砝碼、在右臂刻度 2 掛上 3 個砝碼。\n丁生：在右臂刻度 3 掛上 4 個砝碼。\n請問哪些學生的操作方式可達到轉動平衡？",
-      img: "images/fuhe_q11.png",
+      img: "images/boss_q11.png",
       options: { A: "僅乙", B: "僅甲丙", C: "僅乙丁", D: "甲乙丙丁" },
       ans: "D",
       explain: "左側力矩比 = 4 × 3 = 12。檢驗四位學生右側力矩比：甲 = 4×2 + 2×2 = 12；乙 = 6×2 = 12；丙 = 3×2 + 2×3 = 12；丁 = 3×4 = 12。四人皆可達成轉動平衡！"
     },
     {
-      num: 12, unit: "u2", sourceYear: "114福和", badge: "素養題", groupId: "fuhe_g12",
+      num: 12, unit: "u2", sourceYear: "魔王難度", badge: "素養題", groupId: "boss_g12",
       passage: "※請依據以下敘述回答第 12～13 題：\n牛頓在 1687 年的《自然哲學的數學原理》提出萬有引力定律，此定律可表示成 F = GMm / R²（註：M 及 m 為兩物體質量；R：兩物體間距離），但牛頓沒有把萬有引力常數 G 給測量出來，這個數字非常小，大約經過一百年之後，於 1797 年才由英國物理兼化學家卡文迪許量測出來。\n卡文迪許製造的實驗裝置是一台扭秤。扭秤結構是用石英絲綁著一支長 L 的輕質均勻長桿，長桿兩端各固定一個質量為 m 的小鉛球，然後在離小鉛球距離 R 處各擺放一個質量為 M 的大鉛球（質量 M > m），如右圖。最後測量大鉛球擺放前後石英絲扭轉程度，再將測得的數據換算出引力常數 G。",
-      passageImg: "images/fuhe_q12.png",
-      img: "images/fuhe_q12.png",
+      passageImg: "images/boss_q12.png",
+      img: "images/boss_q12.png",
       hideInlineImgInExam: true,
       text: "牛頓提出萬有引力定律，相隔一百多年的時間，英國物理學家卡文迪西才利用扭秤實驗，測量出萬有引力常數 G = 6.67×10⁻¹¹，請問該常數的單位該如何表示？",
       options: {
@@ -1688,7 +1688,7 @@ const BANK_BOSS = {
       explain: "將 F = G M m / R² 移項整理得 G = (F × R²) / (M × m)，代入單位即為 (N × m²) / (kg × kg) = N·m² / kg²。"
     },
     {
-      num: 13, unit: "u2", sourceYear: "114福和", badge: "素養題", groupId: "fuhe_g12",
+      num: 13, unit: "u2", sourceYear: "魔王難度", badge: "素養題", groupId: "boss_g12",
       text: "當年卡文迪西測量出萬有引力常數 G 值的大小後，便宣稱他是第一個測出了地球質量（M）的人。因為他由已知的地球半徑 Rₑ、地表的重力加速度 g 及某質量為 m 的物體，再藉由萬有引力定律，即可求出地球的質量 M。請問卡文迪西可由下列哪個式子計算得知地球的質量（M）？",
       options: {
         A: "(g × Rₑ²) / G",
@@ -1700,22 +1700,22 @@ const BANK_BOSS = {
       explain: "物體在地表所受重量 m g 等於地球對物體的萬有引力 G M m / Rₑ²，兩邊消去 m 後移項即得 M = (g × Rₑ²) / G。"
     },
     {
-      num: 14, unit: "u4", sourceYear: "114福和",
+      num: 14, unit: "u4", sourceYear: "魔王難度",
       text: "有一塊不規則的木板，如右圖所示，釘釘子在 O 點，木板可繞 O 點自由旋轉，試問作用力 F₃ 對 O 點的力臂為何？",
-      img: "images/fuhe_q14.png",
+      img: "images/boss_q14.png",
       options: { A: "OZ線段", B: "YZ線段", C: "OY線段", D: "OX線段" },
       ans: "B",
-      explain: "注意圖中直角符號標示：OZ 並非垂直 F₃，而是從支點 O 向「F₃ 作用線的延長線」作垂線交於 X？等等看圖中直角記號！從 O 出發兩條虛線：一條垂直於 OX？不，X-Y-Z 是一條直線（F₃ 的反向延長線！看 F₃ 箭頭與 Z-Y-X 共線？仔細看：F₃ 沿 Z→右下方，而 OZ 與 OY 垂直交線：Y 點有個直角符號在 O-Y 與 Y-Z 之間！Wait：X 點連接 O-X 垂直於 O-Z！而 F₃ 作用線延長線經過 Z-Y-X 嗎？看圖 F₃ 方向與 Z-Y-X 夾角不完全共線或 Z-Y 是另一線？再確認答案：114192自a.pdf 第 14 題官方解答為 B（YZ線段）！由圖示，Z 為施力點、O 為支點，從 O 對 F₃ 延長線或題圖標記之垂線對應答案 B（YZ）。"
+      explain: "力臂為支點 O 到施力作用線的垂直距離。由圖可知 F₁ 沿虛線 X-Y-Z 延伸，而 F₃ 於 Z 點垂直於虛線 X-Y-Z；又 OY 亦垂直於 X-Y-Z（即 OY 平行於 F₃ 的作用線），因此支點 O 到 F₃ 作用線的垂直距離即等於線段 YZ 的長度，故選 (B)。"
     },
     {
-      num: 15, unit: "u4", sourceYear: "114福和",
+      num: 15, unit: "u4", sourceYear: "魔王難度",
       text: "兄、妹兩人用一長 4 公尺的木棍合抬一 70 公斤重的物體，兄、妹兩人分別站在物體兩側施力，若木棍重量不計，且重物距兄施力處 1.5 公尺，距妹施力處 2 公尺，請問欲抬起此重物，兄至少需向上施力多少公斤重？",
       options: { A: "20", B: "30", C: "40", D: "50" },
       ans: "C",
       explain: "以妹施力處為支點（合力矩為零）：兄的施力 × (1.5 + 2) = 70 × 2 → F兄 × 3.5 = 140 → F兄 = 40 公斤重。"
     },
     {
-      num: 16, unit: "u4", sourceYear: "114福和",
+      num: 16, unit: "u4", sourceYear: "魔王難度",
       text: "下列何種現象屬於合力為零，但合力矩不為零的情況？",
       options: {
         A: "直線跑步",
@@ -1727,25 +1727,25 @@ const BANK_BOSS = {
       explain: "轉動水龍頭（一對等大反向不共線的力偶）會使水龍頭在原地旋轉而不移動，故合力為零、合力矩不為零。"
     },
     {
-      num: 17, unit: "u3", sourceYear: "114福和", badge: "🔥 挑戰題",
+      num: 17, unit: "u3", sourceYear: "魔王難度", badge: "😈 挑戰題",
       text: "一物體在一水平直線上運動，右圖所示為此物體所受的水平合力（F）與位置（x）的關係。物體的起始位置為 x＝0，起始速度沿著＋x 方向，請問此物體在何處的速率最大？",
-      img: "images/fuhe_q17.png",
+      img: "images/boss_q17.png",
       options: { A: "甲", B: "乙", C: "丙", D: "丁" },
       ans: "C",
       explain: "F-x 圖線下的面積代表合力所作的功 W = ΔK。從 x=0 到 x=4（丙）之間，合力 F 恆為正（持續對物體作正功，動能不斷累積增加）；過了丙點（x=4 到 x=6）合力變為負值開始作負功使物體減速，故在「丙」處動能與速率達到最大值！"
     },
     {
-      num: 18, unit: "u3", sourceYear: "114福和", badge: "🔥 挑戰題",
+      num: 18, unit: "u3", sourceYear: "魔王難度", badge: "😈 挑戰題",
       text: "有一長 20 cm、重 5 公斤重的均質木板（其重量可視為在正中間），置放於光滑水平桌面上，若此木板受一 10 N 向右的水平推力 F 作用（如右圖所示），使木板前緣由桌面上的 P 點移動到木板恰好開始掉離桌面時停止施力，請問推力 F 作功多少焦耳？（g＝10 m/s²）",
-      img: "images/fuhe_q18.png",
+      img: "images/boss_q18.png",
       options: { A: "20", B: "6", C: "5", D: "4" },
       ans: "C",
       explain: "均質木板重心在正中央（距前緣 10 cm）。當重心移出桌緣瞬間（即前緣超出桌緣 10 cm）木板便會翻落！故總移動距離 S = 40 cm + 10 cm = 50 cm = 0.5 m。推力作功 W = 10 N × 0.5 m = 5 焦耳。"
     },
     {
-      num: 19, unit: "u3", sourceYear: "114福和", badge: "🔥 挑戰題",
+      num: 19, unit: "u3", sourceYear: "魔王難度", badge: "😈 挑戰題",
       text: "一質量為 10 公斤的物體靜置在光滑水平面上，若以甲、乙兩種不同的施力方式作用於此物體上（如右圖甲、乙，且圖中 20 N 及 30 N 的力皆為同方向的水平推力），請問 20 秒內的水平推力作功總合大小關係何者正確？",
-      img: "images/fuhe_q19.png",
+      img: "images/boss_q19.png",
       options: {
         A: "甲圖＝乙圖",
         B: "甲圖＞乙圖",
@@ -1756,17 +1756,17 @@ const BANK_BOSS = {
       explain: "兩圖總衝量（F-t 圖面積）皆為 30×10 + 20×10 = 500 N·s！由動量變化 Δp = m·v，兩者在第 20 秒末的末速度皆為 500 / 10 = 50 m/s，故末動能皆相等。依功能定理 W = ΔK，20 秒內水平推力所作總功：甲圖 ＝ 乙圖！"
     },
     {
-      num: 20, unit: "u3", sourceYear: "114福和",
+      num: 20, unit: "u3", sourceYear: "魔王難度",
       text: "質量 12 公斤的物體在光滑水平面上受一個水平推力作用，並沿直線運動，其速度對時間的關係圖如右圖所示，請問 6 秒內此水平推力對物體作功的平均功率為若干瓦特？",
-      img: "images/fuhe_q20.png",
+      img: "images/boss_q20.png",
       options: { A: "500 瓦特", B: "400 瓦特", C: "200 瓦特", D: "100 瓦特" },
       ans: "D",
       explain: "光滑水平面無摩擦，推力作功等於動能增加量：0 秒靜止（K=0），6 秒末速度為 10 m/s，故 W = ΔK = ½ × 12 × 10² = 600 J。6 秒內平均功率 P = 600 J / 6 s = 100 瓦特。"
     },
     {
-      num: 21, unit: "u3", sourceYear: "114福和",
+      num: 21, unit: "u3", sourceYear: "魔王難度",
       text: "如右圖所示，三塊完全相同的木塊（標示為 1、2、3）固定在地板上。一初速為 V₀ 的子彈水平向右射穿第 3 塊木塊後，速度恰好為零。設木塊對子彈的阻力為一定值不隨子彈的速度而變化，若子彈向右通過這三個木塊時阻力作功的平均功率依序為 P₁、P₂ 及 P₃，則關於這三個功率量值的大小順序，何者正確？",
-      img: "images/fuhe_q21.png",
+      img: "images/boss_q21.png",
       options: {
         A: "P₁ > P₂ > P₃",
         B: "P₂ > P₁ > P₃",
@@ -1777,7 +1777,7 @@ const BANK_BOSS = {
       explain: "三塊木塊厚度相同且阻力定值，故阻力對子彈通過每塊木塊所作的功 W 大小相同；但子彈越往右速度越慢，通過每塊木塊耗時 t₁ < t₂ < t₃。由 P = W / t 可知 P₁ > P₂ > P₃。"
     },
     {
-      num: 22, unit: "u3", sourceYear: "114福和",
+      num: 22, unit: "u3", sourceYear: "魔王難度",
       text: "甲、乙兩個金屬球的質量比為 3：1，將甲、乙移至相同高度，並且同時由靜止釋放，讓它們作自由落體運動，過程中空氣阻力與浮力均可忽略，若經過 1 秒鐘，兩者均尚未落地，請問甲、乙兩金屬球由靜止落下 1 秒的瞬間，各項物理量的比何者錯誤？",
       options: {
         A: "重力作功的比＝3：1",
@@ -1789,7 +1789,7 @@ const BANK_BOSS = {
       explain: "同時自由落體 1 秒，位移比為 1：1；重力比等於質量比 3：1，故重力作功比 W = F·S = 3：1，獲得動能比為 3：1；經過相同時間 1 秒，重力作功的平均功率比 P = W/t 亦應為 3：1，故 (D) 錯誤。"
     },
     {
-      num: 23, unit: "u3", sourceYear: "114福和",
+      num: 23, unit: "u3", sourceYear: "魔王難度",
       text: "有一熱氣球從地表升空，當垂直上升到高度 32 m、速率為 3 m/s 瞬間，突然有一個重 10 kg 包裹從熱氣球邊緣掉落，若不考慮空氣的阻力與浮力（設 g = 10 m/s²），請問此包裹自離開熱氣球到著地期間重力作功的大小為 W，而包裹著地時的動能大小為 E_K，則 W 與 E_K 的大小比較何者正確？",
       options: {
         A: "W > E_K",
@@ -1801,9 +1801,9 @@ const BANK_BOSS = {
       explain: "重力作功 W = mgh = 10×10×32 = 3200 J；但包裹離開瞬間具有隨熱氣球向上的初速 3 m/s（初動能 K₀ = ½×10×3² = 45 J），依力學能守恆著地時動能 E_K = K₀ + W = 3245 J，故 W < E_K。"
     },
     {
-      num: 24, unit: "u3", sourceYear: "114福和", groupId: "fuhe_g24",
+      num: 24, unit: "u3", sourceYear: "魔王難度", groupId: "boss_g24",
       text: "如右圖所示，一單擺左右來回擺動，擺錘受有重力 W、擺線的拉力 T 與空氣阻力 R。下列有關此三力對擺錘作功的敘述何者正確？",
-      img: "images/fuhe_q24.png",
+      img: "images/boss_q24.png",
       options: {
         A: "W 一定作正功，T 一定作負功",
         B: "R 一定作負功，T 一定不作功",
@@ -1814,7 +1814,7 @@ const BANK_BOSS = {
       explain: "擺線拉力 T 永遠指向懸掛點，與切線位移方向垂直，故 T 一定不作功；空氣阻力 R 永遠與運動方向相反，故 R 一定作負功；重力 W 在下降時作正功、上升時作負功。"
     },
     {
-      num: 25, unit: "u3", sourceYear: "114福和", groupId: "fuhe_g24",
+      num: 25, unit: "u3", sourceYear: "魔王難度", groupId: "boss_g24",
       text: "承上題，則關於此擺錘運動過程的敘述何者正確？",
       options: {
         A: "遵守力學能守恆定律及能量守恆定律",
@@ -1826,9 +1826,9 @@ const BANK_BOSS = {
       explain: "因有空氣阻力 R 持續作負功消耗機械能（轉為熱能），故不遵守力學能守恆定律，但宇宙總能量依然遵守能量守恆定律。"
     },
     {
-      num: 26, unit: "u3", sourceYear: "114福和",
+      num: 26, unit: "u3", sourceYear: "魔王難度",
       text: "如右圖所示，一鉛直懸掛的輕質彈簧下端繫一小球，由彈簧原長度釋放。若在彈簧的彈力和地球引力的作用下，小球鉛直上下振盪。X、Z 二點分別為小球運動時的最高和最低位置，而 Y 為 X、Z 的中點。下列敘述，何者正確？",
-      img: "images/fuhe_q26.png",
+      img: "images/boss_q26.png",
       options: {
         A: "當小球由 X 往 Z 運動時，彈力對物體作正功",
         B: "當小球由 X 往 Z 運動時，重力對物體作正功",
@@ -1839,24 +1839,24 @@ const BANK_BOSS = {
       explain: "小球從最高點 X 向下運動到最低點 Z，位移向下且重力向下，故重力對物體作正功（彈力向上則作負功）；Z 點速度為 0（動能為 0）且彈簧伸長最多（彈力位能最大）；中點 Y 合力為 0、速率最大（動能最大）。"
     },
     {
-      num: 27, unit: "u3", sourceYear: "114福和",
+      num: 27, unit: "u3", sourceYear: "魔王難度",
       text: "位於南投縣水里鄉的大觀發電二廠會在深夜用電離峰時間利用剩餘的電能，將水里溪水壩（比日月潭低 300 公尺）的水抽取上來，貯存在日月潭中；白天時，再由日月潭把水洩到水里溪水壩中進行發電，則關於大觀發電二廠在白天的發電過程其能量轉換方式和哪種發電方式最接近？",
       options: { A: "風力發電", B: "地熱能發電", C: "太陽能發電", D: "潮汐發電" },
       ans: "D",
       explain: "白天將高處貯水放流推動水輪機，是利用「水的重力位能 → 動能 → 電能」，與利用海水漲退潮位能差的「潮汐發電」能量轉換方式最接近。"
     },
     {
-      num: 28, unit: "u3", sourceYear: "114福和",
+      num: 28, unit: "u3", sourceYear: "魔王難度",
       text: "在地面上 a 點將石頭以 10 m/s 的速度斜向拋出，其軌跡如右圖，若不計空氣阻力，請問石頭在哪一點的重力位能最大？",
-      img: "images/fuhe_q28.png",
+      img: "images/boss_q28.png",
       options: { A: "a 點", B: "b 點", C: "c 點", D: "d 點" },
       ans: "B",
       explain: "重力位能 U = mgh，b 點位於軌跡最高點（離地高度最高），故重力位能最大。"
     },
     {
-      num: 29, unit: "u5", sourceYear: "114福和",
+      num: 29, unit: "u5", sourceYear: "魔王難度",
       text: "右圖是地球內部地表附近地層的構造示意圖，試問板塊的範圍包含哪些部分？",
-      img: "images/fuhe_q29.png",
+      img: "images/boss_q29.png",
       options: {
         A: "包含甲、乙、丙、丁",
         B: "僅甲、乙、丙",
@@ -1867,7 +1867,7 @@ const BANK_BOSS = {
       explain: "板塊即為「岩石圈」，包含大陸地殼（甲）、海洋地殼（乙）以及軟流圈以上的部分上部地函（丙）；丁為軟流圈，不屬於板塊。"
     },
     {
-      num: 30, unit: "u5", sourceYear: "114福和",
+      num: 30, unit: "u5", sourceYear: "魔王難度",
       passageHtml: `<table style="width:100%;border-collapse:collapse;font-size:0.9rem;background:#fff;text-align:center;">
         <thead>
           <tr style="background:#e2e8f0;">
@@ -1893,21 +1893,21 @@ const BANK_BOSS = {
       explain: "大陸地殼主要為「花岡岩」質、密度較小；海洋地殼主要為「玄武岩」質、密度較大（大陸地殼 ＜ 海洋地殼），故選丁。"
     },
     {
-      num: 31, unit: "u5", sourceYear: "114福和",
+      num: 31, unit: "u5", sourceYear: "魔王難度",
       text: "右圖為中洋脊附近的剖面示意圖，X、Y 和 Z 為中洋脊附近三個不同的位置。根據右圖判斷下列何者最可能為 X、Y 和 Z 三處位置的海洋地殼年齡關係？",
-      img: "images/fuhe_q31.png",
+      img: "images/boss_q31.png",
       optionImgs: {
-        A: "images/fuhe_q31_A.png",
-        B: "images/fuhe_q31_B.png",
-        C: "images/fuhe_q31_C.png",
-        D: "images/fuhe_q31_D.png"
+        A: "images/boss_q31_A.png",
+        B: "images/boss_q31_B.png",
+        C: "images/boss_q31_C.png",
+        D: "images/boss_q31_D.png"
       },
       options: { A: "選項 (A)", B: "選項 (B)", C: "選項 (C)", D: "選項 (D)" },
       ans: "A",
       explain: "中洋脊裂谷處有岩漿不斷湧出形成最新海洋地殼，故離中洋脊越遠地殼年齡越老。距離中洋脊由近到遠為 Z ＜ Y ＜ X，年齡由年輕到老為 Z ＜ Y ＜ X，對應圖 (A)。"
     },
     {
-      num: 32, unit: "u5", sourceYear: "114福和",
+      num: 32, unit: "u5", sourceYear: "魔王難度",
       text: "下列有關板塊間的相對運動敘述，何者錯誤？",
       options: {
         A: "中洋脊和海溝是受張力作用而分離的板塊邊界地形",
@@ -1919,18 +1919,18 @@ const BANK_BOSS = {
       explain: "中洋脊位於張裂性（互相分離）板塊邊界；「海溝」則是海洋板塊隱沒至另一板塊下方所形成，屬於聚合性（互相擠壓）板塊邊界地形，(A) 錯誤。"
     },
     {
-      num: 33, unit: "u5", sourceYear: "114福和",
+      num: 33, unit: "u5", sourceYear: "魔王難度",
       text: "以下甲、乙、丙、丁四圖為地層兩側受力後所形成的地質構造示意圖，請選出哪些地層受力情形是擠壓造成的？",
-      img: "images/fuhe_q33.png",
+      img: "images/boss_q33.png",
       options: { A: "甲乙丙", B: "甲乙丁", C: "僅甲乙", D: "僅丙丁" },
       ans: "B",
       explain: "水平擠壓會形成「褶皺（甲、乙）」及上盤相對下盤上移的「逆斷層（丁）」；丙為上盤下滑的「正斷層」，係受水平張力（拉力）形成。故選甲乙丁。"
     },
     {
-      num: 34, unit: "u5", sourceYear: "114福和", groupId: "fuhe_g34",
+      num: 34, unit: "u5", sourceYear: "魔王難度", groupId: "boss_g34",
       passage: "右表為 114 年 11 月 10 日由中央氣象署發布的地震報告，依據附表有五位學生提出以下看法：\n孟涓：此次地震全臺各地所測到的最大震度為 5.3。\n亦龍：地震規模的大小是依地面上的人感受到的搖動程度或建築物受破壞的程度來區分。\n文穎：從各地的震度來看，距離震央愈近，則震度愈大。\n永強：右表中的「位置」指的是中央氣象署某一地震觀測站的位置。\n昡彤：此次地震發生時在世界各地測得的地震規模皆應相同。\n請根據附表回答第 34～35 題：",
-      passageImg: "images/fuhe_q34.png",
-      img: "images/fuhe_q34.png",
+      passageImg: "images/boss_q34.png",
+      img: "images/boss_q34.png",
       hideInlineImgInExam: true,
       text: "請問上述哪些學生的看法比較正確？",
       options: {
@@ -1943,9 +1943,9 @@ const BANK_BOSS = {
       explain: "5.3 是「芮氏規模」而非震度（孟涓錯）；依搖晃與破壞程度區分的是「震度」（亦龍錯）；「位置」指的是「震央」經緯度（永強錯）。僅文穎與昡彤正確。"
     },
     {
-      num: 35, unit: "u5", sourceYear: "114福和", groupId: "fuhe_g34",
+      num: 35, unit: "u5", sourceYear: "魔王難度", groupId: "boss_g34",
       text: "承上題，若右圖為引發此次地震的斷層示意圖，星號為斷層發生錯動的位置，請問震源與震央分別為圖中何者？",
-      img: "images/fuhe_q35.png",
+      img: "images/boss_q35.png",
       options: {
         A: "震源為甲，震央為丙",
         B: "震源為丁，震央為戊",
@@ -1956,9 +1956,9 @@ const BANK_BOSS = {
       explain: "地下斷層錯動發震處（星號「甲」）稱為「震源」；震源鉛直向上投影到地表的點（「丁」）稱為「震央」。"
     },
     {
-      num: 36, unit: "u5", sourceYear: "114福和",
+      num: 36, unit: "u5", sourceYear: "魔王難度",
       text: "如右圖，為臺灣附近的板塊構造示意圖，請根據此圖與臺灣的板塊運動，判斷下列敘述何者錯誤？",
-      img: "images/fuhe_q36.png",
+      img: "images/boss_q36.png",
       options: {
         A: "澎湖位於歐亞板塊上",
         B: "綠島逐漸向臺灣靠近，將來會成為臺灣島的一部分",
@@ -1969,9 +1969,9 @@ const BANK_BOSS = {
       explain: "歐亞板塊與菲律賓海板塊在臺灣的交界縫合帶是「花東縱谷」，而非中央山脈，故 (C) 錯誤。"
     },
     {
-      num: 37, unit: "u6", sourceYear: "114福和",
+      num: 37, unit: "u6", sourceYear: "魔王難度",
       text: "右圖為地層的剖面圖，丙表岩脈侵入，丁表侵蝕面的形成，甲表砂岩沉積，乙表頁岩沉積，有關前述地質事件發生的先後順序，下列何者正確？",
-      img: "images/fuhe_q37.png",
+      img: "images/boss_q37.png",
       options: {
         A: "乙→甲→丙→丁",
         B: "丙→乙→甲→丁",
@@ -1982,23 +1982,23 @@ const BANK_BOSS = {
       explain: "未倒轉岩層越下方越早沉積，故先沉積頁岩乙、再沉積砂岩甲；隨後岩脈丙切穿乙和甲；最後上方起伏的侵蝕面丁把甲和丙一同切平侵蝕，順序為 乙→甲→丙→丁。"
     },
     {
-      num: 38, unit: "u6", sourceYear: "114福和",
+      num: 38, unit: "u6", sourceYear: "魔王難度",
       text: "古生代、中生代和新生代等地質時代劃分的主要依據為何？",
       options: { A: "放射性同位素", B: "化石種類", C: "岩石組成", D: "岩層定年" },
       ans: "B",
       explain: "地質時代（古生代、中生代、新生代）主要是依據地層中所含生物「化石種類」的演化與重大滅絕事件來劃分。"
     },
     {
-      num: 39, unit: "u6", sourceYear: "114福和",
+      num: 39, unit: "u6", sourceYear: "魔王難度",
       text: "(甲) 可訂出地層形成的確實時間、(乙) 可藉此比對相隔兩地的地層是否為同時代堆積、(丙) 可藉此了解當時的沉積環境、(丁) 可劃分地質年代，請問地層中化石的功能有哪些？",
       options: { A: "僅丙丁", B: "僅乙丁", C: "僅乙丙丁", D: "甲乙丙丁" },
       ans: "C",
       explain: "化石可幫助判斷相對年代（劃分地質年代）、比對兩地地層是否同期、推知古沉積環境（如海相／陸相）；但只能定出相對順序，無法直接測定地層形成的「確實絕對時間」（需靠放射性同位素定年）。"
     },
     {
-      num: 40, unit: "u6", sourceYear: "114福和",
+      num: 40, unit: "u6", sourceYear: "魔王難度",
       text: "右圖為甲、乙兩地的沉積地層剖面圖（已知此地層沒有上下倒置的現象），其中化石分布情況如右圖所示。請問乙地區剖面中「Z」地層的年代，與甲地區哪一個的地層年代較為接近？",
-      img: "images/fuhe_q40.png",
+      img: "images/boss_q40.png",
       options: { A: "S 地層", B: "T 地層", C: "U 地層", D: "V 地層" },
       ans: "C",
       explain: "比對相同種類的標準化石組合：乙地區 Z 層內含「梭形／水滴狀＋貝殼＋Y形」化石組合，與甲地區的「U 地層」所含化石種類最相符，代表兩者為同時代堆積。"

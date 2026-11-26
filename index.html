@@ -197,19 +197,36 @@
 
     .mode-card.boss-card {
       grid-column: 1 / -1;
-      border-color: #fca5a5;
-      background: linear-gradient(135deg, #fff5f5 0%, #ffffff 100%);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      border-color: #581c87;
+      background: linear-gradient(135deg, #12091f 0%, #24113f 55%, #140a24 100%);
+      color: #f5f3ff;
     }
 
     .mode-card.boss-card:hover {
-      border-color: #ef4444;
-      background: #fef2f2;
+      border-color: #9333ea;
+      background: linear-gradient(135deg, #190d2b 0%, #2f1654 55%, #1c0e33 100%);
     }
 
     .mode-card.boss-card.selected {
-      border-color: #dc2626;
-      background: linear-gradient(135deg, #fef2f2 0%, #fff1f2 100%);
-      box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.2);
+      border-color: #c084fc;
+      background: linear-gradient(135deg, #21103a 0%, #3b1c68 55%, #23113f 100%);
+      box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.42), 0 10px 24px rgba(18, 9, 31, 0.45);
+    }
+
+    .boss-demon-emblem {
+      width: 58px;
+      height: 58px;
+      flex-shrink: 0;
+      border-radius: 14px;
+      background: radial-gradient(circle at 35% 25%, #4c1d95 0%, #170929 65%, #090412 100%);
+      border: 1.5px solid #a855f7;
+      box-shadow: inset 0 0 14px rgba(168, 85, 247, 0.4), 0 4px 12px rgba(0, 0, 0, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .mode-badge {
@@ -229,8 +246,12 @@
     }
 
     .mode-card.boss-card .mode-badge {
-      background: #fee2e2;
-      color: #b91c1c;
+      background: linear-gradient(90deg, #2e1065 0%, #581c87 100%);
+      color: #f3e8ff;
+      border: 1px solid #a855f7;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
     }
 
     .q-boss-badge {
@@ -239,9 +260,9 @@
       font-weight: 700;
       padding: 2px 8px;
       border-radius: 6px;
-      background: #fef2f2;
-      color: #b91c1c;
-      border: 1px solid #fecaca;
+      background: #2e1065;
+      color: #f3e8ff;
+      border: 1px solid #7e22ce;
       margin-left: 4px;
     }
 
@@ -255,6 +276,14 @@
       margin: 0;
       font-size: 0.85rem;
       color: var(--muted);
+    }
+
+    .mode-card.boss-card h4 {
+      color: #faf5ff;
+    }
+
+    .mode-card.boss-card p {
+      color: #ddd6fe;
     }
 
     .overview-grid {
@@ -960,9 +989,45 @@
             <p>選擇與素養 26 題（78 分）＋ 簡答 4 大題（22 分），滿分 100 分。</p>
           </button>
           <button type="button" class="mode-card boss-card" data-mode="boss">
-            <span class="mode-badge">🔥 魔王難度｜名校挑戰</span>
-            <h4>👑 魔王難度（114 學年度福和國中第二次段考）</h4>
-            <p>收錄新北市立福和國中 114 上二次段考原卷（單選 40 題 × 2.5 分 ＝ 100 分，含卡文迪許扭秤素養題與物理計算挑戰題）</p>
+            <div class="boss-demon-emblem" aria-hidden="true">
+              <svg viewBox="0 0 64 64" width="44" height="44" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <linearGradient id="demonHornGrad" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#e9d5ff"/>
+                    <stop offset="45%" stop-color="#a855f7"/>
+                    <stop offset="100%" stop-color="#3b0764"/>
+                  </linearGradient>
+                  <linearGradient id="demonFaceGrad" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#2e1065"/>
+                    <stop offset="100%" stop-color="#090412"/>
+                  </linearGradient>
+                </defs>
+                <!-- Left & Right Curved Demon Horns -->
+                <path d="M22 24 C13 20, 7 11, 11 4 C13 11, 19 15, 26 18 Z" fill="url(#demonHornGrad)" stroke="#c084fc" stroke-width="1.2" stroke-linejoin="round"/>
+                <path d="M42 24 C51 20, 57 11, 53 4 C51 11, 45 15, 38 18 Z" fill="url(#demonHornGrad)" stroke="#c084fc" stroke-width="1.2" stroke-linejoin="round"/>
+                <!-- Angular Demon Head Silhouette -->
+                <path d="M16 24 L24 17 L40 17 L48 24 L51 37 L42 52 L32 58 L22 52 L13 37 Z" fill="url(#demonFaceGrad)" stroke="#9333ea" stroke-width="1.8" stroke-linejoin="round"/>
+                <!-- Forehead Dark Crest -->
+                <path d="M32 21 L35 28 L32 31 L29 28 Z" fill="#a855f7" opacity="0.85"/>
+                <!-- Glowing Violet Slanted Eyes -->
+                <polygon points="19,33 29,37 27,40 18,37" fill="#f0abfc"/>
+                <polygon points="45,33 35,37 37,40 46,37" fill="#f0abfc"/>
+                <!-- Menacing Fanged Grin -->
+                <path d="M22 46 Q32 52 42 46 L39 49 L36 47 L32 50 L28 47 L25 49 Z" fill="#c084fc"/>
+              </svg>
+            </div>
+            <div>
+              <span class="mode-badge">
+                <svg viewBox="0 0 16 16" width="13" height="13" aria-hidden="true" style="vertical-align:-2px;">
+                  <path d="M4 6 C2 4,1 2,2.5 0.8 C3 3,4.5 4,6 4.8 L10 4.8 C11.5 4,13 3,13.5 0.8 C15 2,14 4,12 6 L13 10 L8 15 L3 10 Z" fill="#d8b4fe"/>
+                  <polygon points="4.5,8.5 7.2,9.8 6.5,10.8 4.2,9.8" fill="#12091f"/>
+                  <polygon points="11.5,8.5 8.8,9.8 9.5,10.8 11.8,9.8" fill="#12091f"/>
+                </svg>
+                魔王難度｜終極挑戰
+              </span>
+              <h4>魔王難度</h4>
+              <p>全卷單一選擇題 40 題（每題 2.5 分 ＝ 100 分，含長文素養題與高階物理計算挑戰題）</p>
+            </div>
           </button>
         </div>
 
