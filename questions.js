@@ -5,7 +5,8 @@
 const UNITS = [
   {
     id: "u1",
-    shortLabel: "2-1~2-3\n牛頓定律",
+    name: "牛頓三大運動定律",
+    shortLabel: "牛頓三大\n運動定律",
     chapter: "第2章 力與運動",
     section: "2-1～2-3 牛頓三大運動定律",
     pages: "115課本 P.36～44",
@@ -13,7 +14,8 @@ const UNITS = [
   },
   {
     id: "u2",
-    shortLabel: "2-4 圓周與\n萬有引力",
+    name: "圓周運動與萬有引力",
+    shortLabel: "圓周運動與\n萬有引力",
     chapter: "第2章 力與運動",
     section: "2-4 圓周運動與萬有引力",
     pages: "115課本 P.46～50",
@@ -21,7 +23,8 @@ const UNITS = [
   },
   {
     id: "u3",
-    shortLabel: "3-1~3-2 功\n與力學能",
+    name: "功、功率與力學能",
+    shortLabel: "功、功率與\n力學能",
     chapter: "第3章 功與能",
     section: "3-1～3-2 功、功率與力學能守恆",
     pages: "115課本 P.62～71",
@@ -29,7 +32,8 @@ const UNITS = [
   },
   {
     id: "u4",
-    shortLabel: "3-3~3-4\n力矩與槓桿",
+    name: "力矩與槓桿原理",
+    shortLabel: "力矩與\n槓桿原理",
     chapter: "第3章 功與能",
     section: "3-3～3-4 力矩與槓桿原理",
     pages: "115課本 P.74～81",
@@ -37,7 +41,8 @@ const UNITS = [
   },
   {
     id: "u5",
-    shortLabel: "6-1~6-2\n板塊與斷層",
+    name: "地球構造與板塊斷層",
+    shortLabel: "地球構造與\n板塊斷層",
     chapter: "第6章 板塊運動與地球歷史",
     section: "6-1～6-2 地球構造、板塊與斷層",
     pages: "115課本 P.172～181, 186～188",
@@ -45,7 +50,8 @@ const UNITS = [
   },
   {
     id: "u6",
-    shortLabel: "6-3 地球歷史\n與化石演化",
+    name: "地球歷史與代表化石",
+    shortLabel: "地球歷史與\n代表化石",
     chapter: "第6章 板塊運動與地球歷史",
     section: "6-3 地球歷史與代表性化石",
     pages: "115課本 P.182, 184",
@@ -2059,7 +2065,7 @@ function shuffleQuestionOptions(q) {
 }
 
 function generateActiveExam(mode) {
-  if (mode !== "remix") {
+  if (mode !== "raid" && mode !== "remix") {
     const bank = EXAM_BANKS[mode];
     return {
       mode,
@@ -2073,10 +2079,10 @@ function generateActiveExam(mode) {
     };
   }
 
-  // 【重組段考】：依 112～114 章節平均比例抽取 32 題單選 (每題 2.5 分 = 80 分)
-  // 配額：{ u1: 5, u2: 4, u3: 6, u4: 6, u5: 7, u6: 4 } -> 合計 32 題
-  const QUOTA = { u1: 5, u2: 4, u3: 6, u4: 6, u5: 7, u6: 4 };
-  const allMc = [...BANK_114.mc, ...BANK_113.mc, ...BANK_112.mc];
+  // 【闖關討伐模式】：從全題庫 (112、113、114、魔王題庫) 依 6 大單元平均各抽 5 題，共 30 題 (滿分 100 分)
+  // 前 20 題每題 3 分 (60 分) ＋ 後 10 題狂暴決戰每題 4 分 (40 分) ＝ 100 分
+  const QUOTA = { u1: 5, u2: 5, u3: 5, u4: 5, u5: 5, u6: 5 };
+  const allMc = [...BANK_114.mc, ...BANK_113.mc, ...BANK_112.mc, ...BANK_BOSS.mc];
 
   // 將所有單選題組成原子區塊（單題為長度1之陣列；題組為共題幹之多題陣列）
   const blocksByUnit = { u1: [], u2: [], u3: [], u4: [], u5: [], u6: [] };
@@ -2087,7 +2093,6 @@ function generateActiveExam(mode) {
       if (visitedGroups.has(q.groupId)) return;
       visitedGroups.add(q.groupId);
       const grp = allMc.filter(x => x.groupId === q.groupId);
-      // 題組歸屬於其主單元（本題庫內所有題組皆為同單元題目）
       blocksByUnit[grp[0].unit].push(grp);
     } else {
       blocksByUnit[q.unit].push([q]);
@@ -2108,7 +2113,6 @@ function generateActiveExam(mode) {
         }
       }
     }
-    // 備援精確回溯搜尋
     const shuffled = shuffleArr(blocks);
     function dfs(idx, curSum, acc) {
       if (curSum === targetCount) return acc;
@@ -2125,53 +2129,33 @@ function generateActiveExam(mode) {
     selectedBlocks = selectedBlocks.concat(pickExactCount(blocksByUnit[u], QUOTA[u]));
   });
 
-  // 隨機排列區塊順序並將每題選項洗牌（防背答案）
+  // 隨機排列區塊順序並將每題選項洗牌（防背答案），題組共同題幹同步保留於各子題
   selectedBlocks = shuffleArr(selectedBlocks);
-  const remixMc = [];
+  const raidMc = [];
   let mcCounter = 1;
   selectedBlocks.forEach(blk => {
+    const grpMeta = blk[0] || {};
     blk.forEach(q => {
       const shuffledQ = shuffleQuestionOptions(q);
       shuffledQ.origNum = q.num;
-      shuffledQ.num = mcCounter++;
-      remixMc.push(shuffledQ);
+      shuffledQ.num = mcCounter;
+      shuffledQ.pts = mcCounter <= 20 ? 3 : 4;
+      if (!shuffledQ.passage && grpMeta.passage) shuffledQ.passage = grpMeta.passage;
+      if (!shuffledQ.passageHtml && grpMeta.passageHtml) shuffledQ.passageHtml = grpMeta.passageHtml;
+      if (!shuffledQ.passageImg && grpMeta.passageImg) shuffledQ.passageImg = grpMeta.passageImg;
+      mcCounter++;
+      raidMc.push(shuffledQ);
     });
   });
-
-  // 手寫題：在 u1, u2, u3, u4 各選 1 題，使總格數剛好為 10 格（每格 2 分 = 20 分）
-  const validCombos = [];
-  REMIX_HW_POOL.u1.forEach(q1 => {
-    REMIX_HW_POOL.u2.forEach(q2 => {
-      REMIX_HW_POOL.u3.forEach(q3 => {
-        REMIX_HW_POOL.u4.forEach(q4 => {
-          const totalBlanks = q1.blanks.length + q2.blanks.length + q3.blanks.length + q4.blanks.length;
-          if (totalBlanks === 10) {
-            validCombos.push([q1, q2, q3, q4]);
-          }
-        });
-      });
-    });
-  });
-
-  const pickedHwRaw = shuffleArr(validCombos[Math.floor(Math.random() * validCombos.length)]);
-  const remixHw = pickedHwRaw.map((q, idx) => ({
-    ...q,
-    num: idx + 1,
-    blanks: q.blanks.map((b, bIdx) => ({
-      ...b,
-      id: `remix_hw_${idx + 1}_${bIdx + 1}`,
-      pts: 2
-    }))
-  }));
 
   return {
-    mode: "remix",
-    title: "【重組段考】112～114 學年度跨年度隨機組卷",
-    subtitle: "單選 32 題隨機洗牌選項（80 分）＋ 手寫 4 題共 10 格（20 分）",
-    mcPts: 2.5,
-    mcMax: 80,
-    hwMax: 20,
-    mc: remixMc,
-    hw: remixHw
+    mode: "raid",
+    title: "【闖關討伐模式】跨題庫魔王討伐戰",
+    subtitle: "全題庫 6 大章節均衡抽題（共 30 題｜前 20 題各 3 分 ＋ 狂暴決戰 10 題各 4 分 ＝ 100 分）",
+    mcPts: 3,
+    mcMax: 100,
+    hwMax: 0,
+    mc: raidMc,
+    hw: []
   };
 }

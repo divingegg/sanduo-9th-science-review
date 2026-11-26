@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="data:," />
   <title>三多國中九年級自然｜第二次段考複習與重組段考系統</title>
   <style>
     :root {
@@ -158,11 +159,11 @@
 
     .mode-grid {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(3, 1fr);
       gap: 12px;
     }
 
-    @media (max-width: 680px) {
+    @media (max-width: 720px) {
       .mode-grid { grid-template-columns: 1fr; }
     }
 
@@ -925,21 +926,629 @@
       .no-print { display: none !important; }
       .card { box-shadow: none; border: 1px solid #cbd5e1; break-inside: avoid; }
     }
+
+    /* ==================== RPG RAID ARENA & HERO CARD STYLES ==================== */
+    .mode-group-label {
+      margin: 18px 0 8px;
+      font-size: 0.96rem;
+      font-weight: 800;
+      color: #1e293b;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .mode-card.raid-card {
+      grid-column: 1 / -1;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      border: 2px solid #f59e0b;
+      background: linear-gradient(135deg, #0b132b 0%, #1c2541 48%, #0f4c5c 100%);
+      color: #f8fafc;
+      box-shadow: inset 0 0 0 1px rgba(251, 191, 36, 0.35), 0 8px 22px rgba(15, 23, 42, 0.25);
+    }
+    .mode-card.raid-card:hover {
+      border-color: #fbbf24;
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 48%, #115e59 100%);
+    }
+    .mode-card.raid-card.selected {
+      border-color: #fde047;
+      background: linear-gradient(135deg, #111827 0%, #312e81 48%, #0f766e 100%);
+      box-shadow: 0 0 0 3px rgba(250, 204, 21, 0.45), 0 12px 28px rgba(15, 23, 42, 0.35);
+    }
+    .mode-card.raid-card h4 { color: #fef08a; }
+    .mode-card.raid-card p { color: #cbd5e1; }
+    .mode-card.raid-card .mode-badge {
+      background: linear-gradient(90deg, #b45309, #d97706);
+      color: #fffbeb;
+      border: 1px solid #fcd34d;
+    }
+    .raid-quest-emblem {
+      width: 64px;
+      height: 64px;
+      flex-shrink: 0;
+      border-radius: 14px;
+      border: 2px solid #fbbf24;
+      background: radial-gradient(circle at center, #312e81 0%, #090412 100%);
+      box-shadow: inset 0 0 12px rgba(251, 191, 36, 0.35), 0 4px 12px rgba(0, 0, 0, 0.45);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .raid-quest-emblem img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      image-rendering: pixelated;
+    }
+    .raid-chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin: 6px 0 8px;
+    }
+    .raid-chip {
+      font-size: 0.74rem;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(253, 224, 71, 0.4);
+      color: #fef9c3;
+    }
+
+    .preview-dev-bar {
+      margin-top: 14px;
+      padding: 12px 14px;
+      border-radius: 12px;
+      background: #fefce8;
+      border: 1.5px dashed #eab308;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      font-size: 0.86rem;
+      color: #854d0e;
+    }
+    .preview-dev-bar .btn-dev {
+      background: #fffbeb;
+      border: 1px solid #d97706;
+      color: #92400e;
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 0.84rem;
+      cursor: pointer;
+      font-family: inherit;
+    }
+    .preview-dev-bar .btn-dev:hover { background: #fef3c7; }
+
+    .raid-stage {
+      background: radial-gradient(circle at 80% 20%, #3b0764 0%, #170929 52%, #090412 100%);
+      color: #f8fafc;
+      border-radius: 18px;
+      padding: 20px 22px;
+      margin-bottom: 16px;
+      border: 2px solid #7e22ce;
+      box-shadow: 0 14px 36px rgba(23, 9, 41, 0.42);
+      position: relative;
+      overflow: hidden;
+    }
+    .raid-stage.rage-phase {
+      background: radial-gradient(circle at 80% 20%, #7f1d1d 0%, #2e0738 55%, #0c0414 100%);
+      border-color: #f43f5e;
+      box-shadow: 0 14px 38px rgba(190, 18, 60, 0.42);
+    }
+
+    .raid-top-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      padding-bottom: 12px;
+      margin-bottom: 14px;
+      border-bottom: 1px solid rgba(168, 85, 247, 0.28);
+    }
+    .raid-pill {
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(216, 180, 254, 0.35);
+      color: #f3e8ff;
+      padding: 4px 12px;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 700;
+    }
+    .raid-round-pill {
+      background: linear-gradient(90deg, #7c3aed, #db2777);
+      color: #fff;
+      padding: 4px 14px;
+      border-radius: 999px;
+      font-size: 0.88rem;
+      font-weight: 800;
+    }
+    .raid-top-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+    .raid-mini-btn {
+      background: rgba(255, 255, 255, 0.1);
+      color: #e2e8f0;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      border-radius: 8px;
+      padding: 5px 10px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+    }
+    .raid-mini-btn:hover { background: rgba(255, 255, 255, 0.2); }
+
+    .raid-hud {
+      display: grid;
+      grid-template-columns: 1fr 1.25fr;
+      gap: 18px;
+      align-items: center;
+    }
+    @media (max-width: 720px) {
+      .raid-hud { grid-template-columns: 1fr; }
+    }
+
+    .raid-hero-panel {
+      background: rgba(15, 23, 42, 0.65);
+      border: 1px solid rgba(148, 163, 184, 0.3);
+      border-radius: 14px;
+      padding: 14px 16px;
+    }
+    .raid-hearts {
+      font-size: 1.25rem;
+      letter-spacing: 3px;
+      margin: 4px 0 8px;
+    }
+    .raid-combo-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 12px;
+      border-radius: 999px;
+      font-weight: 800;
+      font-size: 0.92rem;
+      background: rgba(59, 130, 246, 0.22);
+      border: 1px solid rgba(96, 165, 250, 0.5);
+      color: #bae6fd;
+      transition: transform 0.2s;
+    }
+    .raid-combo-badge.hot {
+      background: linear-gradient(90deg, #b45309, #db2777);
+      border-color: #fde047;
+      color: #fef9c3;
+      animation: comboPop 0.35s ease;
+    }
+    .raid-shield-tag {
+      display: inline-block;
+      margin-top: 8px;
+      background: rgba(16, 185, 129, 0.22);
+      border: 1px solid #34d399;
+      color: #a7f3d0;
+      padding: 3px 10px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+
+    .raid-boss-panel {
+      background: rgba(9, 4, 18, 0.72);
+      border: 1px solid rgba(192, 132, 252, 0.4);
+      border-radius: 14px;
+      padding: 14px 16px;
+      display: flex;
+      gap: 14px;
+      align-items: center;
+      position: relative;
+    }
+    .raid-boss-avatar {
+      width: 82px;
+      height: 82px;
+      flex-shrink: 0;
+      border-radius: 16px;
+      background: radial-gradient(circle at 35% 25%, #581c87 0%, #140824 72%);
+      border: 2px solid #a855f7;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    .raid-boss-avatar.hit { animation: bossShake 0.4s ease; }
+    .raid-boss-speech {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      padding: 6px 10px;
+      font-size: 0.83rem;
+      color: #f5d0fe;
+      margin: 6px 0 8px;
+    }
+    .raid-hp-track {
+      height: 16px;
+      background: #1e1b4b;
+      border: 1px solid #7e22ce;
+      border-radius: 999px;
+      overflow: hidden;
+      position: relative;
+    }
+    .raid-hp-fill {
+      height: 100%;
+      width: 100%;
+      background: linear-gradient(90deg, #a855f7 0%, #ec4899 60%, #ef4444 100%);
+      transition: width 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .raid-dmg-pop {
+      position: absolute;
+      right: 22px;
+      top: 10px;
+      font-size: 1.2rem;
+      font-weight: 900;
+      color: #fde047;
+      text-shadow: 0 2px 8px #000;
+      pointer-events: none;
+      animation: floatDmg 0.85s ease forwards;
+    }
+
+    @keyframes bossShake {
+      0%, 100% { transform: translateX(0); }
+      20% { transform: translateX(-7px) rotate(-3deg); }
+      45% { transform: translateX(7px) rotate(3deg); }
+      70% { transform: translateX(-4px); }
+    }
+    @keyframes floatDmg {
+      0% { opacity: 1; transform: translateY(0) scale(1); }
+      100% { opacity: 0; transform: translateY(-28px) scale(1.22); }
+    }
+    @keyframes comboPop {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.14); }
+      100% { transform: scale(1); }
+    }
+
+    /* 3-choose-2 Skill Bar */
+    .raid-items-card {
+      background: #ffffff;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 14px;
+      padding: 14px 18px;
+      margin-bottom: 14px;
+      box-shadow: var(--shadow);
+    }
+    .raid-items-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 10px;
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: #1e293b;
+    }
+    .raid-quota-pill {
+      background: #ede9fe;
+      color: #5b21b6;
+      padding: 3px 10px;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      font-weight: 800;
+    }
+    .raid-items-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+    @media (max-width: 680px) {
+      .raid-items-grid { grid-template-columns: 1fr; }
+    }
+    .raid-item-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 3px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 1.5px solid #cbd5e1;
+      background: #f8fafc;
+      cursor: pointer;
+      text-align: left;
+      font-family: inherit;
+      transition: all 0.15s;
+    }
+    .raid-item-btn:hover:not(:disabled) {
+      border-color: #7c3aed;
+      background: #f5f3ff;
+      transform: translateY(-1px);
+    }
+    .raid-item-btn.used {
+      background: #e2e8f0;
+      border-color: #94a3b8;
+      opacity: 0.65;
+    }
+    .raid-item-btn.locked-limit {
+      background: #f1f5f9;
+      border-style: dashed;
+      opacity: 0.55;
+    }
+    .raid-item-btn:disabled { cursor: not-allowed; }
+    .raid-item-title { font-weight: 800; font-size: 0.94rem; color: #0f172a; }
+    .raid-item-desc { font-size: 0.78rem; color: var(--muted); }
+
+    .raid-scroll-hint {
+      margin: 12px 0;
+      padding: 12px 14px;
+      background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+      border: 1.5px solid #f59e0b;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      color: #78350f;
+    }
+    .option-btn.eliminated {
+      opacity: 0.35;
+      text-decoration: line-through;
+      background: #f1f5f9;
+      border-style: dashed;
+      pointer-events: none;
+    }
+    .option-btn.raid-correct {
+      border-color: #16a34a !important;
+      background: #dcfce7 !important;
+      font-weight: 700;
+    }
+    .option-btn.raid-correct .option-key { background: #16a34a; color: #fff; }
+    .option-btn.raid-wrong {
+      border-color: #dc2626 !important;
+      background: #fee2e2 !important;
+    }
+    .option-btn.raid-wrong .option-key { background: #dc2626; color: #fff; }
+
+    /* Hero Card & Anonymous Class Top 10 */
+    .hero-leaderboard-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.95fr;
+      gap: 18px;
+      margin-bottom: 18px;
+    }
+    @media (max-width: 820px) {
+      .hero-leaderboard-grid { grid-template-columns: 1fr; }
+    }
+
+    .hero-card {
+      border-radius: 16px;
+      padding: 20px;
+      color: #f8fafc;
+      position: relative;
+      overflow: hidden;
+      border: 2px solid #a855f7;
+      background: linear-gradient(145deg, #0f172a 0%, #24113f 55%, #090412 100%);
+      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.25);
+    }
+    .hero-card.rarity-UR {
+      border-color: #facc15;
+      background: linear-gradient(145deg, #1e1b4b 0%, #4c1d95 45%, #701a75 100%);
+      box-shadow: 0 12px 34px rgba(168, 85, 247, 0.38);
+    }
+    .hero-card.rarity-SSR {
+      border-color: #c084fc;
+      background: linear-gradient(145deg, #172554 0%, #3b0764 60%, #0f172a 100%);
+    }
+    .hero-card.rarity-SR {
+      border-color: #38bdf8;
+      background: linear-gradient(145deg, #0f172a 0%, #1e3a8a 60%, #0f766e 100%);
+    }
+    .hero-card.rarity-R {
+      border-color: #34d399;
+      background: linear-gradient(145deg, #0f172a 0%, #064e3b 65%, #1e293b 100%);
+    }
+    .hero-card.rarity-N {
+      border-color: #94a3b8;
+      background: linear-gradient(145deg, #1e293b 0%, #334155 100%);
+    }
+
+    .hero-top-flex {
+      display: flex;
+      gap: 14px;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    .hero-pixel-avatar {
+      width: 108px;
+      height: 108px;
+      flex-shrink: 0;
+      border-radius: 14px;
+      border: 2.5px solid #c084fc;
+      background: #090412;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.45);
+      overflow: hidden;
+    }
+    .hero-card.rarity-UR .hero-pixel-avatar {
+      border-color: #facc15;
+      box-shadow: 0 0 18px rgba(250, 204, 21, 0.45);
+    }
+    .hero-pixel-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      image-rendering: pixelated;
+      display: block;
+    }
+    @media (max-width: 480px) {
+      .hero-top-flex { flex-direction: column; align-items: flex-start; }
+    }
+
+    .tactics-tier-box {
+      padding: 12px 16px;
+      border-radius: 12px;
+      margin-bottom: 14px;
+      font-size: 0.92rem;
+      line-height: 1.55;
+      border-left: 5px solid #2563eb;
+      background: #eff6ff;
+      color: #1e3a8a;
+    }
+    .tactics-tier-box.tier-low {
+      border-left-color: #d97706;
+      background: #fffbeb;
+      color: #78350f;
+    }
+    .tactics-tier-box.tier-mid {
+      border-left-color: #7c3aed;
+      background: #f5f3ff;
+      color: #3b0764;
+    }
+    .tactics-tier-box.tier-high {
+      border-left-color: #16a34a;
+      background: #f0fdf4;
+      color: #14532d;
+    }
+    .tactics-sub-title {
+      margin: 18px 0 10px;
+      font-size: 1.04rem;
+      font-weight: 800;
+      color: #1e293b;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .hero-rarity-pill {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 900;
+      letter-spacing: 0.8px;
+      background: rgba(250, 204, 21, 0.2);
+      border: 1px solid #facc15;
+      color: #fef08a;
+    }
+    .hero-title-main {
+      margin: 8px 0 4px;
+      font-size: 1.32rem;
+      font-weight: 900;
+      color: #fff;
+    }
+    .hero-sub-meta {
+      font-size: 0.86rem;
+      color: #cbd5e1;
+      margin-bottom: 12px;
+    }
+    .hero-kpis {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+    .hero-kpi {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 10px;
+      padding: 8px 10px;
+      text-align: center;
+    }
+    .hero-kpi .k { font-size: 0.74rem; color: #cbd5e1; }
+    .hero-kpi .v { font-size: 1.08rem; font-weight: 800; color: #fde047; }
+
+    .hero-attrs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px 14px;
+      margin-bottom: 14px;
+    }
+    @media (max-width: 520px) {
+      .hero-attrs { grid-template-columns: 1fr; }
+    }
+    .attr-row-head {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.78rem;
+      color: #e2e8f0;
+      margin-bottom: 3px;
+      font-weight: 600;
+    }
+    .attr-bar {
+      height: 7px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.14);
+      overflow: hidden;
+    }
+    .attr-bar-fill {
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #38bdf8, #a855f7);
+    }
+
+    .leaderboard-card {
+      background: #fff;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+    }
+    .lb-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+      margin-top: 8px;
+    }
+    .lb-table th, .lb-table td {
+      padding: 8px 10px;
+      border-bottom: 1px solid #e2e8f0;
+      text-align: left;
+    }
+    .lb-table th:first-child, .lb-table td:first-child {
+      width: 92px;
+      white-space: nowrap;
+    }
+    .lb-table th {
+      font-size: 0.78rem;
+      color: var(--muted);
+      background: #f8fafc;
+    }
+    .lb-row-me {
+      background: #eff6ff;
+      font-weight: 800;
+    }
+    .lb-me-tag {
+      font-size: 0.72rem;
+      background: #2563eb;
+      color: #fff;
+      padding: 1px 6px;
+      border-radius: 999px;
+      margin-left: 6px;
+    }
+    .lb-note {
+      margin-top: auto;
+      padding-top: 10px;
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
   </style>
 </head>
 <body>
   <div class="container">
     <div class="header-banner">
       <div class="header-badge">新北市立三多國民中學｜九年級自然科複習系統</div>
-      <h1>112～114學年度第二次段考考古題 × 115課本能力診斷</h1>
+      <h1>九年級第二次段考複習 × ⚔️ 魔王討伐RPG能力診斷</h1>
       <p>範圍：115課本 第2章 力與運動、第3章 功與能、第6章 板塊運動與地球歷史（滿分 100 分）</p>
     </div>
 
     <!-- ==================== PAGE 1: STUDENT INFO & MODE SELECT ==================== -->
     <section id="page-info" class="card">
-      <h2 class="card-title">📝 第一步：填寫學生資料與選擇試卷模式</h2>
+      <h2 class="card-title">📝 第一步：填寫學生資料與選擇複習模式</h2>
       <p style="color: var(--muted); margin-top: 0;">
-        請先填寫你的班級、座號、姓名與電子信箱，並選擇要練習的段考年度或「重組段考」。交卷後將自動產生<strong>「個人能力值六角圖」</strong>與<strong>「115課本頁碼複習建議」</strong>，並可寄送至你的信箱保存。
+        請先填寫你的班級、座號、姓名與電子信箱，並選擇挑戰<strong>「⚔️ 闖關討伐模式」</strong>或歷屆模擬試卷。完成後將獲得專屬<strong>「勇者能力卡」</strong>、<strong>「能力值六角圖」</strong>與<strong>「全班前 10 名匿名英雄榜」</strong>！
       </p>
 
       <form id="student-form" novalidate>
@@ -966,14 +1575,10 @@
           </div>
         </div>
 
-        <div class="mode-picker-title">📚 選擇練習試卷（點擊卡片切換）：</div>
+        <div class="mode-picker-title">📚 選擇複習試卷或討伐副本（點擊卡片切換）：</div>
+        <div class="mode-group-label">📄 歷屆段考考古題原卷（建議先練基礎題型）：</div>
         <div class="mode-grid" id="mode-grid">
-          <button type="button" class="mode-card remix-card selected" data-mode="remix">
-            <span class="mode-badge">🔥 推薦刷題｜防背答案</span>
-            <h4>🎲 【重組段考】智慧隨機組卷</h4>
-            <p>依 112～114 三年章節比例均衡抽題（單選 32 題＋手寫 4 題共 10 格），每次重抽題目與選項順序全打亂！</p>
-          </button>
-          <button type="button" class="mode-card" data-mode="114">
+          <button type="button" class="mode-card selected" data-mode="114">
             <span class="mode-badge">考古題原卷</span>
             <h4>📄 114 學年度第二次段考</h4>
             <p>單一選擇 32 題（80 分）＋ 手寫填充 6 題共 10 格（20 分），滿分 100 分。</p>
@@ -988,6 +1593,9 @@
             <h4>📄 112 學年度第二次段考</h4>
             <p>選擇與素養 26 題（78 分）＋ 簡答 4 大題（22 分），滿分 100 分。</p>
           </button>
+
+          <div class="mode-group-label" style="grid-column: 1 / -1; margin-top: 10px; margin-bottom: 2px;">🎮 進階魔王挑戰與 RPG 討伐副本專區：</div>
+
           <button type="button" class="mode-card boss-card" data-mode="boss">
             <div class="boss-demon-emblem" aria-hidden="true">
               <svg viewBox="0 0 64 64" width="44" height="44" xmlns="http://www.w3.org/2000/svg">
@@ -1002,17 +1610,12 @@
                     <stop offset="100%" stop-color="#090412"/>
                   </linearGradient>
                 </defs>
-                <!-- Left & Right Curved Demon Horns -->
                 <path d="M22 24 C13 20, 7 11, 11 4 C13 11, 19 15, 26 18 Z" fill="url(#demonHornGrad)" stroke="#c084fc" stroke-width="1.2" stroke-linejoin="round"/>
                 <path d="M42 24 C51 20, 57 11, 53 4 C51 11, 45 15, 38 18 Z" fill="url(#demonHornGrad)" stroke="#c084fc" stroke-width="1.2" stroke-linejoin="round"/>
-                <!-- Angular Demon Head Silhouette -->
                 <path d="M16 24 L24 17 L40 17 L48 24 L51 37 L42 52 L32 58 L22 52 L13 37 Z" fill="url(#demonFaceGrad)" stroke="#9333ea" stroke-width="1.8" stroke-linejoin="round"/>
-                <!-- Forehead Dark Crest -->
                 <path d="M32 21 L35 28 L32 31 L29 28 Z" fill="#a855f7" opacity="0.85"/>
-                <!-- Glowing Violet Slanted Eyes -->
                 <polygon points="19,33 29,37 27,40 18,37" fill="#f0abfc"/>
                 <polygon points="45,33 35,37 37,40 46,37" fill="#f0abfc"/>
-                <!-- Menacing Fanged Grin -->
                 <path d="M22 46 Q32 52 42 46 L39 49 L36 47 L32 50 L28 47 L25 49 Z" fill="#c084fc"/>
               </svg>
             </div>
@@ -1027,6 +1630,25 @@
               </span>
               <h4>魔王難度</h4>
               <p>全卷單一選擇題 40 題（每題 2.5 分 ＝ 100 分，含長文素養題與高階物理計算挑戰題）</p>
+            </div>
+          </button>
+
+          <button type="button" class="mode-card raid-card" data-mode="raid">
+            <div class="raid-quest-emblem" aria-hidden="true">
+              <img src="images/heroes/hero_slayer.png" alt="RPG勇者徽章" />
+            </div>
+            <div style="flex:1; min-width:0;">
+              <span class="mode-badge">🎮 RPG 副本挑戰｜全題庫 30 回合討伐戰</span>
+              <h4>⚔️ 【闖關討伐模式】闇紫魔王討伐副本</h4>
+              <div class="raid-chip-row">
+                <span class="raid-chip">❤️ 魔王血條對決</span>
+                <span class="raid-chip">🔥 Combo 連擊</span>
+                <span class="raid-chip">🧪 消失藥水</span>
+                <span class="raid-chip">🛡️ 連擊護盾</span>
+                <span class="raid-chip">📜 觀念卷軸</span>
+                <span class="raid-chip">🃏 掉落像素勇者卡</span>
+              </div>
+              <p>從全部題庫依 6 大單元平均各抽 5 題（共 30 題，滿分 100 分），3 種戰鬥道具每場限選 2 個出擊！</p>
             </div>
           </button>
         </div>
@@ -1055,63 +1677,182 @@
           </div>
         </div>
 
+        <div id="preview-dev-bar" class="preview-dev-bar hidden">
+          <span>🔧 <strong>教師本機預覽快捷列</strong>（僅於本機預覽顯示，正式上線網域會自動隱藏）：</span>
+          <div style="display:flex; gap:8px; flex-wrap:wrap;">
+            <button type="button" class="btn-dev" id="quick-start-raid-btn">⚡ 一鍵帶入測試生並進入闖關討伐戰</button>
+            <button type="button" class="btn-dev" id="quick-sim-result-btn">🏆 一鍵模擬結算（直達勇者能力卡＋英雄榜）</button>
+          </div>
+        </div>
+
         <div style="margin-top: 22px; display: flex; justify-content: flex-end; gap: 12px; flex-wrap: wrap;">
-          <button type="submit" class="btn btn-primary" id="start-btn">開始進入【重組段考】作答 →</button>
+          <button type="submit" class="btn btn-primary" id="start-btn">開始進入 114 學年度段考作答 →</button>
         </div>
       </form>
     </section>
 
-    <!-- ==================== PAGE 2: EXAM ==================== -->
+    <!-- ==================== PAGE 2: EXAM / RAID BATTLE ==================== -->
     <section id="page-exam" class="hidden">
-      <div class="sticky-bar no-print">
-        <div class="sticky-top">
-          <div class="student-pill" id="exam-student-pill">學生資料</div>
-          <div class="progress-wrap">
-            <span id="progress-text" style="font-size: 0.88rem; font-weight: 700; white-space: nowrap;">已作答 0 / 42 格</span>
-            <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+      <!-- 2A. RPG 魔王討伐戰主畫面 (mode === "raid") -->
+      <div id="raid-battle-wrap" class="hidden">
+        <div class="raid-stage" id="raid-stage">
+          <div class="raid-top-row">
+            <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
+              <span class="raid-pill" id="raid-student-pill">901 測試勇者</span>
+              <span class="raid-round-pill" id="raid-round-pill">第 1 / 30 回合</span>
+              <span class="raid-pill" id="raid-timer-pill">⏱ 00:00</span>
+            </div>
+            <div class="raid-top-actions no-print">
+              <button type="button" class="raid-mini-btn" id="raid-sfx-btn">🔊 音效：開</button>
+              <button type="button" class="raid-mini-btn" id="raid-finish-early-btn">📊 提前結算</button>
+              <button type="button" class="raid-mini-btn" id="raid-retreat-btn">← 返回首頁</button>
+            </div>
           </div>
-          <div style="display: flex; gap: 8px; align-items: center;">
-            <span id="timer-display" style="font-size: 0.88rem; font-weight: 700; color: var(--muted);">⏱ 00:00</span>
-            <button type="button" class="btn btn-secondary" style="padding: 6px 12px; font-size: 0.85rem;" id="toggle-nav-btn">題號導覽</button>
+
+          <div class="raid-hud">
+            <div class="raid-hero-panel">
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <strong style="font-size:0.95rem; color:#e2e8f0;">🛡️ 勇者狀態</strong>
+                <span style="font-size:0.8rem; color:#94a3b8;" id="raid-max-combo-label">最高連擊 x0</span>
+              </div>
+              <div class="raid-hearts" id="raid-hearts">❤️❤️❤️❤️❤️</div>
+              <div style="display:flex; flex-wrap:wrap; gap:8px; align-items:center;">
+                <span class="raid-combo-badge" id="raid-combo-badge">🔥 COMBO x0</span>
+                <span class="raid-shield-tag hidden" id="raid-shield-tag">🛡️ 連擊護盾守護中</span>
+              </div>
+            </div>
+
+            <div class="raid-boss-panel" id="raid-boss-panel">
+              <div class="raid-boss-avatar" id="raid-boss-avatar" aria-hidden="true">
+                <svg viewBox="0 0 64 64" width="58" height="58" xmlns="http://www.w3.org/2000/svg">
+                  <defs>
+                    <linearGradient id="raidBossHorn" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stop-color="#f3e8ff"/>
+                      <stop offset="50%" stop-color="#a855f7"/>
+                      <stop offset="100%" stop-color="#3b0764"/>
+                    </linearGradient>
+                    <linearGradient id="raidBossFace" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stop-color="#2e1065"/>
+                      <stop offset="100%" stop-color="#090412"/>
+                    </linearGradient>
+                  </defs>
+                  <path d="M22 24 C13 20, 7 11, 11 4 C13 11, 19 15, 26 18 Z" fill="url(#raidBossHorn)" stroke="#c084fc" stroke-width="1.2"/>
+                  <path d="M42 24 C51 20, 57 11, 53 4 C51 11, 45 15, 38 18 Z" fill="url(#raidBossHorn)" stroke="#c084fc" stroke-width="1.2"/>
+                  <path d="M16 24 L24 17 L40 17 L48 24 L51 37 L42 52 L32 58 L22 52 L13 37 Z" fill="url(#raidBossFace)" stroke="#a855f7" stroke-width="1.8"/>
+                  <polygon points="19,33 29,37 27,40 18,37" fill="#f0abfc"/>
+                  <polygon points="45,33 35,37 37,40 46,37" fill="#f0abfc"/>
+                  <path d="M22 46 Q32 52 42 46 L39 49 L36 47 L32 50 L28 47 L25 49 Z" fill="#c084fc"/>
+                </svg>
+              </div>
+              <div style="flex:1; min-width:0;">
+                <div style="display:flex; justify-content:space-between; align-items:center; gap:8px;">
+                  <strong id="raid-boss-name" style="font-size:1rem; color:#f3e8ff;">😈 闇紫自然魔王</strong>
+                  <span id="raid-boss-hp-text" style="font-size:0.88rem; font-weight:800; color:#fda4af;">HP 100 / 100</span>
+                </div>
+                <div class="raid-boss-speech" id="raid-boss-speech">「想通過九年級二段考？先接下我的 30 回合自然試煉吧！」</div>
+                <div class="raid-hp-track">
+                  <div class="raid-hp-fill" id="raid-hp-fill"></div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-        <div id="nav-grid" class="nav-grid hidden"></div>
-      </div>
 
-      <div class="exam-mode-banner">
-        <div>
-          <strong id="active-exam-title" style="color: var(--primary); font-size: 1.05rem;"></strong>
-          <div id="active-exam-subtitle" style="font-size: 0.86rem; color: var(--muted);"></div>
+        <!-- 3 選 2 技能道具欄 -->
+        <div class="raid-items-card no-print">
+          <div class="raid-items-head">
+            <span>🎒 勇者技能道具（3 種道具，本場戰役僅限挑選其中 2 個使用）</span>
+            <span class="raid-quota-pill" id="raid-item-quota-pill">剩餘可用次數：2 / 2</span>
+          </div>
+          <div class="raid-items-grid" id="raid-items-grid">
+            <button type="button" class="raid-item-btn" data-item="potion" id="item-btn-potion">
+              <span class="raid-item-title">🧪 消失藥水</span>
+              <span class="raid-item-desc">立即消除本題 2 個錯誤選項（每場限用 1 次）</span>
+            </button>
+            <button type="button" class="raid-item-btn" data-item="shield" id="item-btn-shield">
+              <span class="raid-item-title">🛡️ 連擊護盾</span>
+              <span class="raid-item-desc">本題若不幸答錯可抵擋扣血並保留 Combo</span>
+            </button>
+            <button type="button" class="raid-item-btn" data-item="scroll" id="item-btn-scroll">
+              <span class="raid-item-title">📜 觀念卷軸</span>
+              <span class="raid-item-desc">召喚 115 課本核心觀念與公式錦囊（不透漏答案）</span>
+            </button>
+          </div>
         </div>
-        <button type="button" class="btn btn-ghost no-print" id="switch-mode-top-btn">切換試卷年度</button>
+
+        <!-- 單題戰鬥卡片 -->
+        <div id="raid-question-host"></div>
       </div>
 
-      <div class="section-banner">
-        <span id="mc-section-title">一、單一選擇題</span>
-        <span class="sub" id="mc-section-sub"></span>
-      </div>
-      <div id="mc-container"></div>
+      <!-- 2B. 傳統全卷測驗模式 (114/113/112/boss) -->
+      <div id="classic-exam-wrap">
+        <div class="sticky-bar no-print">
+          <div class="sticky-top">
+            <div class="student-pill" id="exam-student-pill">學生資料</div>
+            <div class="progress-wrap">
+              <span id="progress-text" style="font-size: 0.88rem; font-weight: 700; white-space: nowrap;">已作答 0 / 42 格</span>
+              <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+            </div>
+            <div style="display: flex; gap: 8px; align-items: center;">
+              <span id="timer-display" style="font-size: 0.88rem; font-weight: 700; color: var(--muted);">⏱ 00:00</span>
+              <button type="button" class="btn btn-secondary" style="padding: 6px 12px; font-size: 0.85rem;" id="toggle-nav-btn">題號導覽</button>
+            </div>
+          </div>
+          <div id="nav-grid" class="nav-grid hidden"></div>
+        </div>
 
-      <div class="section-banner" id="hw-section-banner">
-        <span id="hw-section-title">二、手寫與簡答填充題</span>
-        <span class="sub" id="hw-section-sub"></span>
-      </div>
-      <div id="hw-container"></div>
+        <div class="exam-mode-banner">
+          <div>
+            <strong id="active-exam-title" style="color: var(--primary); font-size: 1.05rem;"></strong>
+            <div id="active-exam-subtitle" style="font-size: 0.86rem; color: var(--muted);"></div>
+          </div>
+          <button type="button" class="btn btn-ghost no-print" id="switch-mode-top-btn">切換試卷年度</button>
+        </div>
 
-      <div class="card" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
-        <button type="button" class="btn btn-secondary" id="back-to-info-btn">← 返回修改資料 / 切換年度</button>
-        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-          <button type="button" class="btn btn-primary" id="submit-exam-btn">完成作答並查看成績與六角圖 ✓</button>
+        <div class="section-banner">
+          <span id="mc-section-title">一、單一選擇題</span>
+          <span class="sub" id="mc-section-sub"></span>
+        </div>
+        <div id="mc-container"></div>
+
+        <div class="section-banner" id="hw-section-banner">
+          <span id="hw-section-title">二、手寫與簡答填充題</span>
+          <span class="sub" id="hw-section-sub"></span>
+        </div>
+        <div id="hw-container"></div>
+
+        <div class="card" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+          <button type="button" class="btn btn-secondary" id="back-to-info-btn">← 返回修改資料 / 切換年度</button>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <button type="button" class="btn btn-primary" id="submit-exam-btn">完成作答並查看成績與六角圖 ✓</button>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- ==================== PAGE 3: RESULT & RADAR ==================== -->
+    <!-- ==================== PAGE 3: RESULT, HERO CARD, LEADERBOARD & RADAR ==================== -->
     <section id="page-result" class="hidden">
+      <div id="result-preview-bar" class="preview-dev-bar hidden no-print" style="margin-top:0; margin-bottom:14px;">
+        <span>🔧 <strong>教師預覽切換</strong>：</span>
+        <div style="display:flex; gap:6px; flex-wrap:wrap; align-items:center;">
+          <button type="button" class="btn-dev" data-sim-tier="low">42分(&lt;50僅觀念)</button>
+          <button type="button" class="btn-dev" data-sim-tier="mid">62分(50~70對題+錯題概念)</button>
+          <button type="button" class="btn-dev" data-sim-tier="high">86分(70+完整詳解)</button>
+          <button type="button" class="btn-dev" data-sim-tier="ur">98分(UR大賢者)</button>
+          <span style="margin:0 4px;">｜ 立繪：</span>
+          <button type="button" class="btn-dev" data-sim-avatar="images/heroes/hero_novice.png">見習</button>
+          <button type="button" class="btn-dev" data-sim-avatar="images/heroes/hero_knight.png">劍士</button>
+          <button type="button" class="btn-dev" data-sim-avatar="images/heroes/hero_mage.png">魔導</button>
+          <button type="button" class="btn-dev" data-sim-avatar="images/heroes/hero_geomancer.png">召喚</button>
+          <button type="button" class="btn-dev" data-sim-avatar="images/heroes/hero_slayer.png">討伐</button>
+          <button type="button" class="btn-dev" data-sim-avatar="images/heroes/hero_sage.png">賢者</button>
+        </div>
+      </div>
+
       <div class="card">
         <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 16px;">
           <div>
-            <h2 class="card-title" style="margin: 0;">📊 測驗成績與個人能力診斷報告</h2>
+            <h2 class="card-title" style="margin: 0;">📊 測驗成績與勇者討伐結算</h2>
             <div id="res-exam-label" style="font-size: 0.88rem; color: var(--muted); margin-top: 2px;"></div>
           </div>
           <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
@@ -1128,10 +1869,10 @@
             <div class="score-meta-grid">
               <div class="meta-stat">
                 <div class="lbl">單一選擇題得分</div>
-                <div class="val" id="stat-mc">0 / 80</div>
+                <div class="val" id="stat-mc">0 / 100</div>
               </div>
               <div class="meta-stat">
-                <div class="lbl">手寫與簡答得分</div>
+                <div class="lbl">手寫題 / 討伐連擊</div>
                 <div class="val" id="stat-hw">0 / 20</div>
               </div>
               <div class="meta-stat">
@@ -1144,9 +1885,32 @@
 
         <div class="no-print" style="display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-top: 18px; padding-top: 16px; border-top: 1px solid #e2e8f0;">
           <button type="button" class="btn btn-primary" id="send-email-btn">📧 將結果寄送至信箱</button>
+          <button type="button" class="btn btn-secondary" id="download-hero-btn">📥 下載勇者能力卡 (PNG)</button>
           <button type="button" class="btn btn-secondary" id="retry-btn">🔄 重新挑戰一次</button>
-          <button type="button" class="btn btn-ghost" id="switch-exam-btn">📚 切換其他年度試卷</button>
+          <button type="button" class="btn btn-ghost" id="switch-exam-btn">📚 切換其他模式 / 年度</button>
           <span id="email-status-note" style="font-size: 0.86rem; color: var(--muted); width: 100%;"></span>
+        </div>
+      </div>
+
+      <!-- Unified Character Card + Anonymous Class Top 10 Leaderboard -->
+      <div class="hero-leaderboard-grid">
+        <div class="hero-card rarity-SR" id="hero-card-box"></div>
+        <div class="leaderboard-card" id="leaderboard-box">
+          <h3 style="margin:0 0 4px; color:var(--primary); font-size:1.12rem;">🏆 全班英雄榜（前 10 名）</h3>
+          <p style="margin:0 0 8px; font-size:0.82rem; color:var(--muted);">保護隱私：僅顯示班級與目前前 10 名最高分，不公開學生姓名。</p>
+          <div style="overflow-x:auto;">
+            <table class="lb-table">
+              <thead>
+                <tr>
+                  <th style="width:68px;">名次</th>
+                  <th>班級</th>
+                  <th style="text-align:right;">分數</th>
+                </tr>
+              </thead>
+              <tbody id="leaderboard-tbody"></tbody>
+            </table>
+          </div>
+          <div class="lb-note" id="leaderboard-note"></div>
         </div>
       </div>
 
@@ -1165,7 +1929,7 @@
             <table class="unit-table" id="unit-summary-table">
               <thead>
                 <tr>
-                  <th>115課本章節</th>
+                  <th>單元名稱</th>
                   <th>得分</th>
                   <th>答錯率</th>
                   <th>熟悉度</th>
@@ -1223,10 +1987,11 @@
         </details>
       </div>
 
-      <!-- Detailed Question-by-Question Review -->
+      <!-- Next Battle Tactics Design (Score-Tiered Review) -->
       <div class="card">
-        <h2 class="card-title">🔍 逐題批改與完整詳解</h2>
-        <div class="filter-bar no-print">
+        <h2 class="card-title" id="tactics-section-title">🗺️ 下次戰術設計</h2>
+        <div id="tactics-tier-banner"></div>
+        <div class="filter-bar no-print" id="review-filter-bar">
           <button type="button" class="filter-btn active" data-filter="all">全部題目</button>
           <button type="button" class="filter-btn" data-filter="wrong">只看錯題 / 未作答</button>
           <button type="button" class="filter-btn" data-filter="correct">只看答對</button>
@@ -1264,7 +2029,7 @@
     // 1. 狀態管理與輔助函式
     // =========================================================================
     const state = {
-      selectedMode: "remix",
+      selectedMode: "114",
       activeExam: null,
       student: { cls: "", seat: "", name: "", email: "" },
       mcAnswers: {},
@@ -1272,7 +2037,26 @@
       startTime: null,
       elapsedSeconds: 0,
       timerId: null,
-      lastPayload: null
+      lastPayload: null,
+      lastTotalScore: 0,
+      lastStatsArray: [],
+      previewAvatarOverride: "",
+      heroCardMeta: null,
+      raid: {
+        idx: 0,
+        bossHp: 100,
+        heroHearts: 5,
+        currentCombo: 0,
+        maxCombo: 0,
+        itemsUsedCount: 0,
+        itemsUsed: { potion: false, shield: false, scroll: false },
+        eliminatedOpts: [],
+        shieldActive: false,
+        scrollOpen: false,
+        turnResolved: false,
+        chosenKey: "",
+        muted: false
+      }
     };
 
     function escapeHtml(str) {
@@ -1300,6 +2084,12 @@
       return Number.isInteger(n) ? String(n) : Number(n.toFixed(2)).toString();
     }
 
+    function formatClassDisplay(cls) {
+      const s = String(cls || "").trim();
+      if (!s) return "未填班級";
+      return s.endsWith("班") ? s : `${s} 班`;
+    }
+
     function getGasUrl() {
       const configured = (GAS_WEB_APP_URL || "").trim();
       if (configured) return configured;
@@ -1310,11 +2100,44 @@
       }
     }
 
+    function playRaidSfx(type) {
+      if (state.raid && state.raid.muted) return;
+      try {
+        const Ctx = window.AudioContext || window.webkitAudioContext;
+        if (!Ctx) return;
+        const ctx = new Ctx();
+        const now = ctx.currentTime;
+        const seq = {
+          hit: [[440, 0.08], [660, 0.12]],
+          crit: [[523, 0.07], [659, 0.07], [880, 0.14]],
+          miss: [[240, 0.12], [170, 0.18]],
+          shield: [[392, 0.08], [523, 0.12]],
+          item: [[587, 0.07], [784, 0.11]],
+          win: [[523, 0.09], [659, 0.09], [784, 0.09], [1046, 0.22]]
+        }[type] || [[440, 0.08]];
+        let t = now;
+        seq.forEach(([freq, dur]) => {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = type === "miss" ? "sawtooth" : "triangle";
+          osc.frequency.setValueAtTime(freq, t);
+          gain.gain.setValueAtTime(0.08, t);
+          gain.gain.exponentialRampToValueAtTime(0.001, t + dur);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start(t);
+          osc.stop(t + dur);
+          t += dur * 0.85;
+        });
+        setTimeout(() => ctx.close().catch(() => {}), 800);
+      } catch {}
+    }
+
     // =========================================================================
     // 2. 第一頁：模式選擇卡片 & 表單驗證
     // =========================================================================
     const MODE_BUTTON_LABELS = {
-      remix: "開始進入【重組段考】隨機作答 →",
+      raid: "⚔️ 開始【闖關討伐模式】討伐魔王 →",
       "114": "開始進入 114 學年度段考作答 →",
       "113": "開始進入 113 學年度段考作答 →",
       "112": "開始進入 112 學年度段考作答 →",
@@ -1361,13 +2184,25 @@
       state.startTime = Date.now();
       state.elapsedSeconds = 0;
 
-      document.getElementById("exam-student-pill").textContent = `${state.student.cls} ${state.student.seat}號 ${state.student.name}`;
-      renderExam();
-      updateProgress();
-
       document.getElementById("page-info").classList.add("hidden");
       document.getElementById("page-result").classList.add("hidden");
       document.getElementById("page-exam").classList.remove("hidden");
+
+      const raidWrap = document.getElementById("raid-battle-wrap");
+      const classicWrap = document.getElementById("classic-exam-wrap");
+
+      if (state.activeExam.mode === "raid") {
+        classicWrap.classList.add("hidden");
+        raidWrap.classList.remove("hidden");
+        initRaidBattle();
+      } else {
+        raidWrap.classList.add("hidden");
+        classicWrap.classList.remove("hidden");
+        document.getElementById("exam-student-pill").textContent = `${state.student.cls} ${state.student.seat}號 ${state.student.name}`;
+        renderExam();
+        updateProgress();
+      }
+
       window.scrollTo({ top: 0, behavior: "smooth" });
       startTimer();
     }
@@ -1377,12 +2212,343 @@
       if (!state.startTime) state.startTime = Date.now();
       state.timerId = setInterval(() => {
         state.elapsedSeconds = Math.floor((Date.now() - state.startTime) / 1000);
-        document.getElementById("timer-display").textContent = `⏱ ${formatTime(state.elapsedSeconds)}`;
+        const txt = `⏱ ${formatTime(state.elapsedSeconds)}`;
+        document.getElementById("timer-display").textContent = txt;
+        document.getElementById("raid-timer-pill").textContent = txt;
       }, 1000);
     }
 
     // =========================================================================
-    // 3. 試題渲染與作答進度追蹤
+    // 2B. 【闖關討伐模式】RPG 魔王戰引擎 & 3 選 2 技能道具
+    // =========================================================================
+    function initRaidBattle() {
+      state.raid = {
+        idx: 0,
+        bossHp: 100,
+        heroHearts: 5,
+        currentCombo: 0,
+        maxCombo: 0,
+        itemsUsedCount: 0,
+        itemsUsed: { potion: false, shield: false, scroll: false },
+        eliminatedOpts: [],
+        shieldActive: false,
+        scrollOpen: false,
+        turnResolved: false,
+        chosenKey: "",
+        muted: state.raid ? state.raid.muted : false
+      };
+      document.getElementById("raid-student-pill").textContent = `${state.student.cls} ${state.student.seat}號 ${state.student.name}`;
+      document.getElementById("raid-boss-speech").textContent = "「想通過九年級二段考？先接下我的 30 回合自然試煉吧！」";
+      renderRaidHud();
+      renderRaidItemsBar();
+      renderRaidTurn();
+    }
+
+    function renderRaidHud() {
+      const r = state.raid;
+      const totalQ = state.activeExam.mc.length;
+      const roundNum = Math.min(r.idx + 1, totalQ);
+      const isRage = roundNum > 20;
+
+      document.getElementById("raid-stage").classList.toggle("rage-phase", isRage);
+      document.getElementById("raid-round-pill").textContent = isRage
+        ? `🔥 狂暴第 ${roundNum} / ${totalQ} 回合`
+        : `第 ${roundNum} / ${totalQ} 回合`;
+      document.getElementById("raid-boss-name").textContent = isRage
+        ? "🔥 終焉狂暴・闇紫魔王"
+        : "😈 闇紫自然魔王";
+      document.getElementById("raid-boss-hp-text").textContent = `HP ${r.bossHp} / 100`;
+      document.getElementById("raid-hp-fill").style.width = `${Math.max(0, r.bossHp)}%`;
+
+      const fullHearts = "❤️".repeat(r.heroHearts);
+      const emptyHearts = "🖤".repeat(Math.max(0, 5 - r.heroHearts));
+      document.getElementById("raid-hearts").textContent = fullHearts + emptyHearts;
+
+      const comboEl = document.getElementById("raid-combo-badge");
+      comboEl.textContent = `🔥 COMBO x${r.currentCombo}`;
+      comboEl.classList.toggle("hot", r.currentCombo >= 3);
+      document.getElementById("raid-max-combo-label").textContent = `最高連擊 x${r.maxCombo}`;
+      document.getElementById("raid-shield-tag").classList.toggle("hidden", !r.shieldActive);
+      document.getElementById("raid-sfx-btn").textContent = r.muted ? "🔇 音效：關" : "🔊 音效：開";
+    }
+
+    function spawnRaidDamagePopup(text) {
+      const panel = document.getElementById("raid-boss-panel");
+      const pop = document.createElement("div");
+      pop.className = "raid-dmg-pop";
+      pop.textContent = text;
+      panel.appendChild(pop);
+      const avatar = document.getElementById("raid-boss-avatar");
+      avatar.classList.remove("hit");
+      void avatar.offsetWidth;
+      avatar.classList.add("hit");
+      setTimeout(() => pop.remove(), 880);
+    }
+
+    function renderRaidItemsBar() {
+      const r = state.raid;
+      const remain = Math.max(0, 2 - r.itemsUsedCount);
+      document.getElementById("raid-item-quota-pill").textContent = `剩餘可用次數：${remain} / 2`;
+
+      const meta = {
+        potion: { title: "🧪 消失藥水", desc: "消除本題 2 個錯誤選項（每場限 1 次）" },
+        shield: { title: "🛡️ 連擊護盾", desc: "本題答錯可擋下反擊並保住 Combo" },
+        scroll: { title: "📜 觀念卷軸", desc: "召喚 115 課本核心觀念錦囊（不透漏答案）" }
+      };
+
+      ["potion", "shield", "scroll"].forEach(key => {
+        const btn = document.getElementById(`item-btn-${key}`);
+        const used = r.itemsUsed[key];
+        const limitReached = !used && r.itemsUsedCount >= 2;
+        btn.disabled = r.turnResolved || used || limitReached;
+        btn.classList.toggle("used", used);
+        btn.classList.toggle("locked-limit", limitReached);
+
+        const titleEl = btn.querySelector(".raid-item-title");
+        const descEl = btn.querySelector(".raid-item-desc");
+        titleEl.textContent = meta[key].title + (used ? "（已使用）" : limitReached ? "（已鎖定）" : "");
+        descEl.textContent = limitReached ? "🔒 本場已達「3 個限用 2 個」上限" : meta[key].desc;
+      });
+    }
+
+    function useRaidItem(key) {
+      const r = state.raid;
+      if (r.turnResolved || r.itemsUsed[key] || r.itemsUsedCount >= 2) return;
+      const q = state.activeExam.mc[r.idx];
+
+      r.itemsUsed[key] = true;
+      r.itemsUsedCount++;
+      playRaidSfx("item");
+
+      if (key === "potion") {
+        const ansArr = Array.isArray(q.ans) ? q.ans : [q.ans];
+        const wrongKeys = shuffleArr(["A", "B", "C", "D"].filter(k => !ansArr.includes(k)));
+        r.eliminatedOpts = wrongKeys.slice(0, 2);
+        if (r.eliminatedOpts.includes(r.chosenKey)) r.chosenKey = "";
+        document.getElementById("raid-boss-speech").textContent = "「可惡！消失藥水竟然瞬間抹除了我的 2 個干擾選項！」";
+        showToast("🧪 已使用消失藥水，消除 2 個錯誤選項！");
+      } else if (key === "shield") {
+        r.shieldActive = true;
+        document.getElementById("raid-boss-speech").textContent = "「哼！連擊護盾展開了嗎？這回合就算答錯也不會斷 Combo！」";
+        showToast("🛡️ 已啟動連擊護盾，保護本回合！");
+      } else if (key === "scroll") {
+        r.scrollOpen = true;
+        document.getElementById("raid-boss-speech").textContent = "「居然翻開 115 課本的觀念卷軸…看來你是有備而來！」";
+        showToast("📜 已開啟觀念卷軸錦囊！");
+      }
+
+      renderRaidHud();
+      renderRaidItemsBar();
+      renderRaidTurn();
+    }
+
+    function renderRaidTurn() {
+      const r = state.raid;
+      const exam = state.activeExam;
+      const q = exam.mc[r.idx];
+      const unit = UNITS.find(u => u.id === q.unit);
+      const qPts = q.pts || 3;
+      const host = document.getElementById("raid-question-host");
+
+      const passageBlock = (q.passage || q.passageHtml || q.passageImg) ? `
+        <div class="passage-box">
+          ${q.passage ? `<div>${escapeHtml(q.passage).replace(/\n/g, "<br>")}</div>` : ""}
+          ${q.passageHtml ? `<div style="margin-top:10px;">${q.passageHtml}</div>` : ""}
+          ${q.passageImg ? `<div class="q-figure"><img src="${q.passageImg}" alt="題組附圖" class="orig-fig"></div>` : ""}
+        </div>
+      ` : "";
+
+      const showInlineImg = q.img && !q.hideInlineImgInExam;
+      const singleCol = !q.optionImgs && Object.values(q.options).some(v => v.length > 18);
+      const ansArr = Array.isArray(q.ans) ? q.ans : [q.ans];
+
+      let optsHtml = "";
+      ["A", "B", "C", "D"].forEach(key => {
+        const isElim = r.eliminatedOpts.includes(key);
+        const isSel = r.chosenKey === key;
+        let clsExtra = "";
+        if (isElim) clsExtra += " eliminated";
+        if (isSel && !r.turnResolved) clsExtra += " selected";
+        if (r.turnResolved) {
+          if (ansArr.includes(key)) clsExtra += " raid-correct";
+          else if (isSel) clsExtra += " raid-wrong";
+        }
+        const inner = q.optionImgs
+          ? `<img src="${q.optionImgs[key]}" alt="選項${key}" class="orig-fig-opt">`
+          : `<span>${escapeHtml(q.options[key])}</span>`;
+        optsHtml += `
+          <button type="button" class="option-btn${clsExtra}" data-key="${key}" ${(isElim || r.turnResolved) ? "disabled" : ""}>
+            <span class="option-key">${key}</span>
+            ${inner}
+          </button>
+        `;
+      });
+
+      const scrollHtml = r.scrollOpen ? `
+        <div class="raid-scroll-hint">
+          <strong>📜 觀念卷軸錦囊（${escapeHtml(unit.section)}｜${escapeHtml(unit.pages)}）：</strong><br>
+          ${escapeHtml(unit.tips)}
+        </div>
+      ` : "";
+
+      const srcLabel = q.sourceYear === "魔王難度" ? "魔王試煉題庫" : `${q.sourceYear} 學年度題庫`;
+      const bossTag = q.badge ? `<span class="q-boss-badge">${escapeHtml(q.badge)}</span>` : "";
+
+      let actionFooterHtml = "";
+      if (!r.turnResolved) {
+        actionFooterHtml = `
+          <div style="margin-top:16px; display:flex; justify-content:flex-end; align-items:center; gap:12px;">
+            <span style="font-size:0.86rem; color:var(--muted);">${r.chosenKey ? `已鎖定選項 (${r.chosenKey})` : "請選擇答案後發動攻擊"}</span>
+            <button type="button" class="btn btn-primary" id="raid-attack-btn" ${r.chosenKey ? "" : "disabled"}>⚔️ 發動攻擊！（確認送出）</button>
+          </div>
+        `;
+      } else {
+        const stuCorrect = ansArr.includes(r.chosenKey);
+        const isLast = r.idx >= exam.mc.length - 1;
+        actionFooterHtml = `
+          <div class="explain-box" style="margin-top:16px; border-left:5px solid ${stuCorrect ? "#16a34a" : "#dc2626"}; background:${stuCorrect ? "#f0fdf4" : "#fef2f2"};">
+            <div style="font-weight:800; ${stuCorrect ? "" : "margin-bottom:4px; "}color:${stuCorrect ? "#15803d" : "#b91c1c"};">
+              ${stuCorrect
+                ? `⚔️ 命中要害！對魔王造成 ${qPts} 點傷害（獲得 ${qPts} 分）`
+                : `💥 攻擊被閃避！（正確答案為 ${ansArr.join(" 或 ")}）`}
+            </div>
+            ${stuCorrect ? "" : `<div><strong>💡 戰術解析：</strong>${escapeHtml(q.explain)}</div>`}
+          </div>
+          <div style="margin-top:14px; display:flex; justify-content:flex-end;">
+            <button type="button" class="btn btn-primary" id="raid-next-btn">
+              ${isLast ? "🏆 完成討伐！查看勇者能力卡與全班英雄榜 →" : `下一回合（第 ${r.idx + 2} / ${exam.mc.length} 題） →`}
+            </button>
+          </div>
+        `;
+      }
+
+      host.innerHTML = `
+        <div class="question-card" id="raid-q-card">
+          <div class="q-header">
+            <div>
+              <span class="q-num">第 ${q.num} / ${exam.mc.length} 題</span>
+              <span class="q-src-tag" style="background:#f5f3ff; color:#5b21b6; border-color:#ddd6fe;">⚔️ 傷害 ${qPts} 點（${qPts}分）</span>
+              <span class="q-src-tag" style="margin-left:4px;">出自 ${escapeHtml(srcLabel)}</span>
+              ${bossTag}
+            </div>
+            <span class="q-unit-tag">${escapeHtml(unit.section)}</span>
+          </div>
+          ${passageBlock}
+          ${scrollHtml}
+          <div class="q-text">${escapeHtml(q.text).replace(/\n/g, "<br>")}</div>
+          ${showInlineImg ? `<div class="q-figure"><img src="${q.img}" alt="第${q.num}題附圖" class="orig-fig"></div>` : ""}
+          <div class="options-list ${singleCol ? "single-col" : ""}" id="raid-options-list">${optsHtml}</div>
+          ${actionFooterHtml}
+        </div>
+      `;
+
+      const optList = document.getElementById("raid-options-list");
+      if (optList && !r.turnResolved) {
+        optList.addEventListener("click", (e) => {
+          const btn = e.target.closest(".option-btn");
+          if (!btn || btn.disabled) return;
+          r.chosenKey = btn.dataset.key;
+          renderRaidTurn();
+        });
+      }
+
+      const atkBtn = document.getElementById("raid-attack-btn");
+      if (atkBtn) atkBtn.addEventListener("click", submitRaidTurn);
+
+      const nextBtn = document.getElementById("raid-next-btn");
+      if (nextBtn) nextBtn.addEventListener("click", nextRaidTurn);
+    }
+
+    function submitRaidTurn() {
+      const r = state.raid;
+      if (r.turnResolved || !r.chosenKey) return;
+      const q = state.activeExam.mc[r.idx];
+      const qPts = q.pts || 3;
+      const ansArr = Array.isArray(q.ans) ? q.ans : [q.ans];
+      const isCorrect = ansArr.includes(r.chosenKey);
+
+      r.turnResolved = true;
+      state.mcAnswers[q.num] = r.chosenKey;
+
+      if (isCorrect) {
+        r.bossHp = Math.max(0, r.bossHp - qPts);
+        r.currentCombo++;
+        r.maxCombo = Math.max(r.maxCombo, r.currentCombo);
+        const isCrit = r.currentCombo >= 3 || qPts >= 4;
+        spawnRaidDamagePopup(isCrit ? `🔥 CRIT -${qPts}!` : `-${qPts} HP!`);
+        playRaidSfx(isCrit ? "crit" : "hit");
+        document.getElementById("raid-boss-speech").textContent = r.bossHp === 0
+          ? "「不可能…竟然把我的 HP 全部歸零了……！」"
+          : (r.currentCombo >= 3
+            ? `「唔啊！連續 ${r.currentCombo} 連擊好痛…不能再讓你連擊下去了！」`
+            : "「嘖，被你找到破綻了嗎？下一題沒這麼簡單！」");
+      } else {
+        if (r.shieldActive) {
+          playRaidSfx("shield");
+          document.getElementById("raid-boss-speech").textContent = `「什麼？！連擊護盾擋下了我的反擊，Combo x${r.currentCombo} 竟然沒斷！」`;
+        } else {
+          r.currentCombo = 0;
+          r.heroHearts = Math.max(0, r.heroHearts - 1);
+          playRaidSfx("miss");
+          document.getElementById("raid-boss-speech").textContent = "「哈哈哈！這題觀念中了陷阱！快看看下方的戰術解析吧！」";
+        }
+      }
+
+      renderRaidHud();
+      renderRaidItemsBar();
+      renderRaidTurn();
+    }
+
+    function nextRaidTurn() {
+      const r = state.raid;
+      const exam = state.activeExam;
+      if (r.idx >= exam.mc.length - 1) {
+        if (state.timerId) clearInterval(state.timerId);
+        playRaidSfx("win");
+        gradeAndShowResult();
+        return;
+      }
+      r.idx++;
+      r.eliminatedOpts = [];
+      r.shieldActive = false;
+      r.scrollOpen = false;
+      r.turnResolved = false;
+      r.chosenKey = "";
+
+      if (r.idx === 20) {
+        document.getElementById("raid-boss-speech").textContent = "「🔥 進入最終狂暴階段（第 21～30 題）！每題傷害提升為 4 點！」";
+        showToast("🔥 魔王進入狂暴形態！最後 10 題每題 4 分！");
+      }
+
+      renderRaidHud();
+      renderRaidItemsBar();
+      renderRaidTurn();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    document.getElementById("raid-items-grid").addEventListener("click", (e) => {
+      const btn = e.target.closest(".raid-item-btn");
+      if (!btn || btn.disabled) return;
+      useRaidItem(btn.dataset.item);
+    });
+    document.getElementById("raid-sfx-btn").addEventListener("click", () => {
+      state.raid.muted = !state.raid.muted;
+      renderRaidHud();
+    });
+    document.getElementById("raid-retreat-btn").addEventListener("click", () => {
+      if (Object.keys(state.mcAnswers).length > 0 && !confirm("撤退返回首頁將會重置目前的討伐進度，確定要離開嗎？")) return;
+      returnToModePicker();
+    });
+    document.getElementById("raid-finish-early-btn").addEventListener("click", () => {
+      const done = Object.keys(state.mcAnswers).length;
+      const total = state.activeExam.mc.length;
+      if (!confirm(`目前已完成 ${done} / ${total} 題，確定要提前結算分數與勇者能力卡嗎？`)) return;
+      if (state.timerId) clearInterval(state.timerId);
+      gradeAndShowResult();
+    });
+
+    // =========================================================================
+    // 3. 傳統試題渲染與作答進度追蹤
     // =========================================================================
     function getTotalInputTargets() {
       if (!state.activeExam) return 0;
@@ -1456,9 +2622,7 @@
           `;
         });
 
-        const srcTag = exam.mode === "remix"
-          ? `<span class="q-src-tag">出自 ${q.sourceYear} 學年度</span>`
-          : "";
+        const srcTag = "";
         const bossTag = q.badge
           ? `<span class="q-boss-badge">${escapeHtml(q.badge)}</span>`
           : "";
@@ -1526,15 +2690,10 @@
           `;
         }).join("");
 
-        const srcTag = exam.mode === "remix"
-          ? `<span class="q-src-tag">出自 ${q.sourceYear} 學年度</span>`
-          : "";
-
         card.innerHTML = `
           <div class="q-header">
             <div>
               <span class="q-num" style="background: var(--accent);">手寫第 ${q.num} 題</span>
-              ${srcTag}
             </div>
             <span class="q-unit-tag">${unit.section}</span>
           </div>
@@ -1604,7 +2763,7 @@
     document.getElementById("switch-exam-btn").addEventListener("click", returnToModePicker);
 
     // =========================================================================
-    // 4. 批改計算、六角能力雷達圖 & 個人化建議
+    // 4. 批改計算、勇者能力卡、全班前10匿名英雄榜 & 六角能力雷達圖
     // =========================================================================
     document.getElementById("submit-exam-btn").addEventListener("click", () => {
       const exam = state.activeExam;
@@ -1645,18 +2804,19 @@
       const mcResults = exam.mc.map(q => {
         const stuAns = state.mcAnswers[q.num] || "";
         const isCorrect = Array.isArray(q.ans) ? q.ans.includes(stuAns) : (stuAns === q.ans);
+        const qPts = q.pts || exam.mcPts;
         const st = unitStats[q.unit];
-        st.total += exam.mcPts;
+        st.total += qPts;
         st.qCount += 1;
         if (isCorrect) {
-          mcScore += exam.mcPts;
+          mcScore += qPts;
           mcCorrect++;
-          st.earned += exam.mcPts;
+          st.earned += qPts;
         } else {
           st.qWrongCount += 1;
-          st.wrongItems.push(`選擇題第 ${q.num} 題`);
+          st.wrongItems.push(`第 ${q.num} 題`);
         }
-        return { type: "mc", q, stuAns, isCorrect };
+        return { type: "mc", q, qPts, stuAns, isCorrect };
       });
 
       let hwScore = 0;
@@ -1705,18 +2865,21 @@
         return { ...s, earned: earnedRound, total: totalRound, mastery, errorRate };
       });
 
+      document.getElementById("page-info").classList.add("hidden");
       document.getElementById("page-exam").classList.add("hidden");
       document.getElementById("page-result").classList.remove("hidden");
       window.scrollTo({ top: 0, behavior: "smooth" });
 
       const { cls, seat, name, email } = state.student;
-      document.getElementById("res-exam-label").textContent = `本次測驗卷別：${exam.title}`;
+      document.getElementById("res-exam-label").textContent = `本次測驗模式：${exam.title}`;
       document.getElementById("res-student-pill").textContent = `${cls} ${seat}號 ${name}`;
       document.getElementById("res-email-line").textContent = `學生信箱：${email}`;
       document.getElementById("stat-mc").textContent = `${formatPts(mcScore)} / ${exam.mcMax} 分（對 ${mcCorrect}/${exam.mc.length} 題）`;
-      document.getElementById("stat-hw").textContent = exam.hwMax === 0
-        ? "本卷無手寫題（全單選 40 題）"
-        : `${formatPts(hwScore)} / ${exam.hwMax} 分（對 ${hwCorrectBlanks}/${hwTotalBlanks} 格）`;
+      document.getElementById("stat-hw").textContent = exam.mode === "raid"
+        ? `最高 Combo x${state.raid.maxCombo}（❤️×${state.raid.heroHearts}）`
+        : (exam.hwMax === 0
+          ? `本卷無手寫題（全單選 ${exam.mc.length} 題）`
+          : `${formatPts(hwScore)} / ${exam.hwMax} 分（對 ${hwCorrectBlanks}/${hwTotalBlanks} 格）`);
       document.getElementById("stat-time").textContent = `${formatTime(state.elapsedSeconds)} / ${totalScore} 分`;
 
       const sendBtn = document.getElementById("send-email-btn");
@@ -1729,16 +2892,16 @@
       let comment = "";
       let ringColor = "#2563eb";
       if (totalScore >= 90) {
-        comment = "🌟 太強了！段考核心概念非常扎實，繼續維持細心即可穩拿高分！";
+        comment = "🌟 太強了！段考核心概念非常扎實，成功重創魔王穩拿高分！";
         ringColor = "#16a34a";
       } else if (totalScore >= 75) {
         comment = "👍 表現不錯！大部分觀念已掌握，針對下方六角圖凹陷的弱點單元加強複習就能衝上頂尖！";
         ringColor = "#2563eb";
       } else if (totalScore >= 60) {
-        comment = "💪 已經達標！再把公式應用與地科觀念釐清，成績還有很大的進步空間喔！";
+        comment = "💪 已經達標！再把公式應用與地科觀念釐清，下次討伐一定更高分！";
         ringColor = "#d97706";
       } else {
-        comment = "📚 加油！別灰心，這份診斷幫你精準抓出了盲點，照著下方的 115 課本頁碼逐一複習一定能進步！";
+        comment = "📚 加油！別灰心，這場戰鬥幫你精準抓出了盲點，照著 115 課本頁碼逐一補齊一定能逆襲！";
         ringColor = "#dc2626";
       }
       document.getElementById("score-comment").textContent = comment;
@@ -1757,6 +2920,11 @@
         </svg>
       `;
 
+      state.lastTotalScore = totalScore;
+      state.lastStatsArray = statsArray;
+
+      renderHeroCard(totalScore, statsArray, exam);
+      renderAnonymousLeaderboard(cls, totalScore);
       renderHexagonRadar(statsArray);
 
       const tbody = document.querySelector("#unit-summary-table tbody");
@@ -1767,7 +2935,7 @@
         else if (s.errorRate > 0) badge = `<span class="badge badge-ok">穩健</span>`;
         return `
           <tr>
-            <td><strong>${s.unit.section}</strong><br><span style="font-size:0.78rem; color:#64748b;">${s.unit.pages}</span></td>
+            <td><strong>${s.unit.name || s.unit.section}</strong><br><span style="font-size:0.78rem; color:#64748b;">${s.unit.pages}</span></td>
             <td>${formatPts(s.earned)} / ${formatPts(s.total)}</td>
             <td style="color:${s.errorRate > 0 ? '#dc2626' : '#16a34a'}; font-weight:700;">${s.errorRate}%</td>
             <td><strong>${s.mastery}%</strong></td>
@@ -1805,12 +2973,12 @@
         `;
       }).join("");
 
-      renderReviewList(mcResults, hwResults, "all");
+      renderReviewList(mcResults, hwResults, "all", totalScore);
       document.querySelectorAll(".filter-btn").forEach(btn => {
         btn.onclick = () => {
           document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
           btn.classList.add("active");
-          renderReviewList(mcResults, hwResults, btn.dataset.filter);
+          renderReviewList(mcResults, hwResults, btn.dataset.filter, totalScore);
         };
       });
 
@@ -1901,7 +3069,7 @@
         dotsSvg += `
           <circle cx="${dx.toFixed(1)}" cy="${dy.toFixed(1)}" r="6" fill="#2563eb" stroke="#fff" stroke-width="2"
             style="cursor:pointer;"
-            data-tip="${escapeHtml(s.unit.section)}：熟悉度 ${s.mastery}%（得分 ${formatPts(s.earned)}/${formatPts(s.total)}，答錯率 ${s.errorRate}%）"/>
+            data-tip="${escapeHtml(s.unit.name || s.unit.section)}：熟悉度 ${s.mastery}%（得分 ${formatPts(s.earned)}/${formatPts(s.total)}，答錯率 ${s.errorRate}%）"/>
         `;
       });
 
@@ -1925,11 +3093,430 @@
       });
     }
 
-    function renderReviewList(mcResults, hwResults, filter) {
-      const host = document.getElementById("review-container");
-      const exam = state.activeExam;
-      const items = [];
+    function computeHeroProfile(totalScore, statsArray, exam) {
+      let rarity = { tier: "N", label: "N 見習級", cls: "rarity-N" };
+      if (totalScore >= 95) rarity = { tier: "UR", label: "UR 神話級", cls: "rarity-UR" };
+      else if (totalScore >= 85) rarity = { tier: "SSR", label: "SSR 傳說級", cls: "rarity-SSR" };
+      else if (totalScore >= 75) rarity = { tier: "SR", label: "SR 史詩級", cls: "rarity-SR" };
+      else if (totalScore >= 60) rarity = { tier: "R", label: "R 精良級", cls: "rarity-R" };
 
+      const sortedByMastery = [...statsArray].sort((a, b) => b.mastery - a.mastery);
+      const topUnitId = sortedByMastery[0] ? sortedByMastery[0].unit.id : "u1";
+      const unitInfo = {
+        u1: { title: "⚡ 慣性與動力劍士", avatar: "images/heroes/hero_knight.png" },
+        u2: { title: "🪐 萬有引力星術師", avatar: "images/heroes/hero_mage.png" },
+        u3: { title: "🔥 能量守恆魔導士", avatar: "images/heroes/hero_mage.png" },
+        u4: { title: "⚖️ 槓桿平衡機關師", avatar: "images/heroes/hero_knight.png" },
+        u5: { title: "🌋 板塊震波召喚師", avatar: "images/heroes/hero_geomancer.png" },
+        u6: { title: "🦕 遠古化石時空旅者", avatar: "images/heroes/hero_geomancer.png" }
+      };
+
+      let title = "🌱 自然科學見習勇者";
+      let avatar = "images/heroes/hero_novice.png";
+
+      if (totalScore >= 95) {
+        title = "👑 屠魔滿分大賢者";
+        avatar = "images/heroes/hero_sage.png";
+      } else if (exam.mode === "raid" && totalScore >= 80) {
+        title = "⚔️ 闇紫魔王討伐者";
+        avatar = "images/heroes/hero_slayer.png";
+      } else if (exam.mode === "boss" && totalScore >= 75) {
+        title = "😈 終極魔王破壁者";
+        avatar = "images/heroes/hero_slayer.png";
+      } else if (totalScore >= 85) {
+        title = "⚔️ 闇紫魔王討伐者";
+        avatar = "images/heroes/hero_slayer.png";
+      } else if (totalScore >= 60) {
+        const picked = unitInfo[topUnitId] || { title: "⚔️ 自然探險勇者", avatar: "images/heroes/hero_knight.png" };
+        title = picked.title;
+        avatar = picked.avatar;
+      }
+
+      if (state.previewAvatarOverride) {
+        avatar = state.previewAvatarOverride;
+      }
+
+      const statNames = {
+        u1: "牛頓運動定律",
+        u2: "圓周與萬有引力",
+        u3: "功與力學能",
+        u4: "力矩與槓桿",
+        u5: "板塊與斷層",
+        u6: "地球歷史與化石"
+      };
+
+      return { rarity, title, avatar, statNames };
+    }
+
+    function renderHeroCard(totalScore, statsArray, exam) {
+      const box = document.getElementById("hero-card-box");
+      const { cls, seat, name } = state.student;
+      const { rarity, title, avatar, statNames } = computeHeroProfile(totalScore, statsArray, exam);
+
+      box.className = `hero-card ${rarity.cls}`;
+      const comboText = exam.mode === "raid" ? `x${state.raid.maxCombo}` : "原卷模式";
+      const itemsUsedText = exam.mode === "raid" ? `${state.raid.itemsUsedCount} / 2 個` : "無道具";
+
+      const attrsHtml = statsArray.map(s => {
+        const label = statNames[s.unit.id] || s.unit.name || s.unit.section;
+        return `
+          <div>
+            <div class="attr-row-head">
+              <span>${escapeHtml(label)}</span>
+              <span>${s.mastery}%</span>
+            </div>
+            <div class="attr-bar"><div class="attr-bar-fill" style="width:${s.mastery}%;"></div></div>
+          </div>
+        `;
+      }).join("");
+
+      box.innerHTML = `
+        <div class="hero-top-flex">
+          <div class="hero-pixel-avatar">
+            <img src="${escapeHtml(avatar)}" alt="${escapeHtml(title)}" />
+          </div>
+          <div style="flex:1; min-width:0;">
+            <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; flex-wrap:wrap;">
+              <span class="hero-rarity-pill">🃏 自然勇者能力卡｜${rarity.label}</span>
+              <span style="font-size:0.78rem; color:#cbd5e1;">${escapeHtml(formatClassDisplay(cls))} ${escapeHtml(seat)}號</span>
+            </div>
+            <div class="hero-title-main">${escapeHtml(title)}</div>
+            <div class="hero-sub-meta" style="margin-bottom:0;">召喚勇者：<strong>${escapeHtml(name)}</strong><br>挑戰模式：${escapeHtml(exam.title)}</div>
+          </div>
+        </div>
+        <div class="hero-kpis">
+          <div class="hero-kpi"><div class="k">總戰力積分</div><div class="v">${totalScore} / 100</div></div>
+          <div class="hero-kpi"><div class="k">最高連擊</div><div class="v">${comboText}</div></div>
+          <div class="hero-kpi"><div class="k">技能道具 / 用時</div><div class="v" style="font-size:0.94rem;">${itemsUsedText} · ${formatTime(state.elapsedSeconds)}</div></div>
+        </div>
+        <div class="hero-attrs">${attrsHtml}</div>
+      `;
+
+      state.heroCardMeta = {
+        rarity,
+        title,
+        avatar,
+        statNames,
+        totalScore,
+        comboText,
+        statsArray,
+        student: { cls: formatClassDisplay(cls), seat, name },
+        examTitle: exam.title
+      };
+    }
+
+    async function downloadHeroCardPng() {
+      const meta = state.heroCardMeta;
+      if (!meta) return;
+      const canvas = document.createElement("canvas");
+      canvas.width = 860;
+      canvas.height = 560;
+      const ctx = canvas.getContext("2d");
+
+      const grad = ctx.createLinearGradient(0, 0, 860, 560);
+      grad.addColorStop(0, "#0f172a");
+      grad.addColorStop(0.55, "#2e1065");
+      grad.addColorStop(1, "#090412");
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, 860, 560);
+
+      ctx.strokeStyle = meta.rarity.tier === "UR" ? "#facc15" : "#a855f7";
+      ctx.lineWidth = 6;
+      ctx.strokeRect(14, 14, 832, 532);
+
+      // 繪製像素角色立繪
+      try {
+        const avatarImg = await new Promise((resolve, reject) => {
+          const im = new Image();
+          im.onload = () => resolve(im);
+          im.onerror = reject;
+          im.src = meta.avatar;
+        });
+        ctx.save();
+        ctx.imageSmoothingEnabled = false;
+        ctx.fillStyle = "#090412";
+        ctx.fillRect(40, 38, 146, 146);
+        ctx.drawImage(avatarImg, 40, 38, 146, 146);
+        ctx.strokeStyle = meta.rarity.tier === "UR" ? "#facc15" : "#c084fc";
+        ctx.lineWidth = 3;
+        ctx.strokeRect(40, 38, 146, 146);
+        ctx.restore();
+      } catch {}
+
+      ctx.fillStyle = "#fde047";
+      ctx.font = "bold 20px 'Microsoft JhengHei', sans-serif";
+      ctx.fillText(`🃏 自然勇者能力卡｜${meta.rarity.label}`, 206, 66);
+
+      ctx.fillStyle = "#ffffff";
+      ctx.font = "bold 34px 'Microsoft JhengHei', sans-serif";
+      ctx.fillText(meta.title, 206, 114);
+
+      ctx.fillStyle = "#cbd5e1";
+      ctx.font = "20px 'Microsoft JhengHei', sans-serif";
+      ctx.fillText(`勇者：${meta.student.cls} ${meta.student.seat}號 ${meta.student.name}`, 206, 150);
+      ctx.fillText(`總戰力：${meta.totalScore} / 100 分   ｜   最高連擊：${meta.comboText}`, 206, 182);
+
+      ctx.strokeStyle = "rgba(192,132,252,0.35)";
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.moveTo(40, 214);
+      ctx.lineTo(820, 214);
+      ctx.stroke();
+
+      meta.statsArray.forEach((s, i) => {
+        const col = i % 2;
+        const row = Math.floor(i / 2);
+        const x = 40 + col * 400;
+        const y = 264 + row * 86;
+        const label = meta.statNames[s.unit.id] || s.unit.name || s.unit.section;
+        ctx.fillStyle = "#f1f5f9";
+        ctx.font = "bold 20px 'Microsoft JhengHei', sans-serif";
+        ctx.fillText(label, x, y);
+        ctx.fillStyle = "#fde047";
+        ctx.fillText(`${s.mastery}%`, x + 310, y);
+
+        ctx.fillStyle = "rgba(255,255,255,0.14)";
+        ctx.fillRect(x, y + 14, 360, 16);
+        const barGrad = ctx.createLinearGradient(x, 0, x + 360, 0);
+        barGrad.addColorStop(0, "#38bdf8");
+        barGrad.addColorStop(1, "#a855f7");
+        ctx.fillStyle = barGrad;
+        ctx.fillRect(x, y + 14, Math.max(8, (360 * s.mastery) / 100), 16);
+      });
+
+      ctx.fillStyle = "#94a3b8";
+      ctx.font = "15px 'Microsoft JhengHei', sans-serif";
+      ctx.fillText("新北市立三多國中九年級自然科段考複習系統", 40, 524);
+
+      const link = document.createElement("a");
+      link.download = `自然勇者能力卡_${meta.student.cls}_${meta.student.name}.png`;
+      link.href = canvas.toDataURL("image/png");
+      link.click();
+      showToast("📥 勇者能力卡 PNG 已開始下載！");
+    }
+
+    document.getElementById("download-hero-btn").addEventListener("click", downloadHeroCardPng);
+
+    function renderAnonymousLeaderboard(cls, totalScore) {
+      const myCls = formatClassDisplay(cls);
+      const BASELINE_DEMO = [
+        { cls: "902 班", score: 97 },
+        { cls: "905 班", score: 94 },
+        { cls: "901 班", score: 91 },
+        { cls: "903 班", score: 89 },
+        { cls: "904 班", score: 86 },
+        { cls: "902 班", score: 84 },
+        { cls: "906 班", score: 81 },
+        { cls: "901 班", score: 78 },
+        { cls: "903 班", score: 75 },
+        { cls: "905 班", score: 72 }
+      ];
+
+      let localList = [];
+      try {
+        localList = JSON.parse(localStorage.getItem("sanduo_anon_top10") || "[]");
+        if (!Array.isArray(localList)) localList = [];
+      } catch {
+        localList = [];
+      }
+
+      // 嚴格僅保存班級與分數，不儲存任何姓名、座號或信箱
+      localList.push({ cls: myCls, score: totalScore, ts: Date.now() });
+      localList.sort((a, b) => b.score - a.score);
+      localList = localList.slice(0, 20);
+      try {
+        localStorage.setItem("sanduo_anon_top10", JSON.stringify(localList));
+      } catch {}
+
+      function drawRows(rows, noteText) {
+        const tbody = document.getElementById("leaderboard-tbody");
+        let markedMe = false;
+        const top10 = rows.slice(0, 10);
+        tbody.innerHTML = top10.map((entry, idx) => {
+          const rankIcon = idx === 0 ? "🥇 第1名" : idx === 1 ? "🥈 第2名" : idx === 2 ? "🥉 第3名" : `#${idx + 1}`;
+          const clsText = formatClassDisplay(entry.cls);
+          const isMe = !markedMe && clsText === myCls && Number(entry.score) === Number(totalScore);
+          if (isMe) markedMe = true;
+          return `
+            <tr class="${isMe ? "lb-row-me" : ""}">
+              <td><strong>${rankIcon}</strong></td>
+              <td>${escapeHtml(clsText)}${isMe ? `<span class="lb-me-tag">✨ 本次紀錄</span>` : ""}</td>
+              <td style="text-align:right; font-weight:800; color:#1e40af;">${formatPts(Number(entry.score))} 分</td>
+            </tr>
+          `;
+        }).join("");
+        document.getElementById("leaderboard-note").textContent = noteText;
+      }
+
+      const mergedDemo = [...localList, ...BASELINE_DEMO].sort((a, b) => b.score - a.score);
+      drawRows(mergedDemo, "📌 本機預覽示範榜單（僅公開班級與前 10 名分數；實際部署試算表後會即時同步全校排行）。");
+
+      const gasUrl = getGasUrl();
+      if (gasUrl) {
+        const sep = gasUrl.includes("?") ? "&" : "?";
+        fetch(`${gasUrl}${sep}action=leaderboard`)
+          .then(res => res.ok ? res.json() : null)
+          .then(json => {
+            if (json && Array.isArray(json.leaderboard) && json.leaderboard.length > 0) {
+              const liveRows = [...json.leaderboard.map(x => ({ cls: formatClassDisplay(x.cls), score: Number(x.score) })), { cls: myCls, score: totalScore }]
+                .filter(x => !isNaN(x.score))
+                .sort((a, b) => b.score - a.score);
+              drawRows(liveRows, "✅ 已同步雲端試算表目前前 10 名高分榜（已隱藏所有學生姓名與座號）。");
+            }
+          })
+          .catch(() => {});
+      }
+    }
+
+    function buildConceptWithoutAnswerLeak(explain, unit) {
+      let s = String(explain || "").trim();
+      if (!s) return unit ? unit.tips : "請依據課本基礎原理與定義重新檢視題意。";
+      // 移除選項答案洩漏（例如「故選 (B)」「選 (C)」「，故 (D) 錯誤」「(A) 正確」）
+      s = s
+        .replace(/[，,、；;]?\s*(故選|所以選|因此選|應選|請選|選|答案為|正確答案為)\s*[（(]?[A-D甲乙丙丁][）)]?[。！!]*$/gi, "")
+        .replace(/[（(][A-D][）)]\s*(正確|錯誤|不正確|為正解|選項|皆可)[，,。！!]?/g, "")
+        .replace(/^[（(][A-D][）)]\s*/g, "")
+        .replace(/\s*[（(][A-D][）)]\s*/g, " ")
+        .trim();
+      if (s.length < 12 && unit && unit.tips) {
+        return unit.tips;
+      }
+      return s;
+    }
+
+    function renderReviewList(mcResults, hwResults, filter, totalScoreArg) {
+      const host = document.getElementById("review-container");
+      const banner = document.getElementById("tactics-tier-banner");
+      const filterBar = document.getElementById("review-filter-bar");
+      const exam = state.activeExam;
+      const totalScore = typeof totalScoreArg === "number" ? totalScoreArg : state.lastTotalScore;
+
+      // 區間 1：50 分以下 ── 只給重點複習觀念
+      if (totalScore < 50) {
+        if (filterBar) filterBar.classList.add("hidden");
+        banner.innerHTML = `
+          <div class="tactics-tier-box tier-low">
+            <strong>🛡️ 基礎重整戰術（目前 ${totalScore} 分｜未滿 50 分）</strong><br>
+            目前階段先不用急著逐題核對選項，以下依各單元弱點排序為你整理「重點複習觀念」；先把觀念與公式讀熟，下次再戰分數會立刻起飛！
+          </div>
+        `;
+        const sortedUnits = [...(state.lastStatsArray || [])].sort((a, b) => b.errorRate - a.errorRate);
+        host.innerHTML = sortedUnits.map((s, idx) => `
+          <div class="advice-card ${s.errorRate >= 50 ? "high" : "mid"}">
+            <h4>${idx + 1}. ${escapeHtml(s.unit.name || s.unit.section)}（${escapeHtml(s.unit.pages)}）— 熟悉度 ${s.mastery}%</h4>
+            <p><strong>重點複習觀念：</strong>${escapeHtml(s.unit.tips)}</p>
+          </div>
+        `).join("") || `<p style="color:var(--muted);">暫無單元資料</p>`;
+        return;
+      }
+
+      // 區間 2：50～70 分 ── 給答對的題目 ＋ 讓錯誤題目變正確的重點概念
+      if (totalScore < 70) {
+        if (filterBar) filterBar.classList.add("hidden");
+        banner.innerHTML = `
+          <div class="tactics-tier-box tier-mid">
+            <strong>⚔️ 進階突破戰術（目前 ${totalScore} 分｜50～70 分區間）</strong><br>
+            已為你分成兩區：上方保留<strong>「你已答對的題目」</strong>建立信心；下方針對答錯題目只提示<strong>「讓本題變正確的重點概念」</strong>（不直接暴雷正確選項，助你靠自己想通）！
+          </div>
+        `;
+
+        const correctCards = [];
+        const wrongConceptCards = [];
+
+        mcResults.forEach(r => {
+          const unit = UNITS.find(u => u.id === r.q.unit);
+          const unitName = unit ? (unit.name || unit.section) : "";
+          const srcText = r.q.sourceYear === "魔王難度" ? "魔王試煉題庫" : `${r.q.sourceYear} 學年度`;
+          const srcBadge = (exam.mode === "raid" || exam.mode === "remix")
+            ? `<span class="q-src-tag" style="margin-left:6px;">出自 ${escapeHtml(srcText)}</span>` : "";
+
+          if (r.isCorrect) {
+            const stuDisplay = r.stuAns ? `(${r.stuAns}) ${r.q.options[r.stuAns]}` : "未作答";
+            correctCards.push(`
+              <div class="review-item correct">
+                <div style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px; margin-bottom:8px;">
+                  <div>
+                    <span class="badge badge-great">✓ 答對 (+${r.qPts})</span>
+                    <strong style="margin-left:6px;">第 ${r.q.num} 題</strong>${srcBadge}
+                  </div>
+                  <span class="q-unit-tag">${escapeHtml(unitName)}</span>
+                </div>
+                <div style="font-size:0.95rem; margin-bottom:8px;">${escapeHtml(r.q.text).replace(/\n/g, "<br>")}</div>
+                ${r.q.img ? `<div class="q-figure"><img src="${r.q.img}" alt="第${r.q.num}題附圖" class="orig-fig" loading="lazy"></div>` : ""}
+                <div style="font-size:0.9rem;"><span>你的正確作答：<strong style="color:#16a34a;">${escapeHtml(stuDisplay)}</strong></span></div>
+              </div>
+            `);
+          } else {
+            const conceptHint = buildConceptWithoutAnswerLeak(r.q.explain, unit);
+            wrongConceptCards.push(`
+              <div class="review-item wrong">
+                <div style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px; margin-bottom:8px;">
+                  <div>
+                    <span class="badge badge-warn">🧭 待突破觀念</span>
+                    <strong style="margin-left:6px;">第 ${r.q.num} 題</strong>${srcBadge}
+                  </div>
+                  <span class="q-unit-tag">${escapeHtml(unitName)}（${escapeHtml(unit ? unit.pages : "")}）</span>
+                </div>
+                <div style="font-size:0.95rem; margin-bottom:8px;">${escapeHtml(r.q.text).replace(/\n/g, "<br>")}</div>
+                ${r.q.img ? `<div class="q-figure"><img src="${r.q.img}" alt="第${r.q.num}題附圖" class="orig-fig" loading="lazy"></div>` : ""}
+                <div class="explain-box" style="background:#fffbeb; border-color:#fcd34d; color:#78350f;">
+                  <strong>🔑 讓這題變正確的重點概念：</strong>${escapeHtml(conceptHint)}
+                </div>
+              </div>
+            `);
+          }
+        });
+
+        hwResults.forEach(r => {
+          const unit = UNITS.find(u => u.id === r.q.unit);
+          const unitName = unit ? (unit.name || unit.section) : "";
+          if (r.isCorrect) {
+            correctCards.push(`
+              <div class="review-item correct">
+                <div style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px; margin-bottom:8px;">
+                  <div><span class="badge badge-great">✓ 全對 (${formatPts(r.earnedPts)}/${formatPts(r.totalPts)} 分)</span><strong style="margin-left:6px;">手寫第 ${r.q.num} 題</strong></div>
+                  <span class="q-unit-tag">${escapeHtml(unitName)}</span>
+                </div>
+                <div style="font-size:0.95rem;">${escapeHtml(r.q.text).replace(/\n/g, "<br>")}</div>
+              </div>
+            `);
+          } else {
+            const conceptHint = buildConceptWithoutAnswerLeak(r.q.explain, unit);
+            wrongConceptCards.push(`
+              <div class="review-item wrong">
+                <div style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px; margin-bottom:8px;">
+                  <div><span class="badge badge-warn">🧭 待突破觀念</span><strong style="margin-left:6px;">手寫第 ${r.q.num} 題</strong></div>
+                  <span class="q-unit-tag">${escapeHtml(unitName)}（${escapeHtml(unit ? unit.pages : "")}）</span>
+                </div>
+                <div style="font-size:0.95rem; margin-bottom:8px;">${escapeHtml(r.q.text).replace(/\n/g, "<br>")}</div>
+                ${r.q.img ? `<div class="q-figure"><img src="${r.q.img}" alt="手寫第${r.q.num}題附圖" class="orig-fig" loading="lazy"></div>` : ""}
+                <div class="explain-box" style="background:#fffbeb; border-color:#fcd34d; color:#78350f;">
+                  <strong>🔑 讓這題變正確的重點概念：</strong>${escapeHtml(conceptHint)}
+                </div>
+              </div>
+            `);
+          }
+        });
+
+        host.innerHTML = `
+          <div class="tactics-sub-title">✅ 你已掌握並答對的題目（共 ${correctCards.length} 題）</div>
+          ${correctCards.length > 0 ? correctCards.join("") : `<p style="color:var(--muted);">本次尚未有答對題目。</p>`}
+          <div class="tactics-sub-title" style="margin-top:22px;">🧭 讓錯誤題目變正確的重點概念（共 ${wrongConceptCards.length} 題）</div>
+          ${wrongConceptCards.length > 0 ? wrongConceptCards.join("") : `<p style="color:var(--muted);">沒有需要訂正的錯題！</p>`}
+        `;
+        return;
+      }
+
+      // 區間 3：70 分以上 ── 照原本完整逐題批改與詳解給法
+      if (filterBar) filterBar.classList.remove("hidden");
+      banner.innerHTML = `
+        <div class="tactics-tier-box tier-high">
+          <strong>🌟 高手精進戰術（目前 ${totalScore} 分｜70 分以上）</strong><br>
+          表現優異！已為你展開完整的逐題批改、官方解答與詳解檢討，快速抓出最後的細節失誤吧！
+        </div>
+      `;
+
+      const items = [];
       mcResults.forEach(r => {
         if (filter === "wrong" && r.isCorrect) return;
         if (filter === "correct" && !r.isCorrect) return;
@@ -1938,8 +3525,9 @@
         const ansDisplay = Array.isArray(r.q.ans)
           ? r.q.ans.map(a => `(${a}) ${r.q.options[a]}`).join(" 或 ")
           : `(${r.q.ans}) ${r.q.options[r.q.ans]}`;
-        const srcBadge = exam.mode === "remix"
-          ? `<span class="q-src-tag" style="margin-left:6px;">出自 ${r.q.sourceYear} 學年度</span>`
+        const srcText = r.q.sourceYear === "魔王難度" ? "魔王試煉題庫" : `${r.q.sourceYear} 學年度`;
+        const srcBadge = (exam.mode === "raid" || exam.mode === "remix")
+          ? `<span class="q-src-tag" style="margin-left:6px;">出自 ${escapeHtml(srcText)}</span>`
           : "";
         const qBadge = r.q.badge
           ? `<span class="q-boss-badge">${escapeHtml(r.q.badge)}</span>`
@@ -1948,11 +3536,11 @@
           <div class="review-item ${r.isCorrect ? "correct" : "wrong"}">
             <div style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px; margin-bottom:8px;">
               <div>
-                <span class="badge ${r.isCorrect ? "badge-great" : "badge-danger"}">${r.isCorrect ? `✓ 答對 (+${exam.mcPts})` : "✗ 答錯 (0)"}</span>
+                <span class="badge ${r.isCorrect ? "badge-great" : "badge-danger"}">${r.isCorrect ? `✓ 答對 (+${r.qPts})` : "✗ 答錯 (0)"}</span>
                 <strong style="margin-left:6px;">單一選擇第 ${r.q.num} 題</strong>
                 ${srcBadge}${qBadge}
               </div>
-              <span class="q-unit-tag">${unit.section}（${unit.pages}）</span>
+              <span class="q-unit-tag">${unit.name || unit.section}（${unit.pages}）</span>
             </div>
             <div style="font-size:0.95rem; margin-bottom:8px;">${escapeHtml(r.q.text).replace(/\n/g, "<br>")}</div>
             ${r.q.img ? `<div class="q-figure"><img src="${r.q.img}" alt="第${r.q.num}題附圖" class="orig-fig" loading="lazy"></div>` : ""}
@@ -1969,7 +3557,7 @@
         if (filter === "wrong" && r.isCorrect) return;
         if (filter === "correct" && !r.isCorrect) return;
         const unit = UNITS.find(u => u.id === r.q.unit);
-        const srcBadge = exam.mode === "remix"
+        const srcBadge = (exam.mode === "raid" || exam.mode === "remix")
           ? `<span class="q-src-tag" style="margin-left:6px;">出自 ${r.q.sourceYear} 學年度</span>`
           : "";
         const blanksHtml = r.blankResults.map(br => `
@@ -1989,7 +3577,7 @@
                 <strong style="margin-left:6px;">手寫第 ${r.q.num} 題</strong>
                 ${srcBadge}
               </div>
-              <span class="q-unit-tag">${unit.section}（${unit.pages}）</span>
+              <span class="q-unit-tag">${unit.name || unit.section}（${unit.pages}）</span>
             </div>
             <div style="font-size:0.95rem; margin-bottom:8px;">${escapeHtml(r.q.text).replace(/\n/g, "<br>")}</div>
             ${r.q.img ? `<div class="q-figure"><img src="${r.q.img}" alt="手寫第${r.q.num}題附圖" class="orig-fig" loading="lazy"></div>` : ""}
@@ -2115,16 +3703,97 @@
     });
 
     document.getElementById("retry-btn").addEventListener("click", () => {
-      const msg = state.selectedMode === "remix"
-        ? "確定要清除本次紀錄，並「重新隨機抽取一份全新的重組段考」挑戰嗎？"
+      const msg = (state.selectedMode === "raid" || state.selectedMode === "remix")
+        ? "確定要清除本次紀錄，並「重新隨機抽取 30 題進入闖關討伐戰」嗎？"
         : "確定要清除本次作答紀錄並重新作答嗎？";
       if (!confirm(msg)) return;
+      state.previewAvatarOverride = "";
       startExamSession(state.selectedMode);
+    });
+
+    // 本機預覽快捷按鈕（不影響學生端正常畫面）
+    function fillDemoStudentIfEmpty() {
+      const c = document.getElementById("stu-class");
+      const s = document.getElementById("stu-seat");
+      const n = document.getElementById("stu-name");
+      const em = document.getElementById("stu-email");
+      if (!c.value.trim()) c.value = "901";
+      if (!s.value.trim()) s.value = "1";
+      if (!n.value.trim()) n.value = "測試勇者";
+      if (!em.value.trim()) em.value = "preview@example.com";
+      return { cls: c.value.trim(), seat: s.value.trim(), name: n.value.trim(), email: em.value.trim() };
+    }
+
+    function simulateRaidScore(tier) {
+      state.student = fillDemoStudentIfEmpty();
+      state.selectedMode = "raid";
+      state.previewAvatarOverride = "";
+      if (!state.activeExam || state.activeExam.mode !== "raid") {
+        state.activeExam = generateActiveExam("raid");
+      }
+      state.mcAnswers = {};
+      state.hwAnswers = {};
+      // 依目標分數分級控制答對題數（前20題3分，後10題4分）
+      const targetPassFn = {
+        low: (idx) => idx < 14,                  // 14*3 = 42 分 (<50)
+        mid: (idx) => idx < 16 || idx >= 26,     // 16*3 + 4*4 = 64 分 (50~70)
+        high: (idx) => idx % 6 !== 5,            // ~86 分 (70+)
+        ur: () => true                           // 100 分 (UR 大賢者)
+      }[tier] || ((idx) => idx % 5 !== 4);
+
+      state.activeExam.mc.forEach((q, idx) => {
+        const correctKey = Array.isArray(q.ans) ? q.ans[0] : q.ans;
+        if (targetPassFn(idx)) {
+          state.mcAnswers[q.num] = correctKey;
+        } else {
+          state.mcAnswers[q.num] = ["A", "B", "C", "D"].find(k => k !== correctKey) || "A";
+        }
+      });
+      state.raid.maxCombo = tier === "ur" ? 30 : tier === "high" ? 9 : tier === "mid" ? 5 : 2;
+      state.raid.heroHearts = tier === "low" ? 1 : tier === "mid" ? 3 : 5;
+      state.raid.itemsUsedCount = 2;
+      state.elapsedSeconds = 390;
+      gradeAndShowResult();
+    }
+
+    document.getElementById("quick-start-raid-btn").addEventListener("click", () => {
+      state.student = fillDemoStudentIfEmpty();
+      state.selectedMode = "raid";
+      state.previewAvatarOverride = "";
+      document.querySelectorAll(".mode-card").forEach(c => c.classList.toggle("selected", c.dataset.mode === "raid"));
+      startExamSession("raid");
+    });
+
+    document.getElementById("quick-sim-result-btn").addEventListener("click", () => {
+      simulateRaidScore("high");
+      showToast("🏆 已模擬 70+ 分結算（含像素勇者卡、英雄榜與完整戰術檢討）！");
+    });
+
+    document.getElementById("result-preview-bar").addEventListener("click", (e) => {
+      const tierBtn = e.target.closest("[data-sim-tier]");
+      if (tierBtn) {
+        simulateRaidScore(tierBtn.dataset.simTier);
+        showToast(`🔧 已切換至「${tierBtn.textContent}」預覽`);
+        return;
+      }
+      const avBtn = e.target.closest("[data-sim-avatar]");
+      if (avBtn) {
+        state.previewAvatarOverride = avBtn.dataset.simAvatar;
+        renderHeroCard(state.lastTotalScore, state.lastStatsArray, state.activeExam);
+        showToast(`🎨 已切換像素角色立繪預覽：${avBtn.textContent}`);
+      }
     });
 
     // Boot
     if (new URLSearchParams(location.search).get("setup") === "1") {
       document.getElementById("open-gas-modal-btn").classList.remove("hidden");
+    }
+    const isLocalPreview = ["localhost", "127.0.0.1", ""].includes(location.hostname) ||
+      location.protocol === "file:" ||
+      new URLSearchParams(location.search).get("preview") === "1";
+    if (isLocalPreview) {
+      document.getElementById("preview-dev-bar").classList.remove("hidden");
+      document.getElementById("result-preview-bar").classList.remove("hidden");
     }
   </script>
 </body>

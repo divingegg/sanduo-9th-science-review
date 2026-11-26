@@ -6,10 +6,38 @@
  * 2. 若此 Apps Script 綁定於 Google 試算表，會自動寫入全班作答成績與各單元熟悉度方便老師追蹤。
  */
 
-function doGet() {
+function doGet(e) {
+  if (e && e.parameter && e.parameter.action === "leaderboard") {
+    return jsonResponse(getAnonymousTop10());
+  }
   return ContentService
     .createTextOutput(JSON.stringify({ ok: true, service: "Sanduo 9th Science Review Mailer" }))
     .setMimeType(ContentService.MimeType.JSON);
+}
+
+function getAnonymousTop10() {
+  try {
+    var ss = SpreadsheetApp.getActiveSpreadsheet();
+    if (!ss) return { ok: true, leaderboard: [] };
+    var sheet = ss.getSheets()[0];
+    var lastRow = sheet.getLastRow();
+    if (lastRow < 2) return { ok: true, leaderboard: [] };
+
+    // 僅讀取班級(第3欄)與總分(第7欄)，嚴格排除姓名、座號、信箱
+    var rows = sheet.getRange(2, 1, lastRow - 1, 7).getValues();
+    var list = [];
+    for (var i = 0; i < rows.length; i++) {
+      var clsRaw = String(rows[i][2] || "").trim();
+      var scoreNum = Number(rows[i][6]);
+      if (clsRaw && !isNaN(scoreNum)) {
+        list.push({ cls: clsRaw, score: Math.round(scoreNum * 10) / 10 });
+      }
+    }
+    list.sort(function (a, b) { return b.score - a.score; });
+    return { ok: true, leaderboard: list.slice(0, 10) };
+  } catch (err) {
+    return { ok: false, error: err.message, leaderboard: [] };
+  }
 }
 
 function doPost(e) {
